@@ -1,0 +1,10 @@
+{
+  "semi": false,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "prettier.printWidth": 150,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": "useTabs"
+}

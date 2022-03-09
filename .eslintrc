@@ -1,0 +1,25 @@
+{
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "@next/next/no-img-element": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 200,
+        "tabWidth": 2,
+        "useTabs": false,
+        "semi": true,
+        "doublequotes": true,
+        "trailingComma": "all",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "parser": "typescript"
+      }
+    ]
+  }
+}

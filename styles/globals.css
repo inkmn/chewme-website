@@ -1,16 +1,53 @@
 html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+body,
+#__next {
+  height: 100%;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl {
+  width: 100%;
+  padding-right: 12px;
+  padding-left: 12px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-* {
-  box-sizing: border-box;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -12px;
+  margin-left: -12px;
+}
+
+@media (min-width: 1200px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl {
+    max-width: 1440px;
+  }
+}
+
+:root {
+  --primary: #5d712c;
+  --link-color: #3d3d3d;
+  --hover-color: #12263f;
+  --table-bg: #dfebf7;
+  --border-color: #c1d8ee;
+  --table_border-color: #9bc2e5;
+  --dark-bg: #1c2e5c24;
+  --swiper-theme-color: #81434e;
+  --primary-red: #e8213a;
+}
+
+.table-pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
 }
