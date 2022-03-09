@@ -2,6 +2,7 @@ import HeroCarousel from '@/components/carousel/hero'
 import Layout from '@/components/layout'
 import type { NextPage } from 'next'
 import styled from 'styled-components'
+import Card from '@/components/Card'
 
 const Home: NextPage = () => {
   return (
@@ -9,10 +10,10 @@ const Home: NextPage = () => {
       <HeroCarousel />
       <StyledHome>
         <div className="container">
-          <div>Home</div>
-          <img src="/test.png" alt="" />
+          <Card />
         </div>
       </StyledHome>
+
       <StyledHome>
         <div className="container">
           <div>Home</div>
