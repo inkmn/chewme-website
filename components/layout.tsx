@@ -7,14 +7,14 @@ import { Affix, Button, Col, Drawer, Input, Row } from 'antd'
 import styled from 'styled-components'
 import { MenuOutlined } from '@ant-design/icons'
 import profilePic from '@/assets/logo.png'
-import HeroCarousel from './carousel/hero'
+import ActiveLink from '@/components/activeLink'
 
 const Layout = ({
   children,
   cover,
 }: {
   children: ReactNode
-  cover: string
+  cover?: string
 }): JSX.Element => {
   const [scroll, setScroll] = useState(false)
   const [drawer, setDrawer] = useState(false)
@@ -46,29 +46,31 @@ const Layout = ({
               </div>
               <div className="header-links">
                 <div className="nav-item">
-                  <Link href="/shop">
+                  <Link href="/">
                     <a>Home</a>
                   </Link>
                 </div>
                 <div className="nav-item">
-                  <Link href="/shop">
+                  <ActiveLink href="/origin">
                     <a>Origin</a>
-                  </Link>
+                  </ActiveLink>
                 </div>
                 <div className="nav-item">
-                  <Link href="/shop">
+                  <ActiveLink href="/shop">
                     <a>Products</a>
-                  </Link>
+                  </ActiveLink>
                 </div>
                 <div className="nav-item">
-                  <Link href="/shop">
+                  <ActiveLink href="/dogechew">
                     <a>DC Coin</a>
-                  </Link>
+                  </ActiveLink>
                 </div>
               </div>
             </div>
             <div className="nav-section">
-              <Button type="link" icon={<MenuOutlined />} />
+              <div className="nav-item">
+                <Button type="link" icon={<MenuOutlined />} />
+              </div>
             </div>
           </div>
         </SiteHeader>
@@ -273,6 +275,7 @@ const SiteHeader = styled.div`
   position: fixed;
   z-index: 10;
   transition: all 0.4s ease-in-out;
+  user-select: none;
   &.sticky {
     background-color: rgba(97, 126, 16, 0.8);
     backdrop-filter: saturate(180%) blur(20px);
@@ -293,6 +296,7 @@ const SiteHeader = styled.div`
     .header-links {
       display: flex;
       flex-wrap: wrap;
+      margin-left: 160px;
     }
 
     .nav-item {
@@ -301,11 +305,26 @@ const SiteHeader = styled.div`
       button {
         color: #fff;
         text-transform: uppercase;
-        font-size: 16px;
+        font-size: 1.2rem;
         font-weight: 400;
         cursor: pointer;
         display: flex;
         align-items: center;
+        justify-content: center;
+        padding: 4px 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        .anticon {
+          font-size: inherit;
+        }
+
+        &:hover {
+          background-color: rgba(97, 126, 16, 0.8);
+        }
+
+        &.selected {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
       }
 
       .icon {
@@ -327,8 +346,7 @@ const SiteHeader = styled.div`
         display: flex;
         align-items: center;
         color: #fff;
-        gap: 10px;
-        font-size: 1.8rem;
+        font-size: 2.7rem;
         font-weight: 600;
       }
     }

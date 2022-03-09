@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const Home: NextPage = () => {
   return (
-    <Layout cover={'/cover1.jpg'}>
+    <Layout>
       <HeroCarousel />
       <StyledHome>
         <div className="container">

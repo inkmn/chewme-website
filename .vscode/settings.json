@@ -5,5 +5,8 @@
   "editor.formatOnSave": true, // Tell VSCode to format files on save
   "editor.defaultFormatter": "esbenp.prettier-vscode", // Tell VSCode to use Prettier as default file formatter
   "editor.wordWrap": "wordWrapColumn",
-  "editor.wordWrapColumn": 280
+  "editor.wordWrapColumn": 280,
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  }
 }
