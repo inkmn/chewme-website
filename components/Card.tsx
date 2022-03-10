@@ -9,11 +9,11 @@ const Card = (): JSX.Element => {
         <div className="img">
           <Image src={imgTest} alt="" />
         </div>
-        <div className="card-title">DOGECHEW L</div>
       </div>
+      <div className="card-title">DOGECHEW L</div>
       <div className="card-footer">
         <span>$10 /</span>
-        <span>50000</span>
+        <span className="last-child"> 50000</span>
       </div>
     </StyledWrapper>
   )
@@ -25,19 +25,36 @@ const StyledWrapper = styled.div`
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: max-content;
 
-  .card-footer {
-    padding: 10px;
+  .card-title {
+    width: 100%;
+    text-align: center;
+    background: #edebec;
+    font-size: 20px;
+    color: #5d7129;
+    font-weight: 600;
   }
+  .card-footer {
+    font-size: 16px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    .last-child {
+      font-weight: 700;
+    }
+  }
+
   .image {
-    padding: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 40px;
+    padding-bottom: 5px;
     background: #edebec;
 
-    .card-title {
-      font-size: 20px;
-      color: #5d7129;
-      font-weight: 600;
-    }
     .img {
       display: flex;
       flex-direction: column;
