@@ -223,26 +223,29 @@ const StyledMenu = styled(Drawer)`
     justify-content: center;
     text-transform: uppercase;
     position: relative;
-    &:after {
-      background: #d0d0d0;
-      bottom: 0;
-      content: '';
-      height: 2px;
-      pointer-events: none;
-      position: absolute;
-      right: 0;
-      transition-duration: 0.5s;
-      transition-property: width;
-      transition-timing-function: cubic-bezier(0.83, 0.01, 0.18, 1.01);
-      width: 0;
-      z-index: -1;
-      pointer-events: none;
+    &:hover::before,
+    &:hover::after,
+    &:focus::before,
+    &:focus::after {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+    &::before {
+      margin-right: 10px;
+      content: '[';
+      transform: translateX(20px);
+    }
+    &::after {
+      margin-left: 10px;
+      content: ']';
+      transform: translateX(-20px);
     }
 
-    &:hover::after {
-      left: 0;
-      right: auto;
-      width: 100%;
+    &::before,
+    &::after {
+      display: inline-block;
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.2s;
     }
   }
 `
