@@ -3,7 +3,15 @@ import heroData from '@/constants/heroData.json'
 import styled from 'styled-components'
 import BottomShape from '../../assets/divider-shape.svg'
 
-const HeroCover = ({ image, title }: { image?: string; title: string }) => {
+const HeroCover = ({
+  image,
+  title,
+  position,
+}: {
+  image?: string
+  title: string
+  position?: string
+}) => {
   return (
     <StyledWrapper>
       <div className="bottom-shape">
@@ -12,7 +20,10 @@ const HeroCover = ({ image, title }: { image?: string; title: string }) => {
       <StyledHeader>
         <div
           className="slide-image"
-          style={{ backgroundImage: `url(${image})` }}
+          style={{
+            backgroundImage: `url(${image})`,
+            backgroundPosition: `0 ${position || 'center'}`,
+          }}
         />
         <div className="slide-image-filter" />
         <div className="content-wrapper">
@@ -66,6 +77,9 @@ const StyledHeader = styled.div`
     right: 0;
     margin: auto;
     .content {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
       & > h1 {
         color: #fff;
         font-size: 2.5rem;

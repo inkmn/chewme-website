@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import heroData from '@/constants/heroData.json'
 import styled from 'styled-components'
 import BottomShape from '../../assets/bottom-shape.svg'
+import BoneButtonFlat from '@/components/boneButtonFlat'
+import Link from 'next/link'
 
 const HeroCover = () => {
   return (
@@ -27,9 +29,16 @@ const HeroCover = () => {
               />
               <div className="slide-image-filter" />
               <div className="content-wrapper">
-                <div className="content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
+                <div className="container">
+                  <div className="content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Link href={`/shop`}>
+                      <a>
+                        <BoneButtonFlat>MORE</BoneButtonFlat>
+                      </a>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </StyledSlideItem>
@@ -66,7 +75,6 @@ const StyledSlideItem = styled.div`
   }
 
   .content-wrapper {
-    padding: 10% 0% 0% 8%;
     text-align: left;
     justify-content: flex-start;
     color: #fff;
@@ -81,6 +89,9 @@ const StyledSlideItem = styled.div`
     right: 0;
     margin: auto;
     .content {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
       & > h1 {
         color: #fff;
         font-size: 2.5rem;

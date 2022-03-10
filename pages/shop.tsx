@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import useSWR from 'swr'
 import Layout from '@/components/layout'
-import HeroCarousel from '@/components/carousel/hero'
+import PageHeader from '@/components/cover/pageHeader'
 import qs from 'qs'
 
 const Shop = () => {
@@ -39,7 +39,7 @@ const Shop = () => {
   const { data: productList } = useSWR(`${apiUrl}${queryToString}`)
   return (
     <Layout>
-      <HeroCarousel />
+      <PageHeader title={`Origin`} image={`/cover6.jpeg`} position="80%" />
       <StyledShop>
         <div className="container">
           <div>This is Shop view</div>
