@@ -147,10 +147,14 @@ const Layout = ({
 const StyledModal = styled(Modal)`
   .ant-modal-content {
     background-color: rgba(97, 126, 16, 0.8);
+    border-radius: 15px;
     color: #fff;
+    width: max-content;
+    padding: 30px;
   }
   .ant-modal-close {
     color: #fff;
+    font-size: 24px;
   }
   .login-modal-header {
     color: #fff;
