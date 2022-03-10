@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons'
 import profilePic from '@/assets/logo.png'
 import ActiveLink from '@/components/activeLink'
+import LoginForm from './forms/login'
 
 const Layout = ({
   children,
@@ -114,7 +115,15 @@ const Layout = ({
         }
       >
         <div className="menu">
-          <a className="menu-item">Sign in</a>
+          <a
+            className="menu-item"
+            onClick={() => {
+              setLoginModal(true)
+              setDrawer(false)
+            }}
+          >
+            Sign in
+          </a>
           <Link href="/contact-us">
             <a className="menu-item">Contact us</a>
           </Link>
@@ -122,12 +131,14 @@ const Layout = ({
       </StyledMenu>
 
       <StyledModal
-        visible={true}
+        visible={loginModal}
         onCancel={() => setLoginModal(false)}
         footer={false}
         title={false}
       >
         <h2 className="login-modal-header">Login or Signup</h2>
+
+        <LoginForm />
       </StyledModal>
     </StyledWrapper>
   )
