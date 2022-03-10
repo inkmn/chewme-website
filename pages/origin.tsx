@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import BoneButton from '@/components/boneButton'
 import BoneButtonFlat from '@/components/boneButtonFlat'
 import { Button, Divider, Space } from 'antd'
+import Icons from '../assets/iconsSprite.svg'
 
 const Origin = () => {
   return (
@@ -15,6 +16,7 @@ const Origin = () => {
           <BoneButton>BoneButton</BoneButton>
           <BoneButtonFlat>BoneButton</BoneButtonFlat>
           <Divider />
+          <Icons />
           <Space>
             <Button size="large">BoneButton</Button>
             <Button size="middle">BoneButton</Button>

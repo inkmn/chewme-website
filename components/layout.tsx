@@ -3,9 +3,15 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Affix, Button, Col, Drawer, Input, Row } from 'antd'
+import { Affix, Button, Col, Divider, Drawer, Input, Modal, Row } from 'antd'
 import styled from 'styled-components'
-import { MenuOutlined } from '@ant-design/icons'
+import {
+  CloseOutlined,
+  FacebookOutlined,
+  InstagramOutlined,
+  MenuOutlined,
+  YoutubeOutlined,
+} from '@ant-design/icons'
 import profilePic from '@/assets/logo.png'
 import ActiveLink from '@/components/activeLink'
 
@@ -18,6 +24,7 @@ const Layout = ({
 }): JSX.Element => {
   const [scroll, setScroll] = useState(false)
   const [drawer, setDrawer] = useState(false)
+  const [loginModal, setLoginModal] = useState(false)
   const router = useRouter()
   useEffect(() => {
     const scroll = () => {
@@ -69,7 +76,11 @@ const Layout = ({
             </div>
             <div className="nav-section">
               <div className="nav-item">
-                <Button type="link" icon={<MenuOutlined />} />
+                <Button
+                  onClick={() => setDrawer(true)}
+                  type="link"
+                  icon={<MenuOutlined />}
+                />
               </div>
             </div>
           </div>
@@ -80,89 +91,143 @@ const Layout = ({
       </StyledLayout>
       <SiteFooter></SiteFooter>
       <StyledMenu
-        title={
-          <div className="logo-wrapper">
-            <Link href="/">
-              <a>
-                <Image width="35" height="35" src={profilePic} alt="" />
-                DOGECHEW
-              </a>
-            </Link>
-          </div>
-        }
-        placement="left"
-        width={'80%'}
+        title={false}
+        placement="right"
+        width={400}
         onClose={() => setDrawer(false)}
         visible={drawer}
+        closeIcon={<CloseOutlined className="drawerClose" />}
+        footer={
+          <div className="drawer-footer">
+            <a target="_blank" href="https://www.facebook.com" rel="noreferrer">
+              <FacebookOutlined />
+            </a>
+            <div className="drawer-icon-spacer" />
+            <a>
+              <InstagramOutlined />
+            </a>
+            <div className="drawer-icon-spacer" />
+            <a>
+              <YoutubeOutlined />
+            </a>
+          </div>
+        }
       >
         <div className="menu">
-          <div
-            onClick={() => {
-              router.push('/product')
-              setDrawer(false)
-            }}
-            className="menu-item"
-          >
-            Products
-          </div>
-          <div
-            onClick={() => {
-              router.push('/cart')
-              setDrawer(false)
-            }}
-            className="menu-item"
-          >
-            Cart
-          </div>
-          <div
-            onClick={() => {
-              router.push('/profile')
-              setDrawer(false)
-            }}
-            className="menu-item"
-          >
-            Profile
-          </div>
-          <div
-            onClick={() => {
-              router.push('/contact-us')
-              setDrawer(false)
-            }}
-            className="menu-item"
-          >
-            Contact us
-          </div>
+          <a className="menu-item">Sign in</a>
+          <Link href="/contact-us">
+            <a className="menu-item">Contact us</a>
+          </Link>
         </div>
       </StyledMenu>
+
+      <StyledModal
+        visible={true}
+        onCancel={() => setLoginModal(false)}
+        footer={false}
+        title={false}
+      >
+        <h2 className="login-modal-header">Login or Signup</h2>
+      </StyledModal>
     </StyledWrapper>
   )
 }
 
+const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    background-color: rgba(97, 126, 16, 0.8);
+    color: #fff;
+  }
+  .ant-modal-close {
+    color: #fff;
+  }
+  .login-modal-header {
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+  }
+`
+
 const StyledMenu = styled(Drawer)`
-  .logo-wrapper {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 20px;
-    img {
-      width: auto;
-      height: 30px;
+  .drawerClose {
+    color: #fff;
+  }
+  .ant-drawer-footer {
+    border: none;
+    .drawer-footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem;
+      .drawer-icon-spacer {
+        border-right: 1px solid #fff;
+        margin: 0 1rem;
+      }
+      .anticon {
+        font-size: 60px;
+        color: #fff;
+      }
+    }
+  }
+  .ant-drawer-content {
+    background-color: rgba(97, 126, 16, 0.8);
+  }
+  .ant-drawer-header {
+    background: transparent;
+  }
+  .ant-drawer-header-title {
+    justify-content: flex-end;
+    .ant-drawer-close {
+      font-size: 1.3rem;
+      background: #00000096;
+      border-radius: 50%;
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-right: 3.8rem;
+      margin-top: 1.7rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
   .menu {
     display: flex;
     flex-direction: column;
+    padding: 3rem 0;
+  }
+  .divider {
+    margin: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
   .menu-item {
-    height: 30px;
-    cursor: pointer;
-    color: #313132;
+    color: #fff;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    position: relative;
+    &:after {
+      background: #d0d0d0;
+      bottom: 0;
+      content: '';
+      height: 2px;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      transition-duration: 0.5s;
+      transition-property: width;
+      transition-timing-function: cubic-bezier(0.83, 0.01, 0.18, 1.01);
+      width: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-    :hover {
-      color: #0000ff;
+    &:hover::after {
+      left: 0;
+      right: auto;
+      width: 100%;
     }
   }
 `

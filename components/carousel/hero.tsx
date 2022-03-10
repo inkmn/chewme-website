@@ -91,15 +91,19 @@ const StyledSlideItem = styled.div`
     .content {
       display: flex;
       flex-direction: column;
-      align-items: end;
+      align-items: flex-end;
       & > h1 {
         color: #fff;
         font-size: 2.5rem;
         margin-bottom: 0;
+        line-height: 38px;
       }
       & > p {
         font-size: 17px;
         line-height: 1.4;
+      }
+      @media (max-width: 1450px) and (min-width: 768px) {
+        padding: 0 6rem;
       }
     }
   }
