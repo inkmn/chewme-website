@@ -30,16 +30,16 @@ const Products = () => {
             </Col>
             <Col xs={5} sm={5} md={5} lg={5} xl={5} xxl={5}>
               <Sider>
-                <Radio.Group
+                <RadioGroup
                   onChange={(e) => onChange(e.target.value)}
                   value={value}
                 >
                   <Radio value={1}>ALL</Radio> <br />
                   <Radio value={2}>CHEWS</Radio> <br />
                   <Radio value={3}>TOYS</Radio> <br />
-                  <Radio value={3}>GEAR</Radio> <br />
-                  <Radio value={4}>TREATS</Radio>
-                </Radio.Group>
+                  <Radio value={4}>GEAR</Radio> <br />
+                  <Radio value={5}>TREATS</Radio>
+                </RadioGroup>
               </Sider>
             </Col>
             <Col xs={19} sm={19} md={19} lg={19} xl={19} xxl={19}>
@@ -55,7 +55,36 @@ const Products = () => {
 }
 
 const Content = styled.div``
+
 const Sider = styled.div``
+
+const RadioGroup = styled(Radio.Group)`
+  .ant-radio {
+    height: 30px;
+    width: 30px;
+  }
+  .ant-radio-inner {
+    height: 30px;
+    width: 30px;
+  }
+  .ant-radio-checked .ant-radio-inner {
+    border-color: var(--primary) !important;
+    height: 30px;
+    width: 30px;
+  }
+
+  .ant-radio-checked .ant-radio-inner:after {
+    background-color: var(--primary);
+    height: 28px;
+    width: 28px;
+  }
+
+  .ant-radio:hover .ant-radio-inner {
+    border-color: var(--primary);
+    height: 30px;
+    width: 30px;
+  }
+`
 
 const StyledOrigin = styled.div`
   height: 500px;
