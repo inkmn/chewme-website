@@ -6,15 +6,14 @@ const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
   return (
     <StyledWrapper>
       <div className="image">
-        <div className="img">
-          <Image
-            className="image"
-            width={170}
-            height={170}
-            src={`http://dev-dc-s3.goodtech.mn${item.image}`}
-            alt=""
-          />
-        </div>
+        <Image
+          className="image"
+          width={316}
+          height={316}
+          objectFit="cover"
+          src={`http://dev-dc-s3.goodtech.mn${item.image}`}
+          alt=""
+        />
       </div>
       <div className="card-title">{item.name}</div>
       <div className="card-footer">
@@ -31,7 +30,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  border: 1px solid #5d7129;
   .card-title {
     width: 100%;
     text-align: center;
@@ -52,17 +51,7 @@ const StyledWrapper = styled.div`
   }
 
   .image {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
     padding: 40px;
-    padding-bottom: 5px;
-
-    .img {
-      display: flex;
-      flex-direction: column;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
   }
 `
 
