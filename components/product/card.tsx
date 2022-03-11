@@ -31,8 +31,6 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: auto;
-  cursor: pointer;
 
   .card-title {
     width: 100%;
@@ -53,18 +51,18 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .img {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    width: auto;
-    height: 180px;
-  }
   .image {
-    padding: 5px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    padding: 40px;
     padding-bottom: 5px;
-    object-fit: contain;
+
+    .img {
+      display: flex;
+      flex-direction: column;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
   }
 `
 
