@@ -5,8 +5,6 @@ import styled from 'styled-components'
 import ProductList from '@/components/product/list'
 import Divider from '@/components/devider'
 import { Col, Row } from 'antd'
-import Test from '../assets/product/dogs (1).jpg'
-import Test2 from '../assets/product/dogs (2).jpg'
 import Image from 'next/image'
 
 const Home: NextPage = () => {
@@ -16,7 +14,7 @@ const Home: NextPage = () => {
       <StyledHome>
         <div className="container">
           <PageHeader>Most Popular</PageHeader>
-          <ProductList perview={5} />
+          <ProductList perview={4} />
         </div>
       </StyledHome>
       <StyledHome>
@@ -25,12 +23,22 @@ const Home: NextPage = () => {
           <Row gutter={[32, 32]}>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               <BannerCard>
-                <Image className="image" src={Test} alt="" />
+                <Image
+                  className="image"
+                  layout="fill"
+                  src="/banner2.jpeg"
+                  alt=""
+                />
               </BannerCard>
             </Col>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               <BannerCard>
-                <Image className="image" src={Test2} alt="" />
+                <Image
+                  className="image"
+                  layout="fill"
+                  src="/banner1.jpeg"
+                  alt=""
+                />
               </BannerCard>
             </Col>
           </Row>
@@ -38,7 +46,7 @@ const Home: NextPage = () => {
       </StyledHome>
       <StyledHome>
         <div className="container">
-          <PageHeader>Most Popular</PageHeader>
+          <PageHeader>Hand crafted</PageHeader>
           <Divider />
           <ProductList perview={5} />
           <Divider />
@@ -50,7 +58,7 @@ const Home: NextPage = () => {
 
 const BannerCard = styled.div`
   border-radius: 20px;
-  display: flex;
+  position: relative;
   height: 300px;
 
   .image {

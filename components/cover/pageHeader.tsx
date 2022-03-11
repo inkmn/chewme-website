@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import BottomShape from '../../assets/divider-shape.svg'
+import BottomCircleShape from '@/components/bottomCircleShape'
 import PawIcon from '../../assets/pawIcon.svg'
 
 const HeroCover = ({
@@ -13,9 +13,7 @@ const HeroCover = ({
 }) => {
   return (
     <StyledWrapper>
-      <div className="bottom-shape">
-        <BottomShape />
-      </div>
+      <BottomCircleShape />
       <StyledHeader>
         <div
           className="slide-image"
@@ -99,31 +97,5 @@ const StyledWrapper = styled.div`
   height: 400px;
   width: 100%;
   position: relative;
-  .bottom-shape {
-    color: #fff;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    line-height: 0;
-    direction: ltr;
-    bottom: -1px;
-    z-index: 2;
-    pointer-events: none;
-    svg {
-      display: block;
-      width: calc(100% + 1.3px);
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% + 1.3px);
-      height: 50px;
-      .elementor-shape-fill {
-        fill: #fff;
-        transform-origin: center;
-        transform: rotateY(0deg);
-      }
-    }
-  }
 `
 export default HeroCover

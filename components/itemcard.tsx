@@ -2,7 +2,7 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import imgTest from '../assets/product/product (1).png'
 
-const Card = (): JSX.Element => {
+const Card = ({ item }: { item: any }): JSX.Element => {
   return (
     <StyledWrapper>
       <div className="image">

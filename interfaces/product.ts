@@ -1,23 +1,57 @@
-interface ProductImage {
+export interface ProductImage {
   isMain: boolean
   url: string
 }
 
-interface Product {
-  barcode: string
-  category_id: string
-  code: string
+export interface ProductListItem {
   id: string
-  image: string
-  images: [ProductImage]
+  category_id: string
+  category_name: string
   name: string
-  price: string
-  dc_price: string
-  description: string
-  is_main: boolean
-  language: string
-  stock_available: number
+  code: string
+  barcode: string
+  price: number
+  dc_price: number
   unit: string
+  object_id: string
+  object_type: string
+  is_main: boolean
+  parent_id: string | null
+  language: string
+  is_active: boolean
+  created_at: string
+  image: string
+  images: string[]
+  view_count: number
+  cart_count: number
+  favorite_count: number
+  order_count: {
+    paid: number
+    unpaid: number
+    cancel: number
+  }
+  stock_avialable: number
 }
 
-export default Product
+interface ProductItem {
+  id: string
+  category_id: string
+  name: string
+  code: string
+  barcode: string
+  price: number
+  dc_price: number
+  unit: string
+  description: string
+  language: string
+  childrens: ProductListItem[]
+  object_id: string
+  object_type: string
+  is_main: boolean
+  parent_id: string | null
+  created_at: string
+  images: ProductImage[]
+  stock_available: number
+}
+
+export default ProductItem

@@ -2,16 +2,14 @@ import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import heroData from '@/constants/heroData.json'
 import styled from 'styled-components'
-import BottomShape from '../../assets/bottom-shape.svg'
+import BottomCircleShape from '@/components/bottomCircleShape'
 import BoneButtonFlat from '@/components/boneButtonFlat'
 import Link from 'next/link'
 
 const HeroCover = () => {
   return (
     <StyledWrapper>
-      <div className="bottom-shape">
-        <BottomShape />
-      </div>
+      <BottomCircleShape />
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
@@ -113,31 +111,5 @@ const StyledWrapper = styled.div`
   height: 600px;
   width: 100%;
   position: relative;
-  .bottom-shape {
-    transform: rotate(180deg);
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    line-height: 0;
-    direction: ltr;
-    bottom: -1px;
-    z-index: 2;
-    pointer-events: none;
-    svg {
-      display: block;
-      width: calc(100% + 1.3px);
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% + 1.3px);
-      height: 50px;
-      .elementor-shape-fill {
-        fill: #fff;
-        transform-origin: center;
-        transform: rotateY(0deg);
-      }
-    }
-  }
 `
 export default HeroCover
