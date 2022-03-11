@@ -1,8 +1,6 @@
 import Layout from '@/components/layout'
 import PageHeader from '@/components/cover/pageHeader'
 import styled from 'styled-components'
-import BoneButton from '@/components/boneButton'
-import BoneButtonFlat from '@/components/boneButtonFlat'
 import { Button, Col, Divider, Input, Radio, Row, Space } from 'antd'
 import { useState } from 'react'
 import ProductList from '@/components/product/list'

@@ -2,11 +2,7 @@ import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import heroData from '@/constants/heroData.json'
 import styled from 'styled-components'
-import BottomShape from '../../assets/bottom-shape.svg'
-import BoneButtonFlat from '@/components/boneButtonFlat'
-import Link from 'next/link'
 import Card from '../itemcard'
-import Divider from '../devider'
 
 const ProductList = ({ perview }: { perview: number }): JSX.Element => {
   return (
