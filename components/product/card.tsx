@@ -35,7 +35,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #5d7129;
+
   .card-title {
     padding: 0 1rem;
     a {
@@ -63,8 +63,18 @@ const StyledWrapper = styled.div`
     }
   }
 
+  .img {
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 10px;
+  }
   .image {
-    padding: 40px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding-bottom: 5px;
+    object-fit: cover;
   }
 `
 
