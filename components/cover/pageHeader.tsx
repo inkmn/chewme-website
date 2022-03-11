@@ -1,7 +1,6 @@
-import { Pagination } from 'swiper'
-import heroData from '@/constants/heroData.json'
 import styled from 'styled-components'
 import BottomShape from '../../assets/divider-shape.svg'
+import PawIcon from '../../assets/pawIcon.svg'
 
 const HeroCover = ({
   image,
@@ -28,7 +27,9 @@ const HeroCover = ({
         <div className="slide-image-filter" />
         <div className="content-wrapper">
           <div className="content">
-            <h1>{title}</h1>
+            <h1>
+              {title} <PawIcon />
+            </h1>
           </div>
         </div>
       </StyledHeader>

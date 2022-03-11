@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['dev-dc-s3.goodtech.mn', '192.168.1.157'],
+  },
   async rewrites() {
     return [
       {

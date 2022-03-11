@@ -11,12 +11,14 @@ import { Form, FormItem, Input } from 'formik-antd'
 import * as Yup from 'yup'
 import { Cookies } from 'react-cookie'
 import { useRouter } from 'next/router'
-import http from '@/lib/request'
+import http from '@/lib/publicFetch'
 import styled from 'styled-components'
+import useUser from '@/hooks/useUser'
 
 const cookies = new Cookies()
 
-const LoginForm = () => {
+const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
+  const { mutate } = useUser()
   const router = useRouter()
   const formSchema = Yup.object().shape({
     username: Yup.string().required('Email is required'),
@@ -34,7 +36,9 @@ const LoginForm = () => {
       })
       cookies.set('token', res.access_token)
       router.push(`/`)
+      mutate()
       notification.success({ message: 'Successfully logged in' })
+      onSuccess()
       actions.setSubmitting(false)
     } catch (error: any) {
       notification.error({

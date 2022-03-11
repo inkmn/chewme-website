@@ -1,32 +1,33 @@
 import { ReactNode, useEffect, useState } from 'react'
-import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
+import { Affix, Button, Drawer, Modal } from 'antd'
+import { Cookies } from 'react-cookie'
 import { useRouter } from 'next/router'
-import { Affix, Button, Col, Divider, Drawer, Input, Modal, Row } from 'antd'
 import styled from 'styled-components'
 import {
   CloseOutlined,
   FacebookOutlined,
   InstagramOutlined,
   MenuOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
   YoutubeOutlined,
 } from '@ant-design/icons'
-import profilePic from '@/assets/logo.png'
 import ActiveLink from '@/components/activeLink'
+import ShoppingCart from '@/components/shoppingCart'
 import LoginForm from './forms/login'
+import useUser from '@/hooks/useUser'
 
-const Layout = ({
-  children,
-  cover,
-}: {
-  children: ReactNode
-  cover?: string
-}): JSX.Element => {
+const cookies = new Cookies()
+
+const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
+  const router = useRouter()
+  const { user, error, isValidating, mutate } = useUser()
   const [scroll, setScroll] = useState(false)
   const [drawer, setDrawer] = useState(false)
+  const [cartDrawer, setCartDrawer] = useState(false)
   const [loginModal, setLoginModal] = useState(false)
-  const router = useRouter()
   useEffect(() => {
     const scroll = () => {
       if (window.scrollY > 0) {
@@ -37,13 +38,17 @@ const Layout = ({
     return () => window.removeEventListener('scroll', scroll, false)
   }, [])
 
+  const logout = async () => {
+    cookies.remove('token')
+    mutate()
+  }
   return (
     <StyledWrapper>
       <Head>
         <title>Doge-Chew Shop</title>
         <meta name="description" content="Doge-Chew Shop" />
       </Head>
-      <Affix offsetTop={0} onChange={(affixed) => console.log(affixed)}>
+      <Affix offsetTop={0}>
         <SiteHeader className={scroll ? 'sticky' : ''}>
           <div className="nav-header container">
             <div className="nav-section">
@@ -76,13 +81,34 @@ const Layout = ({
               </div>
             </div>
             <div className="nav-section">
-              <div className="nav-item">
-                <Button
-                  onClick={() => setDrawer(true)}
-                  type="link"
-                  icon={<MenuOutlined />}
-                />
-              </div>
+              {!error ? (
+                <>
+                  <div className="nav-item">
+                    <Button
+                      icon={<ShoppingCartOutlined />}
+                      onClick={() => setCartDrawer(true)}
+                      type="link"
+                    />
+                  </div>
+                  <div className="nav-item">
+                    <Button
+                      icon={<UserOutlined />}
+                      onClick={() => setDrawer(true)}
+                      type="link"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="nav-item">
+                    <Button
+                      icon={<MenuOutlined />}
+                      onClick={() => setDrawer(true)}
+                      type="link"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </SiteHeader>
@@ -91,6 +117,16 @@ const Layout = ({
         <main>{children}</main>
       </StyledLayout>
       <SiteFooter></SiteFooter>
+      <StyledCartDrawer
+        title={<div className="cart-header">My Cart</div>}
+        placement="right"
+        width={480}
+        onClose={() => setCartDrawer(false)}
+        visible={cartDrawer}
+        closeIcon={<CloseOutlined className="drawerClose" />}
+      >
+        <ShoppingCart />
+      </StyledCartDrawer>
       <StyledMenu
         title={false}
         placement="right"
@@ -104,26 +140,56 @@ const Layout = ({
               <FacebookOutlined />
             </a>
             <div className="drawer-icon-spacer" />
-            <a>
+            <a
+              target="_blank"
+              href="https://www.instagram.com"
+              rel="noreferrer"
+            >
               <InstagramOutlined />
             </a>
             <div className="drawer-icon-spacer" />
-            <a>
+            <a target="_blank" href="https://www.youtube.com" rel="noreferrer">
               <YoutubeOutlined />
             </a>
           </div>
         }
       >
         <div className="menu">
-          <a
-            className="menu-item"
-            onClick={() => {
-              setLoginModal(true)
-              setDrawer(false)
-            }}
-          >
-            Sign in
-          </a>
+          {!error ? (
+            <>
+              <Link href="/wallet">
+                <a className="menu-item">My wallet</a>
+              </Link>
+              <Link href="/order">
+                <a className="menu-item">My order</a>
+              </Link>
+              <Link href="/settings">
+                <a className="menu-item">Settings</a>
+              </Link>
+              <a
+                className="menu-item"
+                onClick={() => {
+                  logout()
+                  setDrawer(false)
+                }}
+              >
+                Sign out
+              </a>
+            </>
+          ) : (
+            <>
+              <a
+                className="menu-item"
+                onClick={() => {
+                  setLoginModal(true)
+                  setDrawer(false)
+                }}
+              >
+                Sign in
+              </a>
+            </>
+          )}
+
           <Link href="/contact-us">
             <a className="menu-item">Contact us</a>
           </Link>
@@ -137,8 +203,7 @@ const Layout = ({
         title={false}
       >
         <h2 className="login-modal-header">Login or Signup</h2>
-
-        <LoginForm />
+        <LoginForm onSuccess={() => setLoginModal(false)} />
       </StyledModal>
     </StyledWrapper>
   )
@@ -164,6 +229,35 @@ const StyledModal = styled(Modal)`
   }
 `
 
+const StyledCartDrawer = styled(Drawer)`
+  .cart-header {
+    font-size: 2rem;
+  }
+  .drawerClose {
+    color: #fff;
+  }
+  .ant-drawer-content {
+    // background-color: rgba(97, 126, 16, 0.8);
+  }
+  .ant-drawer-header {
+    background: transparent;
+  }
+  .ant-drawer-header-title {
+    justify-content: flex-end;
+    .ant-drawer-close {
+      font-size: 1.3rem;
+      background: #00000096;
+      border-radius: 50%;
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-right: 3.8rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+`
 const StyledMenu = styled(Drawer)`
   .drawerClose {
     color: #fff;
@@ -384,6 +478,7 @@ const SiteHeader = styled.div`
 
     .nav-item {
       color: #fff;
+
       a,
       button {
         color: #fff;
@@ -410,8 +505,10 @@ const SiteHeader = styled.div`
         }
       }
 
-      .icon {
-        font-size: 20px;
+      button {
+        font-size: 1.6rem;
+        width: 38px;
+        height: 38px;
       }
     }
     .search-input {
