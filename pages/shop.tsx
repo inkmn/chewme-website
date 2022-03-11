@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import Layout from '@/components/layout'
 import PageHeader from '@/components/cover/pageHeader'
 import qs from 'qs'
+import PublicFetcher from '@/lib/publicFetch'
 
 const Shop = () => {
   const apiUrl = '/pub/product'
@@ -36,10 +37,13 @@ const Shop = () => {
     }
   )
 
-  const { data: productList } = useSWR(`${apiUrl}${queryToString}`)
+  const { data: productList } = useSWR(
+    `${apiUrl}${queryToString}`,
+    PublicFetcher
+  )
   return (
     <Layout>
-      <PageHeader title={`Origin`} image={`/cover6.jpeg`} position="80%" />
+      <PageHeader title={`Products`} image={`/cover6.jpeg`} position="80%" />
       <StyledShop>
         <div className="container">
           <div>This is Shop view</div>
