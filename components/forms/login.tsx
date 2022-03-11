@@ -1,5 +1,11 @@
-import { LockFilled, MailFilled } from '@ant-design/icons'
-import { Button, notification } from 'antd'
+import {
+  LockFilled,
+  MailFilled,
+  FacebookOutlined,
+  GooglePlusOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
+import { Button, notification, Space } from 'antd'
 import { Formik } from 'formik'
 import { Form, FormItem, Input } from 'formik-antd'
 import * as Yup from 'yup'
@@ -53,77 +59,145 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form layout={'vertical'}>
+          <Form layout={'vertical'} className="my-form">
             <FormItem name="username">
               <Input
-                prefix={<MailFilled />}
+                style={{ maxWidth: 350 }}
+                prefix={<UserOutlined />}
                 size="large"
                 name="username"
-                placeholder="Email"
+                placeholder="USERNAME OR EMAIL"
               />
             </FormItem>
             <FormItem name="password">
-              <Input.Password
+              <Input
+                style={{ maxWidth: 350 }}
+                type="password"
                 prefix={<LockFilled />}
                 size="large"
                 placeholder="Password"
                 name="password"
               />
             </FormItem>
-            <Button
-              htmlType="submit"
-              type="primary"
-              size="large"
-              loading={isSubmitting}
-              block
-              style={{ marginBottom: '24px' }}
-            >
-              Login
-            </Button>
-            <Button
-              className="face-book"
-              htmlType="submit"
-              type="primary"
-              size="large"
-              block
-              style={{ marginBottom: '24px' }}
-            >
-              Facebook
-            </Button>
+            <div className="center">
+              <Button
+                htmlType="submit"
+                type="primary"
+                size="large"
+                loading={isSubmitting}
+                block
+                style={{ marginBottom: '24px', width: 240 }}
+              >
+                Log in
+              </Button>
+            </div>
+            <div className="fg">
+              <div>
+                <FacebookOutlined />
+              </div>
+              <div className="line"></div>
+              <div>
+                <GooglePlusOutlined />
+              </div>
+            </div>
           </Form>
         )}
       </Formik>
-      <p className="login-text">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry.
-      </p>
+      <p className="login-text">Forget Password ?</p>
     </StyledLogin>
   )
 }
 
 const StyledLogin = styled.div`
+  .my-form {
+    padding-top: 40px;
+  }
+  .center {
+    width: 100%;
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  .fg {
+    width: 100%;
+    font-size: 40px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .line {
+      border-right: 1px solid #fff;
+      height: 50px;
+      margin: 0 1rem;
+    }
+  }
   .login-text {
     text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+  .ant-input-affix-wrapper {
+    &.ant-input-affix-wrapper-lg {
+      background: transparent;
+      input {
+        font-size: 24px;
+        background: transparent;
+        color: #fff;
+      }
+    }
+  }
+  .ant-input-affix-wrapper {
+    &.ant-input-affix-wrapper-lg {
+      background: transparent;
+      .ant-input-prefix {
+        ::before {
+          background: red;
+        }
+      }
+    }
+  }
+
+  .ant-form-item-has-error
+    :not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless),
+  .ant-input-affix-wrapper {
+    background: transparent !important;
+  }
+
+  .ant-form-item-control-input-content {
+    input {
+      background: transparent !important;
+    }
   }
   .ant-input-affix-wrapper-lg {
-    border-radius: 15px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
     height: 48px;
-    color: #707070;
+    color: #fff;
+    font-size: 24px;
   }
   .ant-input-prefix {
     margin-left: 10px;
-    margin-right: 15px;
+    margin-right: 10px;
+    font-size: 24px;
   }
   .ant-btn {
-    height: 48px;
     border: none;
-    border-radius: 15px;
-    font-size: 18px;
-    font-weight: 700;
-    background: #e8213a;
-    &.face-book {
-      background: #3c5998;
-    }
+    font-size: 22px;
+    border-radius: 10px;
+    font-weight: 500;
+    background: #fff;
+    height: 40px;
+    text-transform: uppercase;
+    color: var(--primary);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
   }
 `
 
