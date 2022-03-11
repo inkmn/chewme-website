@@ -20,7 +20,7 @@ const ProductList = ({ perview }: { perview: number }): JSX.Element => {
         modules={[Pagination]}
         pagination={{ clickable: true }}
         spaceBetween={50}
-        slidesPerView={perview || 4}
+        slidesPerView={perview}
         // onSlideChange={() => console.log('slide change')}
         // onSwiper={(swiper) => console.log(swiper)}
       >
@@ -39,6 +39,6 @@ const StyledSlideItem = styled.div`
 `
 const StyledWrapper = styled.div`
   background: #fff;
-  height: max-content;
+  height: auto;
 `
 export default ProductList

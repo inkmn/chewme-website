@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <StyledHome>
         <div className="container">
           <PageHeader>Most Popular</PageHeader>
-          <ProductList perview={4} />
+          <ProductList perview={5} />
         </div>
       </StyledHome>
       <StyledHome>
