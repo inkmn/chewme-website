@@ -24,7 +24,7 @@ const Products = () => {
                 <Input
                   placeholder="SEARCH PRODUCTS.."
                   addonAfter={<SearchOutlined />}
-                  style={{ maxWidth: '300px' }}
+                  style={{ maxWidth: '400px' }}
                 />
               </div>
             </Col>
@@ -66,13 +66,13 @@ const StyledOrigin = styled.div`
     justify-content: end;
     .ant-input {
       border-color: var(--primary);
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
     }
     .ant-input-group-wrapper {
       .ant-input-group-addon {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
         border-color: var(--primary);
         background: var(--primary);
         color: #fff;
