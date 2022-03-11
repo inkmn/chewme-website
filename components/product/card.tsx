@@ -56,6 +56,7 @@ const StyledWrapper = styled.div`
     flex-direction: column;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    padding: 10px;
   }
   .image {
     border-top-left-radius: 8px;
