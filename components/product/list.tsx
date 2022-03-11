@@ -11,7 +11,6 @@ import Divider from '../devider'
 const ProductList = ({ perview }: { perview: number }): JSX.Element => {
   return (
     <StyledWrapper>
-      <Header>Most Popular</Header>
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}
@@ -31,18 +30,6 @@ const ProductList = ({ perview }: { perview: number }): JSX.Element => {
     </StyledWrapper>
   )
 }
-
-const Header = styled.div`
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  padding: 15px 0;
-  color: rgba(97, 126, 16, 0.8);
-  font-size: 40px;
-  text-transform: uppercase;
-  font-weight: 600;
-`
 
 const StyledSlideItem = styled.div`
   background: #fff;
