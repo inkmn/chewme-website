@@ -51,18 +51,17 @@ const StyledWrapper = styled.div`
     }
   }
 
+  .img {
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
   .image {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    padding: 40px;
     padding-bottom: 5px;
-
-    .img {
-      display: flex;
-      flex-direction: column;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
+    object-fit: cover;
   }
 `
 
