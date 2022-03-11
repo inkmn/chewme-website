@@ -8,7 +8,7 @@ import Link from 'next/link'
 import Card from '../itemcard'
 import Divider from '../devider'
 
-const ProductList = () => {
+const ProductList = ({ perview }: { perview: number }): JSX.Element => {
   return (
     <StyledWrapper>
       <Header>Most Popular</Header>
@@ -16,7 +16,7 @@ const ProductList = () => {
         modules={[Pagination]}
         pagination={{ clickable: true }}
         spaceBetween={50}
-        slidesPerView={5}
+        slidesPerView={perview || 5}
         // onSlideChange={() => console.log('slide change')}
         // onSwiper={(swiper) => console.log(swiper)}
       >
