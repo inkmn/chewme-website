@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import useSWR from 'swr'
 import styled from 'styled-components'
 import qs from 'qs'
@@ -10,7 +9,7 @@ import OrderItemType from '@/interfaces/orderItem'
 import Privatefetcher from '@/lib/privateFetch'
 
 import Layout from '@/components/layout'
-import PageHeader from '@/components/cover/pageHeader'
+import PageHeader from '@/components/pageHeader/cover'
 import { Empty, Pagination, Row } from 'antd'
 import Spinner from '@/components/spinner'
 
@@ -77,7 +76,7 @@ const MyOrder = () => {
   }
   return (
     <Layout>
-      <PageHeader title={`My Order`} image={`/cover5.jpeg`} />
+      <PageHeader title={`My Order`} image={`/cover5.jpeg`} height={400} />
       <StyledMyOrder>
         <div className="container">
           {orderData ? (

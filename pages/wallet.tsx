@@ -1,5 +1,5 @@
 import Layout from '@/components/layout'
-import PageHeader from '@/components/cover/pageHeader'
+import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import useUser from '@/hooks/useUser'
 

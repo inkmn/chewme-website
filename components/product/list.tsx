@@ -1,44 +1,48 @@
-import { Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import styled from 'styled-components'
 import Card from './card'
-import useSWR from 'swr'
-import PublicFetcher from '@/lib/publicFetch'
 import { ProductListItem } from '@/interfaces/product'
+import { Empty, Pagination, Row } from 'antd'
 
-const ProductList = ({ perview }: { perview: number }): JSX.Element => {
-  const { data } = useSWR<{
-    rows: ProductListItem[]
-    count: number
-  }>(
-    '/pub/product/?filter[query]=&filter[category_id]=&offset[page]=1&offset[limit]=10&filter[start_date]=&filter[end_date]=',
-    PublicFetcher
-  )
+const ProductList = ({
+  productData,
+}: {
+  productData: { rows: ProductListItem[]; count: number }
+}): JSX.Element => {
   return (
     <StyledWrapper>
-      <Swiper
-        modules={[Pagination]}
-        pagination={{ clickable: true }}
-        spaceBetween={50}
-        slidesPerView={perview || 4}
-        // onSlideChange={() => console.log('slide change')}
-        // onSwiper={(swiper) => console.log(swiper)}
-      >
-        {data?.rows.map((item: any) => (
-          <SwiperSlide key={item.id}>
+      {productData?.count ? (
+        productData.rows.map((item: any) => (
+          <div className="productListItem" key={item.id}>
             <Card item={item} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          </div>
+        ))
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      )}
     </StyledWrapper>
   )
 }
 
-const StyledSlideItem = styled.div`
-  background: #fff;
-`
 const StyledWrapper = styled.div`
-  background: #fff;
-  height: max-content;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -1rem;
+  .productListItem {
+    width: calc(100% / 4);
+    padding: 1rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .productListItem {
+      width: calc(100% / 3);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .productListItem {
+      width: 100%;
+    }
+  }
 `
 export default ProductList

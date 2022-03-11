@@ -1,5 +1,5 @@
 import Layout from '@/components/layout'
-import PageHeader from '@/components/cover/pageHeader'
+import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import BoneButton from '@/components/boneButton'
 import BoneButtonFlat from '@/components/boneButtonFlat'

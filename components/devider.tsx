@@ -1,7 +1,5 @@
 import { Divider as DividerAnt } from 'antd'
-import Image from 'next/image'
 import styled from 'styled-components'
-import imgTest from '../assets/product/product (1).png'
 import Paw from '../assets/pawprint.svg'
 
 const Divider = (): JSX.Element => {

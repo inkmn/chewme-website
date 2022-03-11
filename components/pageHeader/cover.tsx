@@ -1,20 +1,21 @@
 import styled from 'styled-components'
 import BottomCircleShape from '@/components/bottomCircleShape'
-import PawIcon from '../../assets/pawIcon.svg'
 
 const HeroCover = ({
   image,
   title,
   position,
+  height = title ? 400 : undefined,
 }: {
   image?: string
-  title: string
+  title?: string
   position?: string
+  height?: number
 }) => {
   return (
-    <StyledWrapper>
-      <BottomCircleShape />
-      <StyledHeader>
+    <StyledWrapper height={height}>
+      <BottomCircleShape height={height ? 20 : undefined} />
+      <StyledHeader height={height}>
         <div
           className="slide-image"
           style={{
@@ -23,22 +24,23 @@ const HeroCover = ({
           }}
         />
         <div className="slide-image-filter" />
-        <div className="content-wrapper">
-          <div className="content">
-            <h1>
-              {title} <PawIcon />
-            </h1>
+
+        {title ? (
+          <div className="content-wrapper">
+            <div className="content">
+              <h1>{title}</h1>
+            </div>
           </div>
-        </div>
+        ) : null}
       </StyledHeader>
     </StyledWrapper>
   )
 }
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.div<{ height?: number }>`
   background: #fff;
   width: 100%;
-  height: 400px;
+  height: ${(props) => (props.height ? `${props.height}px` : '130px')};
   transition-duration: calc(10000ms * 1.2);
   flex-shrink: 0;
   position: relative;
@@ -92,9 +94,9 @@ const StyledHeader = styled.div`
     }
   }
 `
-const StyledWrapper = styled.div`
-  background: #313132;
-  height: 400px;
+const StyledWrapper = styled.div<{ height?: number }>`
+  background: var(--primary);
+  height: ${(props) => props.height || '130px'};
   width: 100%;
   position: relative;
 `

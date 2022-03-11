@@ -9,7 +9,7 @@ import Link from 'next/link'
 const HeroCover = () => {
   return (
     <StyledWrapper>
-      <BottomCircleShape />
+      <BottomCircleShape height={60} />
       <Swiper
         modules={[Pagination]}
         pagination={{ clickable: true }}

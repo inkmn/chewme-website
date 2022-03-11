@@ -1,6 +1,7 @@
 import { ProductListItem } from '@/interfaces/product'
-import Image from 'next/image'
+import Image from '@/components/s3Image'
 import styled from 'styled-components'
+import Link from 'next/link'
 
 const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
   return (
@@ -10,12 +11,16 @@ const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
           className="image"
           width={316}
           height={316}
-          objectFit="cover"
-          src={`http://dev-dc-s3.goodtech.mn${item.image}`}
+          objectFit="contain"
+          src={item.image}
           alt=""
         />
       </div>
-      <div className="card-title">{item.name}</div>
+      <div className="card-title">
+        <Link href={`/product/${item.id}`}>
+          <a>{item.name}</a>
+        </Link>
+      </div>
       <div className="card-footer">
         <span>${item.price} /</span>
         <span className="last-child"> {item.dc_price} DC</span>
@@ -32,11 +37,18 @@ const StyledWrapper = styled.div`
   align-items: center;
   border: 1px solid #5d7129;
   .card-title {
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
-    color: #5d7129;
-    font-weight: 600;
+    padding: 0 1rem;
+    a {
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      color: #5d7129;
+      font-weight: 600;
+      overflow: hidden;
+      display: block;
+      height: 68px;
+      line-height: 22px;
+    }
   }
   .card-footer {
     font-size: 16px;
@@ -45,6 +57,7 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+    font-family: tahoma;
     .last-child {
       font-weight: 700;
     }

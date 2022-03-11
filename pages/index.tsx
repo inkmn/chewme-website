@@ -2,7 +2,7 @@ import HeroCarousel from '@/components/carousel/hero'
 import Layout from '@/components/layout'
 import type { NextPage } from 'next'
 import styled from 'styled-components'
-import ProductList from '@/components/product/list'
+import ProductList from '@/components/product/carousel'
 import Divider from '@/components/devider'
 import { Col, Row } from 'antd'
 import Image from 'next/image'
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <StyledHome>
         <div className="container">
           <PageHeader>Most Popular</PageHeader>
-          <ProductList perview={4} />
+          <ProductList perview={5} />
         </div>
       </StyledHome>
       <StyledHome>
@@ -47,7 +47,6 @@ const Home: NextPage = () => {
       <StyledHome>
         <div className="container">
           <PageHeader>Hand crafted</PageHeader>
-          <Divider />
           <ProductList perview={5} />
           <Divider />
         </div>
@@ -76,7 +75,7 @@ const PageHeader = styled.div`
   align-items: center;
   justify-content: center;
   display: flex;
-  padding: 15px 0;
+  padding: 3rem 0;
   color: rgba(97, 126, 16, 0.8);
   font-size: 40px;
   text-transform: uppercase;

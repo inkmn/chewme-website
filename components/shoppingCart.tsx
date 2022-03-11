@@ -1,11 +1,11 @@
 import CardItem from '@/interfaces/cardItem'
 import Spinner from '@/components/spinner'
-import { Button, Empty, Pagination, Row } from 'antd'
+import { Empty, Pagination, Row } from 'antd'
 import { useRouter } from 'next/router'
 import qs from 'qs'
 import styled from 'styled-components'
 import useSWR from 'swr'
-import Image from 'next/image'
+import Image from '@/components/s3Image'
 import Privatefetcher from '@/lib/privateFetch'
 import RemoveIcon from '../assets/remove.svg'
 import Link from 'next/link'
@@ -69,7 +69,7 @@ const ShoppingCart = () => {
               return (
                 <div className="item" key={item.id}>
                   <Image
-                    src={`http://dev-dc-s3.goodtech.mn${item.image}`}
+                    src={item.image}
                     width={70}
                     height={70}
                     objectFit="cover"
