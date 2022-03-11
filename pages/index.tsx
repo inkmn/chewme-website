@@ -2,7 +2,6 @@ import HeroCarousel from '@/components/carousel/hero'
 import Layout from '@/components/layout'
 import type { NextPage } from 'next'
 import styled from 'styled-components'
-import Card from '@/components/itemcard'
 import ProductList from '@/components/product/list'
 import Divider from '@/components/devider'
 import { Col, Row } from 'antd'
@@ -16,7 +15,8 @@ const Home: NextPage = () => {
       <HeroCarousel />
       <StyledHome>
         <div className="container">
-          <ProductList />
+          <PageHeader>Most Popular</PageHeader>
+          <ProductList perview={5} />
         </div>
       </StyledHome>
       <StyledHome>
@@ -38,8 +38,9 @@ const Home: NextPage = () => {
       </StyledHome>
       <StyledHome>
         <div className="container">
+          <PageHeader>Most Popular</PageHeader>
           <Divider />
-          <ProductList />
+          <ProductList perview={5} />
           <Divider />
         </div>
       </StyledHome>
@@ -61,5 +62,17 @@ const BannerCard = styled.div`
 `
 
 const StyledHome = styled.div``
+
+const PageHeader = styled.div`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 15px 0;
+  color: rgba(97, 126, 16, 0.8);
+  font-size: 40px;
+  text-transform: uppercase;
+  font-weight: 600;
+`
 
 export default Home
