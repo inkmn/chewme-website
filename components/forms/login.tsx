@@ -5,7 +5,7 @@ import {
   GooglePlusOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import { Button, notification, Space } from 'antd'
+import { Button, notification, Row, Space } from 'antd'
 import { Formik } from 'formik'
 import { Form, FormItem, Input } from 'formik-antd'
 import * as Yup from 'yup'
@@ -35,7 +35,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         body: JSON.stringify(values),
       })
       cookies.set('token', res.access_token)
-      router.push(`/`)
+      // router.push(`/`)
       mutate()
       notification.success({ message: 'Successfully logged in' })
       onSuccess()
@@ -59,10 +59,10 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form layout={'vertical'} className="my-form">
+          <Form layout={'vertical'} className="dc-form">
             <FormItem name="username">
               <Input
-                style={{ maxWidth: 350 }}
+                bordered={false}
                 prefix={<UserOutlined />}
                 size="large"
                 name="username"
@@ -71,7 +71,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
             </FormItem>
             <FormItem name="password">
               <Input
-                style={{ maxWidth: 350 }}
+                bordered={false}
                 type="password"
                 prefix={<LockFilled />}
                 size="large"
@@ -79,7 +79,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                 name="password"
               />
             </FormItem>
-            <div className="center">
+            <Row justify="center">
               <Button
                 htmlType="submit"
                 type="primary"
@@ -90,7 +90,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               >
                 Log in
               </Button>
-            </div>
+            </Row>
             <div className="fg">
               <div>
                 <FacebookOutlined />
@@ -109,16 +109,13 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 }
 
 const StyledLogin = styled.div`
-  .my-form {
-    padding-top: 40px;
+  padding-top: 40px;
+  .dc-form {
+    *:focus {
+      outline: none;
+    }
   }
-  .center {
-    width: 100%;
-    display: flex;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    justify-content: center;
-  }
+
   .fg {
     width: 100%;
     font-size: 40px;
@@ -179,6 +176,7 @@ const StyledLogin = styled.div`
     height: 48px;
     color: #fff;
     font-size: 24px;
+    border-radius: 0;
   }
   .ant-input-prefix {
     margin-left: 10px;

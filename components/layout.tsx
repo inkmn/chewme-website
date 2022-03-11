@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Affix, Button, Drawer, Modal } from 'antd'
+import { Affix, Badge, Button, Drawer, Modal } from 'antd'
 import { Cookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -84,11 +84,13 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
               {!error ? (
                 <>
                   <div className="nav-item">
-                    <Button
-                      icon={<ShoppingCartOutlined />}
-                      onClick={() => setCartDrawer(true)}
-                      type="link"
-                    />
+                    <Badge count={user.cart_count} size="small">
+                      <Button
+                        icon={<ShoppingCartOutlined />}
+                        onClick={() => setCartDrawer(true)}
+                        type="link"
+                      />
+                    </Badge>
                   </div>
                   <div className="nav-item">
                     <Button
@@ -197,6 +199,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       </StyledMenu>
 
       <StyledModal
+        width={480}
         visible={loginModal}
         onCancel={() => setLoginModal(false)}
         footer={false}
@@ -214,7 +217,6 @@ const StyledModal = styled(Modal)`
     background-color: rgba(97, 126, 16, 0.8);
     border-radius: 15px;
     color: #fff;
-    width: max-content;
     padding: 30px;
   }
   .ant-modal-close {
@@ -478,6 +480,11 @@ const SiteHeader = styled.div`
 
     .nav-item {
       color: #fff;
+
+      .ant-badge-count {
+        top: 6px;
+        right: 20px;
+      }
 
       a,
       button {
