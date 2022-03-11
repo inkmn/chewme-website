@@ -1,6 +1,7 @@
 import Layout from '@/components/layout'
 import PageHeader from '@/components/cover/pageHeader'
 import styled from 'styled-components'
+import { Col, Row } from 'antd'
 
 const DogeChew = () => {
   return (
@@ -18,6 +19,44 @@ const DogeChew = () => {
             on your next purchase!
           </p>
           <h2>Here’s How It Works</h2>
+          <Row>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+              <div className="center">
+                <div className="card">
+                  <div className="number">1</div>
+                  <div className="number-title">Create An Account</div>
+                  <p>
+                    Get access to a full range of rewards and exclusive offers.
+                  </p>
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+              <div className="center">
+                <div className="card">
+                  <div className="number">2</div>
+                  <div className="number-title">
+                    Earn Points On Every Purchase
+                  </div>
+                  <p>
+                    Your account will track all of your purchases and points.
+                  </p>
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+              <div className="center">
+                <div className="card">
+                  <div className="number">3</div>
+                  <div className="number-title">Redeem Points For Treats</div>
+                  <p>
+                    For every $2 dollars you spend, you’ll get 1 point towards
+                    redeemable rewards.
+                  </p>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
       </StyledDogeChew>
     </Layout>
@@ -27,6 +66,41 @@ const DogeChew = () => {
 const StyledDogeChew = styled.div`
   height: 500px;
 
+  .center {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    margin-top: 30px;
+    .number-title {
+      font-weight: 700;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      margin-top: 3rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      text-align: center;
+    }
+    .number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      height: 50px;
+      width: 50px;
+      border-radius: 100%;
+    }
+  }
   h2 {
     font-weight: 700;
     color: var(--primary);
