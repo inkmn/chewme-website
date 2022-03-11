@@ -30,7 +30,7 @@ const StyledWrapper = styled.div`
     }
   }
   .svg {
-    color: green;
+    color: var(--primary);
     font-size: 24px;
     height: 50px;
     width: 50px;

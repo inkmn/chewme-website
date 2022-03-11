@@ -5,7 +5,7 @@ import {
   GooglePlusOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import { Button, notification } from 'antd'
+import { Button, notification, Space } from 'antd'
 import { Formik } from 'formik'
 import { Form, FormItem, Input } from 'formik-antd'
 import * as Yup from 'yup'
@@ -88,9 +88,13 @@ const LoginForm = () => {
               </Button>
             </div>
             <div className="fg">
-              <FacebookOutlined />
-              <div className="line"></div> 
-              <GooglePlusOutlined />
+              <div>
+                <FacebookOutlined />
+              </div>
+              <div className="line"></div>
+              <div>
+                <GooglePlusOutlined />
+              </div>
             </div>
           </Form>
         )}
@@ -113,17 +117,15 @@ const StyledLogin = styled.div`
   }
   .fg {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 40px;
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .line {
-      margin-left: 20px;
-      margin-right: 10px;
+      border-right: 1px solid #fff;
       height: 50px;
-      width: 1px;
-      background: #fff;
+      margin: 0 1rem;
     }
   }
   .login-text {
@@ -187,7 +189,7 @@ const StyledLogin = styled.div`
     background: #fff;
     height: 40px;
     text-transform: uppercase;
-    color: rgba(97, 126, 16, 0.8);
+    color: var(--primary);
     align-items: center;
     display: flex;
     justify-content: center;

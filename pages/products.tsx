@@ -5,6 +5,7 @@ import BoneButton from '@/components/boneButton'
 import BoneButtonFlat from '@/components/boneButtonFlat'
 import { Button, Col, Divider, Radio, Row, Space } from 'antd'
 import { useState } from 'react'
+import ProductList from '@/components/product/list'
 
 const Products = () => {
   const [value, setValue] = useState(1)
@@ -34,7 +35,9 @@ const Products = () => {
               </Sider>
             </Col>
             <Col xs={19} sm={19} md={19} lg={19} xl={19} xxl={19}>
-              <Content>sss</Content>
+              <Content>
+                <ProductList />
+              </Content>
             </Col>
           </Row>
         </div>
