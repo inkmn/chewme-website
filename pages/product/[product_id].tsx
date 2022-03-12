@@ -13,13 +13,14 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Navigation, Thumbs } from 'swiper'
 import BottomShape from '@/components/bottomShape'
 import BoneButtonFlat from '@/components/boneButtonFlat'
-import { StarFilled } from '@ant-design/icons'
+import { HeartFilled, HeartOutlined, StarFilled } from '@ant-design/icons'
 import useInit from '@/hooks/useInit'
 
 const { Title, Paragraph, Text, Link } = Typography
 const ProductDetail = () => {
   const router = useRouter()
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
+  const [isFav, setIsFav] = useState(true)
   const { product_id } = router.query
   const { data } = useInit()
   const { data: productData } = useSWR<ProductItem>(
@@ -80,7 +81,13 @@ const ProductDetail = () => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={10}>
               <Details>
-                <h1>{productData?.name}</h1>
+                <div className="head-title">
+                  <h1>{productData?.name}</h1>
+
+                  <div onClick={() => setIsFav(!isFav)} className="favorite">
+                    {isFav ? <HeartFilled /> : <HeartOutlined />}
+                  </div>
+                </div>
                 <div className="space-between">
                   <div className="rate">
                     <StarFilled />
@@ -153,6 +160,17 @@ const Details = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
+  .head-title {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    .favorite {
+      font-size: 26px;
+      cursor: pointer;
+      color: #ce0404;
+    }
+  }
   .space-between {
     display: flex;
     justify-content: space-between;
