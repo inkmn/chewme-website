@@ -6,7 +6,17 @@ import { useRouter } from 'next/router'
 import PublicFetcher from '@/lib/publicFetch'
 import useSWR from 'swr'
 import ProductItem from '@/interfaces/product'
-import { Alert, Button, Col, Divider, Image, Row, Tag, Typography } from 'antd'
+import {
+  Alert,
+  Button,
+  Col,
+  Divider,
+  Image,
+  Row,
+  Space,
+  Tag,
+  Typography,
+} from 'antd'
 import { Pagination } from 'swiper'
 import Test from '../../assets/product/dogs (1).jpg'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -106,6 +116,7 @@ const ProductDetail = () => {
                 <hr style={{ minWidth: '300px', margin: '30px 0' }} />
 
                 <Alert
+                  style={{ width: '100%' }}
                   message={
                     <Paragraph style={{ maxWidth: '580px', width: '100%' }}>
                       <h5>Key Benefits :</h5>
@@ -136,14 +147,26 @@ const ProductDetail = () => {
                   }
                   type="info"
                 />
-
-                <Button>dddd</Button>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Dolorum reiciendis culpa eos atque at qui laudantium,
-                  inventore pariatur sunt, deleniti magnam laboriosam hic
-                  placeat! Neque ipsa modi sequi aspernatur minima?
-                </p>
+                <StyledAction>
+                  <Space>
+                    <Button size="small" shape="circle">
+                      -
+                    </Button>
+                    <div className="number">3</div>
+                    <Button size="small" shape="circle">
+                      +
+                    </Button>
+                  </Space>
+                  <Button
+                    className="add-cart"
+                    shape="round"
+                    type="primary"
+                    size="large"
+                  >
+                    Add cart
+                  </Button>
+                </StyledAction>
+                <p>{productData?.description || 'Empty'}</p>
               </Details>
             </Col>
           </Row>
@@ -152,6 +175,36 @@ const ProductDetail = () => {
     </Layout>
   )
 }
+
+const StyledAction = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 300px;
+  align-items: center;
+  margin-top: 40px;
+
+  .add-cart {
+    background: #ff4d4f;
+    border: none;
+    &:focus {
+    }
+
+    &.ant-btn.ant-btn-primary,
+    &.ant-btn-primary {
+      background-color: var(--primary-red);
+      border-color: var(--primary-red);
+      &:hover {
+        background-color: var(--primary-red) !important;
+        border-color: var(--primary-red) !important;
+      }
+    }
+  }
+  .number {
+    font-size: 23px;
+  }
+`
 
 const Details = styled.div`
   height: 10px;
@@ -168,7 +221,7 @@ const Details = styled.div`
     .favorite {
       font-size: 26px;
       cursor: pointer;
-      color: #ce0404;
+      color: #ff4d4f;
     }
   }
   .space-between {
