@@ -1,15 +1,27 @@
 import { ReactNode, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Affix, Badge, Button, Drawer, Modal } from 'antd'
+import {
+  Affix,
+  Badge,
+  Button,
+  Col,
+  Drawer,
+  Input,
+  Modal,
+  Row,
+  Space,
+} from 'antd'
 import { Cookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import {
+  AmazonOutlined,
   CloseOutlined,
   FacebookOutlined,
   InstagramOutlined,
   MenuOutlined,
+  SendOutlined,
   ShoppingCartOutlined,
   UserOutlined,
   YoutubeOutlined,
@@ -118,7 +130,68 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       <StyledLayout>
         <main>{children}</main>
       </StyledLayout>
-      <SiteFooter></SiteFooter>
+      {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+      <SiteFooter>
+        <div className="container">
+          <Row>
+            <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6}>
+              <div>
+                <div className="footer-title">OUR INFORMATION</div>
+                <div className="nav-item">Most popular</div>
+                <div className="nav-item">Hand grafted</div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6}>
+              <div>
+                <div className="footer-title">Dogechew</div>
+                <div className="nav-item">Home</div>
+                <div className="nav-item">Origin</div>
+                <div className="nav-item">Products</div>
+                <div className="nav-item">Dc coin</div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <div className="right-content">
+                <div className="footer-title">Social media</div>
+                <Space>
+                  <div className="nav-item icon">
+                    <FacebookOutlined />
+                  </div>
+                  <div className="nav-item icon">
+                    <InstagramOutlined />
+                  </div>
+                  <div className="nav-item icon">
+                    <YoutubeOutlined />
+                  </div>
+                </Space>
+                <div className="footer-title">Account</div>
+                <div className="nav-item">Login</div>
+                <div className="nav-item">Sign up</div>
+                {/* <div className="footer-title">Sign up</div>
+                <div>
+                  <p>
+                    Please send your link to create an account to your email
+                    address
+                  </p>
+                </div>
+                <Space>
+                  <Input
+                    size="large"
+                    className="footer-input"
+                    placeholder="Email..."
+                    style={{ width: '300px' }}
+                  />
+                  <Button size="large" className="footer-btn" type="ghost">
+                    <SendOutlined />
+                  </Button>
+                </Space> */}
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </SiteFooter>
+      {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+
       <StyledCartDrawer
         title={<div className="cart-header">My Cart</div>}
         placement="right"
@@ -346,102 +419,57 @@ const StyledMenu = styled(Drawer)`
   }
 `
 
-const BtnStore = styled.div`
-  cursor: pointer;
-  background-color: #000;
-  border-radius: 5px;
-  width: max-content;
-  color: #fff;
-  line-height: 12px;
-  font-size: 12px;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  gap: 5px;
-  padding: 6px 8px;
-  width: 170px;
-  border: 1px solid transparent;
-  :hover {
-    border: 1px solid #8e8e8e;
-  }
-  .logo-wrapper {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    img {
-      width: auto;
-      height: 30px;
-    }
-  }
-  .btn-title {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 20px;
-  }
-`
-
 const SiteFooter = styled.div`
   margin-top: 10px;
+  padding: 2em 1em 1em 1em;
+  background: #758c3e;
+  color: #fff;
+  font-size: 20px;
 
-  .flex-end {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-
-    .footer-content {
-      max-width: 800px;
-    }
-    .footer-text {
-      padding: 30px 0;
-      max-width: 800px;
-      text-align: center;
-      font-size: 16px;
-      line-height: 20px;
+  .footer-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    :focus {
+      color: #fff;
+      border-color: #fff;
     }
   }
-  .footer-top {
+
+  .footer-btn {
     color: #fff;
-    background: #313132;
-    min-height: 10px;
-    padding: 24px 0;
-
-    .my-grid {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-
-      .footer-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-      }
-      .footer-btn {
-        font-weight: 700;
-        border: none;
-        color: #313132;
-        :hover {
-          color: #313132;
-        }
-      }
+    border-color: var(--primary);
+    :hover {
+      border-color: #fff;
     }
-    @media only screen and (max-width: 600px) {
-      .my-grid {
-        flex-direction: column;
-        gap: 15px;
-      }
+
+    :focus {
+      border-color: #fff;
     }
+  }
+
+  .nav-item {
+    font-size: 18px;
+    cursor: pointer;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    width: max-content;
+    &.icon {
+      font-size: 28px;
+    }
+    :hover {
+      border-bottom: 1px solid #fff;
+    }
+  }
+  .footer-title {
+    color: #dadada;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 30px;
+  }
+  .content {
   }
 `
 
