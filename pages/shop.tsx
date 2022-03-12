@@ -93,7 +93,7 @@ const Shop = () => {
                   <h2>
                     {category_id
                       ? (categories_indexed[category_id] || {}).name
-                      : ''}
+                      : 'All products'}
                   </h2>
                 </div>
               </Row>
