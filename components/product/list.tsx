@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import Card from './card'
 import { ProductListItem } from '@/interfaces/product'
-import { Empty, Pagination, Row } from 'antd'
+import { Empty } from 'antd'
 
 const ProductList = ({
-  productData,
+  productData = { rows: [], count: 0 },
 }: {
-  productData: { rows: ProductListItem[]; count: number }
+  productData?: { rows: ProductListItem[]; count: number }
 }): JSX.Element => {
   return (
     <StyledWrapper>
