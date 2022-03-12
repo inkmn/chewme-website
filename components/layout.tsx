@@ -420,7 +420,7 @@ const StyledMenu = styled(Drawer)`
 `
 
 const SiteFooter = styled.div`
-  margin-top: 10px;
+  margin-top: 100px;
   padding: 2em 1em 1em 1em;
   background: #758c3e;
   color: #fff;
