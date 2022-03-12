@@ -1,117 +1,65 @@
-import CardItem from '@/interfaces/cardItem'
-import Spinner from '@/components/spinner'
-import { Empty, Pagination, Row } from 'antd'
-import { useRouter } from 'next/router'
 import qs from 'qs'
 import styled from 'styled-components'
 import useSWR from 'swr'
-import Image from '@/components/s3Image'
 import Privatefetcher from '@/lib/privateFetch'
-import RemoveIcon from '../assets/remove.svg'
-import Link from 'next/link'
+import CartList from '@/components/cart/list'
+import ListWithPagination from '@/components/listWithPagination'
+import { useState } from 'react'
 
 const ShoppingCart = () => {
   const apiUrl = '/app/order/carts'
-  const router = useRouter()
-  const {
-    page = 1,
-    limit = 10,
-    query = '',
-    category_id = '',
-    start_date = '',
-    end_date = '',
-  } = router.query as any
-
-  const queryToString = qs.stringify(
-    {
-      offset: {
-        page,
-        limit,
-      },
-      filter: {
-        query,
-        category_id,
-        start_date,
-        end_date,
-      },
+  const [offset, setOffset] = useState({
+    page: 1,
+    limit: 12,
+  })
+  const queryObj = {
+    offset,
+    filter: {
+      query: '',
+      category_id: '',
+      start_date: '',
+      end_date: '',
     },
-    {
+  }
+  const [queryString, setQueryString] = useState(
+    qs.stringify(queryObj, {
       encode: false,
       addQueryPrefix: true,
-    }
+    })
   )
+  const {
+    data: cartData,
+    error,
+    mutate,
+  }: any = useSWR(`${apiUrl}${queryString}`, Privatefetcher)
 
-  const { data: cardData } = useSWR<{
-    rows: CardItem[]
-    count: number
-  }>(`${apiUrl}${queryToString}`, Privatefetcher)
-
-  const handlePageChange = (currentPage: number) => {
-    const qsData = {
-      page: currentPage,
-      limit,
-      query,
-      category_id,
-      start_date,
-      end_date,
-    }
-    router.push(
-      `/cart${qs.stringify(qsData, { encode: false, addQueryPrefix: true })}`
+  const handlePageChange = (offset: any) => {
+    setOffset(offset)
+    setQueryString(
+      qs.stringify(
+        {
+          ...queryObj,
+          offset,
+        },
+        {
+          encode: false,
+          addQueryPrefix: true,
+        }
+      )
     )
   }
 
   return (
     <StyledShoppingCart>
-      {cardData ? (
-        cardData.count ? (
-          <div className="items">
-            {cardData.rows.map((item) => {
-              return (
-                <div className="item" key={item.id}>
-                  <Image
-                    src={item.image}
-                    width={70}
-                    height={70}
-                    objectFit="cover"
-                    className="image"
-                    alt=""
-                  />
-                  <div className="item-info">
-                    <div className="if-top">
-                      <div className="item-name">
-                        <Link href="/">
-                          <a>{item.name}</a>
-                        </Link>
-                      </div>
-                      <a>
-                        <RemoveIcon />
-                      </a>
-                    </div>
-                    <div className="if-bottom">
-                      <div className="ifb-quantity">{item.quantity}</div>
-                      <div className="ifb-price">{item.price}</div>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-            {cardData?.count > limit ? (
-              <Row justify="end">
-                <Pagination
-                  pageSize={parseInt(limit, 10)}
-                  current={parseInt(page, 10)}
-                  total={cardData?.count}
-                  onChange={handlePageChange}
-                />
-              </Row>
-            ) : null}
-          </div>
-        ) : (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        )
-      ) : (
-        <Spinner text="Loading..." minHeight={300} />
-      )}
+      <ListWithPagination
+        data={cartData}
+        error={error}
+        limit={offset.limit}
+        page={offset.page}
+        onPageChange={handlePageChange}
+      >
+        <CartList data={cartData?.rows} />
+      </ListWithPagination>
     </StyledShoppingCart>
   )
 }

@@ -8,16 +8,16 @@ import qs from 'qs'
 import PublicFetcher from '@/lib/publicFetch'
 import ProductList from '@/components/product/list'
 import { ProductListItem } from '@/interfaces/product'
-import { Col, Pagination, Row } from 'antd'
-import SwrRender from '@/components/swrRender'
+import { Col, Row } from 'antd'
 import useInit from '@/hooks/useInit'
+import ListWithPagination from '@/components/listWithPagination'
 
 const Shop = () => {
   const apiUrl = '/pub/product'
   const router = useRouter()
   const {
     page = 1,
-    limit = 4,
+    limit = 12,
     query = '',
     category_id = '',
     start_date = '',
@@ -56,17 +56,9 @@ const Shop = () => {
     count: number
   }>(`${apiUrl}${queryToString}`, PublicFetcher)
 
-  const handlePageChange = (currentPage: number) => {
-    const qsData = {
-      page: currentPage,
-      limit,
-      query,
-      category_id,
-      start_date,
-      end_date,
-    }
+  const handlePageChange = (query: any) => {
     router.push(
-      `${router.pathname}${qs.stringify(qsData, {
+      `${router.pathname}${qs.stringify(query, {
         encode: false,
         addQueryPrefix: true,
       })}`
@@ -108,19 +100,15 @@ const Shop = () => {
                 <div>Default sorting</div>
               </Row>
 
-              <SwrRender data={productList} error={error}>
-                <ProductList productData={productList} />
-                {productList?.count || 0 > limit ? (
-                  <Row justify="end">
-                    <Pagination
-                      pageSize={parseInt(limit, 10)}
-                      current={parseInt(page, 10)}
-                      total={productList?.count}
-                      onChange={handlePageChange}
-                    />
-                  </Row>
-                ) : null}
-              </SwrRender>
+              <ListWithPagination
+                data={productList}
+                error={error}
+                limit={parseInt(limit, 10)}
+                page={parseInt(page, 10)}
+                onPageChange={handlePageChange}
+              >
+                <ProductList data={productList?.rows} />
+              </ListWithPagination>
             </Col>
           </Row>
         </div>
