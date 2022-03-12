@@ -138,6 +138,21 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
       <SiteFooter>
         <div className="container">
+          <div className="ig-head">
+            <div className="ig-image-btn">
+              <img
+                className="ig-image"
+                src="/ig/1.jpeg"
+                alt=""
+                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                srcSet=""
+              />
+            </div>
+            <div>
+              <h2>Dogechew</h2>
+              <p>follow to our Instagram</p>
+            </div>
+          </div>
           <div className="footer-head">
             {[1, 2, 3, 4, 5, 6, 7, 9].map((item, index) => {
               return (
@@ -202,7 +217,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
               ©2021 DOGECHEW CORPORATION. ALL RIGHTS RESERVED | POWERED BY
               GOODTECH TECHNOLOGY
             </p>
-            <div className="nav-items">
+            <div>
               <img
                 src={
                   'https://www.himalayan.pet/wp-content/uploads/paymet-1.png'
@@ -444,6 +459,31 @@ const StyledMenu = styled(Drawer)`
 
 const SiteFooter = styled.div`
   margin-top: 60px;
+
+  .ig-head {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    :hover {
+      .ig-image-btn {
+      }
+    }
+    h2 {
+      margin: 0;
+    }
+    .ig-image-btn {
+      border-radius: 5px;
+      display: flex;
+      .ig-image {
+        border-radius: 5px;
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
   .more {
     width: 100%;
     display: flex;
