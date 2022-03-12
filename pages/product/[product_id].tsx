@@ -14,12 +14,14 @@ import { FreeMode, Navigation, Thumbs } from 'swiper'
 import BottomShape from '@/components/bottomShape'
 import BoneButtonFlat from '@/components/boneButtonFlat'
 import { StarFilled } from '@ant-design/icons'
+import useInit from '@/hooks/useInit'
 
 const { Title, Paragraph, Text, Link } = Typography
 const ProductDetail = () => {
   const router = useRouter()
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const { product_id } = router.query
+  const { data } = useInit()
   const { data: productData } = useSWR<ProductItem>(
     product_id ? `/pub/product/${product_id}` : null,
     PublicFetcher
@@ -44,15 +46,11 @@ const ProductDetail = () => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="mySwiper2"
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => {
+                  {productData?.images?.map((item, index) => {
                     return (
                       <SwiperSlide key={index}>
                         <ImageFull>
-                          <Image
-                            src={`https://swiperjs.com/demos/images/nature-${
-                              index + 1
-                            }.jpg`}
-                          />
+                          <Image src={`${data?.s3 || ''}${item.url}`} />
                         </ImageFull>
                       </SwiperSlide>
                     )
@@ -68,15 +66,11 @@ const ProductDetail = () => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="mySwiper"
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => {
+                  {productData?.images?.map((item, index) => {
                     return (
                       <SwiperSlide key={index}>
                         <Items>
-                          <img
-                            src={`https://swiperjs.com/demos/images/nature-${
-                              index + 1
-                            }.jpg`}
-                          />
+                          <img src={`${data?.s3 || ''}${item.url}`} />
                         </Items>
                       </SwiperSlide>
                     )
@@ -246,7 +240,7 @@ const StyledSwiper = styled.div`
 
 const StyledProductDetail = styled.div`
   margin-top: 50px;
-  height: 500px;
+  margin-bottom: 300px;
 `
 
 export default ProductDetail
