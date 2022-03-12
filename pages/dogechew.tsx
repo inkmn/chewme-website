@@ -11,12 +11,12 @@ const DogeChew = () => {
         <div className="container">
           <h2>Loyalty Program</h2>
           <h4>SHOP & GET REWARDED</h4>
-          <p>Earn more and redeem your free Himalayan Pet Supply products.</p>
+          <p>Earn more and redeem your free Dogechew Pet Supply products.</p>
           <p>
-            As a loyal Himalayan Pet Supply customer, you’ll earn points on
-            every purchase you make that can be redeemed for your favorite
-            products! Once you’ve accumulated enough points, unlock your rewards
-            on your next purchase!
+            As a loyal Dogechew Pet Supply customer, you’ll earn points on every
+            purchase you make that can be redeemed for your favorite products!
+            Once you’ve accumulated enough points, unlock your rewards on your
+            next purchase!
           </p>
           <h2>Here’s How It Works</h2>
           <Row>
