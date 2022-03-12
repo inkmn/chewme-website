@@ -12,6 +12,7 @@ import {
   Col,
   Divider,
   Image,
+  notification,
   Row,
   Space,
   Tag,
@@ -25,9 +26,12 @@ import BottomShape from '@/components/bottomShape'
 import BoneButtonFlat from '@/components/boneButtonFlat'
 import { HeartFilled, HeartOutlined, StarFilled } from '@ant-design/icons'
 import useInit from '@/hooks/useInit'
+import useUser from '@/hooks/useUser'
+import Privatefetcher from '@/lib/privateFetch'
 
 const { Title, Paragraph, Text, Link } = Typography
 const ProductDetail = () => {
+  const { mutate } = useUser()
   const router = useRouter()
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const [isFav, setIsFav] = useState(true)
@@ -37,6 +41,30 @@ const ProductDetail = () => {
     product_id ? `/pub/product/${product_id}` : null,
     PublicFetcher
   )
+
+  const addToCart = async () => {
+    try {
+      await Privatefetcher(`/app/order/add_cart`, {
+        method: 'POST',
+        body: JSON.stringify({
+          note: '',
+          products: [
+            {
+              product_id,
+              coupon_code: '',
+              quantity: 1,
+            },
+          ],
+        }),
+      })
+      mutate()
+    } catch (error: any) {
+      notification.error({
+        message: error.data.message,
+      })
+    }
+  }
+
   return (
     <Layout>
       <PageHeader image={`/paws-bg.png`} position="top" />
@@ -68,7 +96,7 @@ const ProductDetail = () => {
                   })}
                 </Swiper>
                 <Swiper
-                  onSwiper={(e) => setThumbsSwiper(e)}
+                  // onSwiper={(e) => setThumbsSwiper(e)}
                   loop={false}
                   spaceBetween={30}
                   slidesPerView={4}

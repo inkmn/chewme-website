@@ -13,7 +13,7 @@ const SwrRender = ({
     return (
       <div>
         Oops there is something wrong!
-        <div>{JSON.stringify(error, null, 2)}</div>
+        <pre style={{ color: 'red' }}>{JSON.stringify(error, null, 2)}</pre>
       </div>
     )
   }

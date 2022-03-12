@@ -3,7 +3,7 @@ enum InputType {
   OTHER = 'OTHER',
 }
 
-interface CardItem {
+interface CartType {
   id: string
   retailer_id: string | null
   product_id: string
@@ -29,4 +29,4 @@ interface CardItem {
   }
 }
 
-export default CardItem
+export default CartType

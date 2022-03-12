@@ -7,14 +7,18 @@ const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
   return (
     <StyledWrapper>
       <div className="image">
-        <Image
-          className="image"
-          width={316}
-          height={316}
-          objectFit="contain"
-          src={item.image}
-          alt=""
-        />
+        <Link href={`/product/${item.id}`}>
+          <a>
+            <Image
+              className="image"
+              width={316}
+              height={316}
+              objectFit="contain"
+              src={item.image}
+              alt=""
+            />
+          </a>
+        </Link>
       </div>
       <div className="card-title">
         <Link href={`/product/${item.id}`}>

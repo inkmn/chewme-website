@@ -1,24 +1,19 @@
 import styled from 'styled-components'
 import Card from './card'
 import { ProductListItem } from '@/interfaces/product'
-import { Empty } from 'antd'
 
 const ProductList = ({
-  productData = { rows: [], count: 0 },
+  data = [],
 }: {
-  productData?: { rows: ProductListItem[]; count: number }
+  data?: ProductListItem[]
 }): JSX.Element => {
   return (
     <StyledWrapper>
-      {productData?.count ? (
-        productData.rows.map((item: any) => (
-          <div className="productListItem" key={item.id}>
-            <Card item={item} />
-          </div>
-        ))
-      ) : (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      )}
+      {data.map((item: any) => (
+        <div className="productListItem" key={item.id}>
+          <Card item={item} />
+        </div>
+      ))}
     </StyledWrapper>
   )
 }
