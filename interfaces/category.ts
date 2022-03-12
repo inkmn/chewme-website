@@ -14,6 +14,7 @@ interface Category {
   updated_by: string
   updated_at: string
   status: boolean
+  children?: Category[]
 }
 
 export default Category
