@@ -19,9 +19,12 @@ import styled from 'styled-components'
 import {
   AmazonOutlined,
   CloseOutlined,
+  EnvironmentFilled,
   FacebookOutlined,
+  HeatMapOutlined,
   InstagramOutlined,
   MenuOutlined,
+  PhoneFilled,
   SendOutlined,
   ShoppingCartOutlined,
   UserOutlined,
@@ -31,6 +34,8 @@ import ActiveLink from '@/components/activeLink'
 import ShoppingCart from '@/components/shoppingCart'
 import LoginForm from './forms/login'
 import useUser from '@/hooks/useUser'
+import Image from 'next/image'
+import CardsViz from '../assets/play.png'
 
 const cookies = new Cookies()
 
@@ -133,61 +138,92 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       </StyledLayout>
       <SiteFooter>
         <div className="container">
-          <Row>
-            <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6}>
-              <div>
-                <div className="footer-title">OUR INFORMATION</div>
-                <div className="nav-item">Most popular</div>
-                <div className="nav-item">Hand grafted</div>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6}>
-              <div>
-                <div className="footer-title">Dogechew</div>
-                <div className="nav-item">Home</div>
-                <div className="nav-item">Origin</div>
-                <div className="nav-item">Products</div>
-                <div className="nav-item">Dc coin</div>
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              <div className="right-content">
-                <div className="footer-title">Social media</div>
-                <Space>
-                  <div className="nav-item icon">
-                    <FacebookOutlined />
-                  </div>
-                  <div className="nav-item icon">
-                    <InstagramOutlined />
-                  </div>
-                  <div className="nav-item icon">
-                    <YoutubeOutlined />
-                  </div>
-                </Space>
-                <div className="footer-title">Account</div>
-                <div className="nav-item">Login</div>
-                <div className="nav-item">Sign up</div>
-                {/* <div className="footer-title">Sign up</div>
-                <div>
-                  <p>
-                    Please send your link to create an account to your email
-                    address
-                  </p>
+          <div className="ig-head">
+            <div className="ig-image-btn">
+              <img
+                className="ig-image"
+                src="/ig/1.jpeg"
+                alt=""
+                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                srcSet=""
+              />
+            </div>
+            <div>
+              <h2>Dogechew</h2>
+              <p>follow to our Instagram</p>
+            </div>
+          </div>
+          <div className="footer-head">
+            {[1, 2, 3, 4, 5, 6, 7, 9].map((item, index) => {
+              return (
+                <div key={index} className="footer-image">
+                  <img src={`/ig/${item}.jpeg`} alt="" />
                 </div>
-                <Space>
-                  <Input
-                    size="large"
-                    className="footer-input"
-                    placeholder="Email..."
-                    style={{ width: '300px' }}
-                  />
-                  <Button size="large" className="footer-btn" type="ghost">
-                    <SendOutlined />
-                  </Button>
-                </Space> */}
-              </div>
-            </Col>
-          </Row>
+              )
+            })}
+          </div>
+          <div className="nav-items">
+            If you have any question, please contact us at
+            <a href=""> doge-chew-mn@eshop.com </a>
+          </div>
+          <div className="nav-items">
+            <Space>
+              <EnvironmentFilled
+                style={{ fontSize: '22px', color: 'var(--primary)' }}
+              />
+              <p>4480 Chennault Beach Road Mukilteo, WA 98275</p>
+            </Space>
+          </div>
+          <div className="nav-items">
+            <Space>
+              <PhoneFilled
+                style={{ fontSize: '22px', color: 'var(--primary)' }}
+              />
+              <p>(+976) 8885-2346</p>
+            </Space>
+          </div>
+          <div className="nav-items">
+            <Space>
+              <a
+                className="icon"
+                target="_blank"
+                href="https://www.facebook.com"
+                rel="noreferrer"
+              >
+                <FacebookOutlined style={{ color: '#3b5998' }} />
+              </a>
+              <div className="drawer-icon-spacer" />
+              <a
+                className="icon"
+                target="_blank"
+                href="https://www.instagram.com"
+                rel="noreferrer"
+              >
+                <InstagramOutlined style={{ color: '#262626' }} />
+              </a>
+              <div className="drawer-icon-spacer" />
+              <a
+                className="icon"
+                target="_blank"
+                href="https://www.youtube.com"
+                rel="noreferrer"
+              >
+                <YoutubeOutlined style={{ color: '#cd201f' }} />
+              </a>
+            </Space>
+          </div>
+          <div className="space-between">
+            <p className="nav-items">
+              ©2021 DOGECHEW CORPORATION. ALL RIGHTS RESERVED | POWERED BY
+              GOODTECH TECHNOLOGY
+            </p>
+            <div>
+              <img
+                src={'https://www.Dogechew.pet/wp-content/uploads/paymet-1.png'}
+                alt=""
+              />
+            </div>
+          </div>
         </div>
       </SiteFooter>
       <StyledCartDrawer
@@ -428,56 +464,72 @@ const StyledMenu = styled(Drawer)`
 `
 
 const SiteFooter = styled.div`
-  margin-top: 10px;
-  padding: 2em 1em 1em 1em;
-  background: #758c3e;
-  color: #fff;
-  font-size: 20px;
+  margin-top: 60px;
 
-  .footer-input {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #fff;
-    :focus {
-      color: #fff;
-      border-color: #fff;
-    }
-  }
-
-  .footer-btn {
-    color: #fff;
-    border-color: var(--primary);
-    :hover {
-      border-color: #fff;
-    }
-
-    :focus {
-      border-color: #fff;
-    }
-  }
-
-  .nav-item {
-    font-size: 18px;
-    cursor: pointer;
-    padding-bottom: 5px;
-    border-bottom: 1px solid transparent;
-    width: max-content;
-    &.icon {
-      font-size: 28px;
-    }
-    :hover {
-      border-bottom: 1px solid #fff;
-    }
-  }
-  .footer-title {
-    color: #dadada;
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: 700;
+  .ig-head {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
     margin-bottom: 10px;
-    margin-top: 30px;
+    cursor: pointer;
+    :hover {
+      .ig-image-btn {
+      }
+    }
+    h2 {
+      margin: 0;
+    }
+    .ig-image-btn {
+      border-radius: 5px;
+      display: flex;
+      .ig-image {
+        border-radius: 5px;
+        width: 50px;
+        height: 50px;
+      }
+    }
   }
-  .content {
+  .more {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    .btn-more {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+  }
+  .footer-image {
+    img {
+      width: 170px;
+      height: 170px;
+      object-fit: cover;
+    }
+  }
+  .footer-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .space-between {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .nav-items {
+    .icon {
+      font-size: 32px;
+    }
+  }
+  .nav-items {
+    max-width: 300px;
+    margin-top: 10px;
   }
 `
 
