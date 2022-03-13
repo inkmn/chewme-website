@@ -6,6 +6,7 @@ import {
   Badge,
   Button,
   Col,
+  Divider,
   Drawer,
   Input,
   Modal,
@@ -130,7 +131,6 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       <StyledLayout>
         <main>{children}</main>
       </StyledLayout>
-      {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
       <SiteFooter>
         <div className="container">
           <Row>
@@ -190,8 +190,6 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
           </Row>
         </div>
       </SiteFooter>
-      {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-
       <StyledCartDrawer
         title={<div className="cart-header">My Cart</div>}
         placement="right"
@@ -241,15 +239,6 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
               <Link href="/settings">
                 <a className="menu-item">Settings</a>
               </Link>
-              <a
-                className="menu-item"
-                onClick={() => {
-                  logout()
-                  setDrawer(false)
-                }}
-              >
-                Sign out
-              </a>
             </>
           ) : (
             <>
@@ -268,6 +257,20 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
           <Link href="/contact-us">
             <a className="menu-item">Contact us</a>
           </Link>
+          <div className="drawer-menu-spacer" />
+          {!error ? (
+            <>
+              <a
+                className="menu-item"
+                onClick={() => {
+                  logout()
+                  setDrawer(false)
+                }}
+              >
+                Sign out
+              </a>
+            </>
+          ) : null}
         </div>
       </StyledMenu>
 
@@ -334,6 +337,11 @@ const StyledCartDrawer = styled(Drawer)`
   }
 `
 const StyledMenu = styled(Drawer)`
+  .drawer-menu-spacer {
+    margin: 1rem 0;
+    border-bottom: 1px solid #fff;
+  }
+
   .drawerClose {
     color: #fff;
   }

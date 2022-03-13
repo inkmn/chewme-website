@@ -70,9 +70,9 @@ const ProductDetail = () => {
       <PageHeader image={`/paws-bg.png`} position="top" />
       <StyledProductDetail>
         <div className="container">
-          <pre style={{ display: '' }}>
+          {/* <pre style={{ display: '' }}>
             {JSON.stringify(productData, null, 2)}
-          </pre>
+          </pre> */}
 
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
