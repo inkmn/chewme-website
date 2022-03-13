@@ -219,9 +219,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
             </p>
             <div>
               <img
-                src={
-                  'https://www.himalayan.pet/wp-content/uploads/paymet-1.png'
-                }
+                src={'https://www.Dogechew.pet/wp-content/uploads/paymet-1.png'}
                 alt=""
               />
             </div>
