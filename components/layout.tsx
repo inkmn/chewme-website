@@ -217,12 +217,10 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
               ©2021 DOGECHEW CORPORATION. ALL RIGHTS RESERVED | POWERED BY
               GOODTECH TECHNOLOGY
             </p>
-            <div>
-              <img
-                src={'https://www.Dogechew.pet/wp-content/uploads/paymet-1.png'}
-                alt=""
-              />
-            </div>
+            <img
+              src={'https://www.himalayan.pet/wp-content/uploads/paymet-1.png'}
+              alt=""
+            />
           </div>
         </div>
       </SiteFooter>
@@ -521,6 +519,7 @@ const SiteFooter = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    align-items: center;
   }
   .nav-items {
     .icon {
