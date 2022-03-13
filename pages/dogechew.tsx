@@ -64,8 +64,6 @@ const DogeChew = () => {
 }
 
 const StyledDogeChew = styled.div`
-  height: 500px;
-
   .center {
     display: flex;
     width: 100%;
