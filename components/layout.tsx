@@ -500,6 +500,7 @@ const SiteFooter = styled.div`
     }
   }
   .footer-image {
+    margin: 12px;
     img {
       width: 170px;
       height: 170px;
@@ -508,12 +509,9 @@ const SiteFooter = styled.div`
   }
   .footer-head {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
-    width: 100%;
-    margin-bottom: 30px;
+    margin-right: -12px;
+    margin-left: -12px;
   }
   .space-between {
     display: flex;
@@ -529,6 +527,12 @@ const SiteFooter = styled.div`
   .nav-items {
     max-width: 300px;
     margin-top: 10px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .footer-head {
+      justify-content: center;
+    }
   }
 `
 
