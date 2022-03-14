@@ -2,7 +2,11 @@ import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import useUser from '@/hooks/useUser'
-import { CaretUpOutlined, ShoppingOutlined } from '@ant-design/icons'
+import {
+  CaretUpOutlined,
+  CopyOutlined,
+  ShoppingOutlined,
+} from '@ant-design/icons'
 import { Col, Row } from 'antd'
 import WalletIcon from '../assets/wallet1.svg'
 
@@ -37,7 +41,12 @@ const MyWallet = () => {
                 <div className="card-footer">
                   <div className="card-column">
                     <div className="crypto">Wallet address</div>
-                    <div className="crypto-id">0x8d2135u1ne1xb51…</div>
+                    <div className="crypto-id">
+                      0x8d2135u1ne1xb51…{' '}
+                      <span>
+                        <CopyOutlined />
+                      </span>
+                    </div>
                   </div>
                   <div className="card-column">
                     <div className="stonk-precent">
@@ -267,6 +276,10 @@ const VisaCard = styled.div`
     }
     .crypto-id {
       font-size: 1.5em;
+      span {
+        cursor: pointer;
+        font-size: 1em;
+      }
     }
     .stonk-precent {
       font-size: 1rem;
