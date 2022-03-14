@@ -19,7 +19,7 @@ const Settings = () => {
 }
 
 const StyledSettings = styled.div`
-  height: 500px;
+  min-height: 500px;
 `
 
 export default Settings
