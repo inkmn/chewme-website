@@ -55,7 +55,7 @@ const Footer = (): JSX.Element => {
             <PhoneFilled
               style={{ fontSize: '22px', color: 'var(--primary)' }}
             />
-            <span>(+976) 8885-2346</span>
+            <span>(+976) 8013-9260</span>
           </Space>
         </div>
         <div className="nav-items">
@@ -90,7 +90,7 @@ const Footer = (): JSX.Element => {
         </div>
         <div className="space-between">
           <p className="nav-items">
-            ©2021 DOGECHEW CORPORATION. ALL RIGHTS RESERVED | POWERED BY
+            ©2022 DOGECHEW CORPORATION. ALL RIGHTS RESERVED | POWERED BY
             GOODTECH TECHNOLOGY
           </p>
           {/* <img
