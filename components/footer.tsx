@@ -47,7 +47,7 @@ const Footer = (): JSX.Element => {
             <EnvironmentFilled
               style={{ fontSize: '22px', color: 'var(--primary)' }}
             />
-            <p>4480 Chennault Beach Road Mukilteo, WA 98275</p>
+            <span>4480 Chennault Beach Road Mukilteo, WA 98275</span>
           </Space>
         </div>
         <div className="nav-items">
@@ -55,7 +55,7 @@ const Footer = (): JSX.Element => {
             <PhoneFilled
               style={{ fontSize: '22px', color: 'var(--primary)' }}
             />
-            <p>(+976) 8885-2346</p>
+            <span>(+976) 8885-2346</span>
           </Space>
         </div>
         <div className="nav-items">
