@@ -43,7 +43,12 @@ const MyWallet = () => {
                     <div className="crypto">Wallet address</div>
                     <div className="crypto-id">
                       0x8d2135u1ne1xb51…{' '}
-                      <span>
+                      <span
+                        onClick={() => {
+                          navigator.clipboard.writeText('0x8d2135u1ne1xb51…')
+                          console.log('')
+                        }}
+                      >
                         <CopyOutlined />
                       </span>
                     </div>

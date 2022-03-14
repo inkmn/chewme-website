@@ -135,7 +135,7 @@ const StyledSettings = styled.div`
     font-size: 2rem;
   }
   .border {
-    padding: 20px;
+    padding: 24px;
     border: 1px solid #dadada;
     border-radius: 15px;
     width: 100%;
