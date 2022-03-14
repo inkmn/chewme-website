@@ -36,7 +36,7 @@ const MyWallet = () => {
                 </div>
                 <div className="card-footer">
                   <div className="card-column">
-                    <div className="crypto">Crypto id</div>
+                    <div className="crypto">Account id</div>
                     <div className="crypto-id">0x8d2135u1ne1xb51…</div>
                   </div>
                   <div className="card-column">
