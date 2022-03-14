@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import useUser from '@/hooks/useUser'
 import { CaretUpOutlined, ShoppingOutlined } from '@ant-design/icons'
 import { Col, Row } from 'antd'
+import WalletIcon from '../assets/wallet1.svg'
 
 const MyWallet = () => {
   const { user } = useUser()
@@ -24,37 +25,60 @@ const MyWallet = () => {
                 application supporting all Apple Wallet-based digital cards.
               </p>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
-              <VisaCard />
+            <Col xs={24} sm={24} md={12} lg={10} xl={10} xxl={10}>
+              <VisaCard>
+                <div className="card-header">
+                  <div className="wallet">
+                    <WalletIcon />
+                    Wallet
+                  </div>
+                  <span>DC 70.000</span>
+                </div>
+                <div className="card-footer">
+                  <div className="card-column">
+                    <div className="crypto">Crypto id</div>
+                    <div className="crypto-id">0x8d2135u1ne1xb51…</div>
+                  </div>
+                  <div className="card-column">
+                    <div className="stonk-precent">
+                      <span>^</span>
+                      1.45%
+                    </div>
+                    <div className="stonk-value">820.320</div>
+                  </div>
+                </div>
+              </VisaCard>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={14} xl={14} xxl={14}>
-              {[1, 2, 3].map((item, index) => {
-                return (
-                  <Item key={index}>
-                    <div>
-                      <img
-                        className="image"
-                        src="/image 1.png"
-                        alt=""
-                        srcSet=""
-                      />
-                    </div>
-                    <div className="item-column">
-                      <div className="balance">balance: </div>
-                      <div className="balance-total">USDT 4900.0 </div>
-                    </div>
-                    <div className="item-column">
-                      <div className="stonk">
-                        <div className="icon">
-                          <CaretUpOutlined />
-                        </div>
-                        <div className="precent">1.45%</div>
+            <Col xs={24} sm={24} md={12} lg={14} xl={14} xxl={14}>
+              <div className="flex-end">
+                {[1, 2, 3].map((item, index) => {
+                  return (
+                    <Item key={index}>
+                      <div>
+                        <img
+                          className="image"
+                          src="/image 1.png"
+                          alt=""
+                          srcSet=""
+                        />
                       </div>
-                      <div className="precent-total">23.32</div>
-                    </div>
-                  </Item>
-                )
-              })}
+                      <div className="item-column">
+                        <div className="balance">balance: </div>
+                        <div className="balance-total">USDT 4900.0 </div>
+                      </div>
+                      <div className="item-column">
+                        <div className="stonk">
+                          <div className="icon">
+                            <CaretUpOutlined />
+                          </div>
+                          <div className="precent">1.45%</div>
+                        </div>
+                        <div className="precent-total">23.32</div>
+                      </div>
+                    </Item>
+                  )
+                })}
+              </div>
             </Col>
             <Col span={24}>
               <h1>Transaction history</h1>
@@ -75,7 +99,7 @@ const MyWallet = () => {
               </HistoryList>
               <HistoryList>
                 <div className="step-1">
-                  <div className="icon">
+                  <div className="icon success">
                     <ShoppingOutlined />
                   </div>
                   <div className="item-column">
@@ -90,7 +114,7 @@ const MyWallet = () => {
               </HistoryList>
               <HistoryList>
                 <div className="step-1">
-                  <div className="icon">
+                  <div className="icon success">
                     <ShoppingOutlined />
                   </div>
                   <div className="item-column">
@@ -151,6 +175,10 @@ const HistoryList = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 20px;
+
+    &.success {
+      background-color: #1bbc1b;
+    }
   }
   .item-column {
     display: flex;
@@ -161,6 +189,8 @@ const HistoryList = styled.div`
 const Item = styled.div`
   margin-bottom: 10px;
   width: 100%;
+  max-width: 550px;
+  height: 75px;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
@@ -168,7 +198,6 @@ const Item = styled.div`
   border-radius: 50px;
   box-shadow: 0px 2px 10px -8px rgb(0 0 0 / 75%);
   align-items: center;
-  height: 75px;
 
   .precent-total {
     font-size: 1.2rem;
@@ -200,9 +229,14 @@ const Item = styled.div`
     flex-direction: column;
     margin-right: 10px;
   }
+
+  @media only screen and (max-width: 767px) {
+    max-width: 100%;
+  }
 `
 
 const VisaCard = styled.div`
+  padding: 20px;
   max-height: 245px;
   min-height: 245px;
   height: 100%;
@@ -217,11 +251,71 @@ const VisaCard = styled.div`
     rgba(110, 115, 255, 1) 0%,
     rgba(52, 83, 255, 1) 100%
   );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #fff;
+
+    .crypto {
+      font-size: 1rem;
+    }
+    .crypto-id {
+      font-size: 1.5em;
+    }
+    .stonk-precent {
+      font-size: 1rem;
+      color: #1bbc1b;
+      text-align: end;
+    }
+    .stonk-value {
+      font-size: 1.5em;
+      text-align: end;
+    }
+  }
+  .card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    .wallet {
+      display: flex;
+      align-items: center;
+      & > svg {
+        height: 35px;
+        width: auto;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 `
 
 const StyledMyWallet = styled.div`
   min-height: 500px;
   margin-top: 40px;
+
+  .flex-end {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
   p {
     font-size: 1.2em;
     max-width: 670px;
