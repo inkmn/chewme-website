@@ -55,6 +55,7 @@ const ShoppingCart = () => {
   return (
     <StyledShoppingCart>
       <ListWithPagination
+        emptyText="No products in the cart."
         data={cartData}
         error={error}
         limit={offset.limit}

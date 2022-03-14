@@ -15,6 +15,9 @@ const S3Image = ({
   [x: string]: any
 }) => {
   const { data } = useInit()
+
+  if (!src) return null
+
   return (
     <Image
       {...rest}

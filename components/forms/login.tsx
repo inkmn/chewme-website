@@ -89,24 +89,14 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                 size="large"
                 loading={isSubmitting}
                 block
-                style={{ marginBottom: '24px', width: 240 }}
+                style={{ width: 240 }}
               >
                 Log in
               </Button>
             </Row>
-            <div className="fg">
-              <div>
-                <FacebookOutlined />
-              </div>
-              <div className="line"></div>
-              <div>
-                <GooglePlusOutlined />
-              </div>
-            </div>
           </Form>
         )}
       </Formik>
-      <p className="login-text">Forget Password ?</p>
     </StyledLogin>
   )
 }
@@ -119,27 +109,6 @@ const StyledLogin = styled.div`
     }
   }
 
-  .fg {
-    width: 100%;
-    font-size: 40px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .line {
-      border-right: 1px solid #fff;
-      height: 50px;
-      margin: 0 1rem;
-    }
-  }
-  .login-text {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-top: 40px;
-    margin-bottom: 0;
-    font-size: 16px;
-  }
   .ant-input-affix-wrapper {
     &.ant-input-affix-wrapper-lg {
       background: transparent;

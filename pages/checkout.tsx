@@ -10,14 +10,14 @@ import privatefetcher from '@/lib/privateFetch'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import qs from 'qs'
-import { ShoppingCartOutlined } from '@ant-design/icons'
+import CartType from '@/interfaces/cart'
 
 const Checkout = () => {
   const apiUrl = '/app/order/carts'
   const router = useRouter()
   const {
     page = 1,
-    limit = 12,
+    limit = 1000,
     query = '',
     category_id = '',
     start_date = '',
@@ -43,19 +43,14 @@ const Checkout = () => {
     }
   )
   const {
-    data: cardData,
+    data: cartData,
     error,
     isValidating,
-  } = useSWR(`${apiUrl}${queryToString}`, privatefetcher)
-
-  const handlePageChange = (query: any) => {
-    router.push(
-      `${router.pathname}${qs.stringify(query, {
-        encode: false,
-        addQueryPrefix: true,
-      })}`
-    )
-  }
+  } = useSWR<{
+    rows: CartType[]
+    count: number
+    cart_sum: { total_amount: number; total_count: number }
+  }>(`${apiUrl}${queryToString}`, privatefetcher)
 
   const formSchema = Yup.object().shape({
     first_name: Yup.string().required('Firstname is required'),
@@ -80,11 +75,11 @@ const Checkout = () => {
           method: 'POST',
           body: JSON.stringify({
             shipping_info: values,
-            // cart_products: cartItems,
+            cart_products: cartData?.rows.map((item: CartType) => item.id),
           }),
         }
       )
-      router.push(`/settings/order`)
+      router.push(`/order`)
       notification.success({ message: 'Request successful' })
       actions.setSubmitting(false)
     } catch (error: any) {
@@ -102,11 +97,81 @@ const Checkout = () => {
         <div className="container">
           <Row gutter={[24, 24]}>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              cart summary
-              <pre>{JSON.stringify(cardData?.cart_sum, null, 2)}</pre>
+              <h2>Your order</h2>
+              <div className="checkout-review-order">
+                <table className="shop_table checkout-review-order-table">
+                  <thead>
+                    <tr>
+                      <th className="product-name">Product</th>
+                      <th className="product-total">Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cartData &&
+                      cartData.rows.map((item, index: number) => (
+                        <tr key={`${item.id}_${index}`} className="cart_item">
+                          <td className="product-name">
+                            {item.name}
+                            <strong className="product-quantity">
+                              {' '}
+                              × {item.quantity}
+                            </strong>{' '}
+                          </td>
+                          <td className="product-total">
+                            <span className="price-amount amount">
+                              <bdi>
+                                <span className="price-currencySymbol">$</span>
+                                {item.price * item.quantity}
+                              </bdi>
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="cart-subtotal">
+                      <th>Subtotal</th>
+                      <td>
+                        <span className="price-amount amount">
+                          <bdi>
+                            <span className="price-currencySymbol">$</span>
+                            {cartData?.cart_sum.total_amount}
+                          </bdi>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr className="tax-total">
+                      <th>Tax</th>
+                      <td>
+                        <span className="price-amount amount">
+                          <bdi>
+                            <span className="price-currencySymbol">$</span>
+                            0.00
+                          </bdi>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr className="order-total">
+                      <th>Total</th>
+                      <td>
+                        <strong>
+                          <span className="price-amount amount">
+                            <bdi>
+                              <span className="price-currencySymbol">$</span>
+                              {cartData?.cart_sum.total_amount}
+                            </bdi>
+                          </span>
+                        </strong>{' '}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </Col>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              address form
+              <h2>Billing Details</h2>
               <Formik
                 initialValues={{
                   first_name: undefined,
@@ -181,6 +246,71 @@ const Checkout = () => {
   )
 }
 
-const StyledCheckout = styled.div``
+const StyledCheckout = styled.div`
+  margin-top: 2rem;
+
+  .checkout-review-order {
+    & > table {
+      width: 100%;
+    }
+    table.shop_table thead {
+      background-color: #d1d1d1;
+    }
+
+    .shop_table.checkout-review-order-table th {
+      font-family: 'Roboto Condensed', Sans-serif;
+      font-weight: 600;
+      border-style: solid;
+      border-width: 1px 1px 1px 1px;
+      border-color: #eaeaea;
+    }
+    .checkout-review-order-table th {
+      background-color: #eaeaea;
+    }
+
+    table caption + thead tr:first-child td,
+    table caption + thead tr:first-child th,
+    table colgroup + thead tr:first-child td,
+    table colgroup + thead tr:first-child th,
+    table thead:first-child tr:first-child td,
+    table thead:first-child tr:first-child th {
+      border-top: 1px solid #ccc;
+    }
+    table.shop_table th {
+      font-weight: 700;
+      padding: 9px 12px;
+      line-height: 1.5em;
+    }
+    .checkout-review-order-table td {
+      border-style: solid;
+      border-width: 1px 1px 1px 1px;
+      border-color: #eaeaea;
+    }
+
+    table.shop_table td {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 9px 12px;
+      vertical-align: middle;
+      line-height: 1.5em;
+    }
+    table tbody > tr:nth-child(odd) > td,
+    table tbody > tr:nth-child(odd) > th {
+      background-color: #fff;
+    }
+    table td,
+    table th {
+      padding: 15px;
+      line-height: 1.5;
+      vertical-align: top;
+      border: 1px solid #ccc;
+    }
+
+    .order-total {
+      .amount {
+        font-size: 1.5rem;
+      }
+    }
+  }
+`
 
 export default Checkout

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import publicFetcher from '@/lib/publicFetch'
 import useSWR from 'swr'
 import ProductItem from '@/interfaces/product'
-import { Col, Row, Tag, Typography } from 'antd'
+import { Col, Empty, Row, Tag, Typography } from 'antd'
 import { HeartFilled, HeartOutlined, StarFilled } from '@ant-design/icons'
 import CarouselThumb from '@/components/product/thumbs'
 import useInit from '@/hooks/useInit'
@@ -21,16 +21,35 @@ const ProductDetail = () => {
   const router = useRouter()
   const [isFav, setIsFav] = useState(true)
   const { product_id } = router.query
-  const { data: productData } = useSWR<ProductItem>(
+  const { data: productData, error } = useSWR<ProductItem>(
     product_id ? `/pub/product/${product_id}` : null,
     publicFetcher
   )
+
+  if (error && error) {
+    return (
+      <Layout>
+        <PageHeader image={`/paws-bg.png`} position="top" />
+        <StyledProductDetail>
+          <div className="container">
+            <div>
+              <Empty
+                description={error.data.message}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+              />
+            </div>
+          </div>
+        </StyledProductDetail>
+      </Layout>
+    )
+  }
 
   return (
     <Layout>
       <PageHeader image={`/paws-bg.png`} position="top" />
       <StyledProductDetail>
         <div className="container">
+          <pre>{JSON.stringify(error, null, 2)}</pre>
           <Row gutter={[24, 24]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
               <CarouselThumb images={productData?.images} />

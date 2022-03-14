@@ -8,7 +8,6 @@ import {
 } from '@ant-design/icons'
 import { Drawer } from 'antd'
 import Link from 'next/link'
-import { useState } from 'react'
 import styled from 'styled-components'
 
 const cookies = new Cookies()

@@ -1,20 +1,26 @@
 import { ReactNode, useEffect, useState } from 'react'
 import Head from 'next/head'
-import { Affix, Badge, Button, Drawer, Modal } from 'antd'
+import { Affix, Badge, Button, Divider, Drawer, Modal } from 'antd'
 import { Cookies } from 'react-cookie'
 import styled from 'styled-components'
-import { CloseOutlined } from '@ant-design/icons'
+import {
+  CloseOutlined,
+  FacebookOutlined,
+  GooglePlusOutlined,
+} from '@ant-design/icons'
 import ShoppingCart from '@/components/shoppingCart'
 import LoginForm from './forms/login'
 import useUser from '@/hooks/useUser'
 import Footer from '@/components/footer'
 import SideMenu from '@/components/sideMenu'
 import Header from '@/components/header'
+import RegisterForm from './forms/register'
 
 const cookies = new Cookies()
 
 const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
-  const { user, error, isValidating, mutate } = useUser()
+  const { mutate } = useUser()
+  const [isRegister, setIsRegister] = useState(false)
   const [scroll, setScroll] = useState(false)
   const [drawer, setDrawer] = useState(false)
   const [cartDrawer, setCartDrawer] = useState(false)
@@ -28,11 +34,6 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
     window.addEventListener('scroll', scroll, false)
     return () => window.removeEventListener('scroll', scroll, false)
   }, [])
-
-  const logout = async () => {
-    cookies.remove('token')
-    mutate()
-  }
   return (
     <StyledWrapper>
       <Head>
@@ -72,9 +73,36 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
         onCancel={() => setLoginModal(false)}
         footer={false}
         title={false}
+        destroyOnClose
       >
         <h2 className="login-modal-header">Login or Signup</h2>
-        <LoginForm onSuccess={() => setLoginModal(false)} />
+        {isRegister ? (
+          <RegisterForm onSuccess={() => setLoginModal(false)} />
+        ) : (
+          <LoginForm onSuccess={() => setLoginModal(false)} />
+        )}
+
+        <div className="login-links">
+          <div className="fg">
+            <div>
+              <FacebookOutlined />
+            </div>
+            <div className="line"></div>
+            <div>
+              <GooglePlusOutlined />
+            </div>
+          </div>
+          <div className="ll-others">
+            <a
+              className="login-text"
+              onClick={() => setIsRegister(!isRegister)}
+            >
+              {!isRegister ? 'Register' : 'login'}
+            </a>
+            <Divider style={{ borderColor: '#fff' }} type="vertical" />
+            <a className="login-text">Forget Password ?</a>
+          </div>
+        </div>
       </StyledModal>
     </StyledWrapper>
   )
@@ -96,6 +124,40 @@ const StyledModal = styled(Modal)`
     text-align: center;
     text-transform: uppercase;
     font-size: 1.5rem;
+  }
+  .login-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .ll-others {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-text {
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+  }
+
+  .fg {
+    margin: 20px 0;
+    width: 100%;
+    font-size: 40px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .line {
+      border-right: 1px solid #fff;
+      height: 50px;
+      margin: 0 1rem;
+    }
   }
 `
 

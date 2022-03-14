@@ -9,6 +9,7 @@ const ListWithPagination = ({
   page,
   limit,
   onPageChange,
+  emptyText,
 }: {
   children: any
   data: any
@@ -16,6 +17,7 @@ const ListWithPagination = ({
   page: number
   limit: number
   onPageChange: any
+  emptyText?: string
 }) => {
   const router = useRouter()
 
@@ -35,7 +37,9 @@ const ListWithPagination = ({
   }
 
   if (data && !data.count) {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    return (
+      <Empty description={emptyText} image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    )
   }
 
   const handlePageChange = (currentPage: number) => {
