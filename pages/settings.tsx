@@ -28,6 +28,7 @@ const Settings = () => {
           {/* This is Settings view
           <pre>{JSON.stringify(user, null, 2)}</pre> */}
 
+          <h1>Edit Profile</h1>
           <Formik
             initialValues={{
               username: '',
@@ -36,15 +37,21 @@ const Settings = () => {
           >
             {({ isSubmitting }) => (
               <Form layout="vertical">
-                <Row gutter={[16, 16]}>
+                <Row gutter={[24, 24]}>
                   <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                    <div style={{ padding: '21px 0' }}>
-                      <Form.Item name="username" label="Username" required>
-                        <Input name="username" placeholder="Username" />
-                      </Form.Item>
-                      <Form.Item name="lastname" label="Last name" required>
-                        <Input name="lastname" placeholder="Last name" />
-                      </Form.Item>
+                    <div className="border">
+                      <Row gutter={[16, 16]}>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                          <Form.Item name="username" label="Username" required>
+                            <Input name="username" placeholder="Username" />
+                          </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                          <Form.Item name="lastname" label="Last name" required>
+                            <Input name="lastname" placeholder="Last name" />
+                          </Form.Item>
+                        </Col>
+                      </Row>
                       <Form.Item
                         name="displayname"
                         label="Display name"
@@ -70,9 +77,8 @@ const Settings = () => {
                       <Form.Item
                         name="current_password"
                         label="Current password (leave blank to leave unchanged)"
-                        required
                       >
-                        <Input
+                        <Input.Password
                           name="current_password"
                           placeholder="Current password (leave blank to leave unchanged)"
                           style={{ width: '100%' }}
@@ -81,9 +87,8 @@ const Settings = () => {
                       <Form.Item
                         name="new_password"
                         label="New password (leave blank to leave unchanged)"
-                        required
                       >
-                        <Input
+                        <Input.Password
                           name="new_password"
                           placeholder="New password (leave blank to leave unchanged)"
                         />
@@ -91,9 +96,8 @@ const Settings = () => {
                       <Form.Item
                         name="confirm_password"
                         label="Confirm new password"
-                        required
                       >
-                        <Input
+                        <Input.Password
                           name="confirm_password"
                           placeholder="Confirm new password"
                         />
@@ -123,14 +127,19 @@ const Settings = () => {
 
 const StyledSettings = styled.div`
   min-height: 500px;
-  margin-top: 10px;
+  margin-top: 40px;
 
+  h1 {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 2rem;
+  }
   .border {
     padding: 20px;
     border: 1px solid #dadada;
     border-radius: 15px;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   .btn-save {
     background: var(--primary);
