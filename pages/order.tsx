@@ -86,6 +86,64 @@ const MyOrder = () => {
   )
 }
 
+const StyledList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .order-item {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    min-width: 100%;
+
+    .bottom {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      flex-direction: row;
+
+      .total {
+        font-size: 1.2em;
+      }
+      .amount {
+        font-size: 1.2em;
+        span {
+          color: var(--primary-red);
+          font-weight: 700;
+        }
+      }
+    }
+    .title {
+      display: flex;
+      justify-content: space-between;
+      min-width: 100%;
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      align-items: center;
+      .extra {
+        font-size: 1em;
+        cursor: pointer;
+        :hover {
+          color: var(--primary);
+        }
+      }
+    }
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .image {
+      margin-right: 20px;
+      img {
+        height: 70px;
+        width: 70px;
+        object-fit: cover;
+      }
+    }
+  }
+`
+
 const StyledMyOrder = styled.div`
   margin-top: 2rem;
   .pageTitle {

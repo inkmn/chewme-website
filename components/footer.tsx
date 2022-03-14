@@ -7,11 +7,13 @@ import {
 } from '@ant-design/icons'
 import { Space } from 'antd'
 import styled from 'styled-components'
+import Divider from './devider'
 
 const Footer = (): JSX.Element => {
   return (
     <StyledWrapper>
       <div className="container">
+        <Divider />
         <div className="ig-head">
           <div className="ig-image-btn">
             <img
@@ -27,7 +29,7 @@ const Footer = (): JSX.Element => {
             <p>follow to our Instagram</p>
           </div>
         </div>
-        <div className="footer-head">
+        <div className="row">
           {[1, 2, 3, 4, 5, 6, 7, 9].map((item, index) => {
             return (
               <div key={index} className="footer-image">
@@ -110,7 +112,6 @@ const StyledWrapper = styled.div`
     gap: 8px;
     align-items: center;
     margin-bottom: 10px;
-    cursor: pointer;
     :hover {
       .ig-image-btn {
       }
@@ -140,20 +141,12 @@ const StyledWrapper = styled.div`
     }
   }
   .footer-image {
+    margin: 12px;
     img {
       width: 170px;
       height: 170px;
       object-fit: cover;
     }
-  }
-  .footer-head {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    width: 100%;
-    margin-bottom: 30px;
   }
   .space-between {
     display: flex;
@@ -169,6 +162,12 @@ const StyledWrapper = styled.div`
   .nav-items {
     max-width: 300px;
     margin-top: 10px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .row {
+      justify-content: center;
+    }
   }
 `
 

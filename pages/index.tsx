@@ -48,7 +48,6 @@ const Home: NextPage = () => {
         <div className="container">
           <PageHeader>Hand crafted</PageHeader>
           <ProductList perview={5} />
-          <Divider />
         </div>
       </StyledHome>
     </Layout>
