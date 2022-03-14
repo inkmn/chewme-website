@@ -7,7 +7,7 @@ import {
   CopyOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
-import { Col, Row } from 'antd'
+import { Col, notification, Row } from 'antd'
 import WalletIcon from '../assets/wallet1.svg'
 
 const MyWallet = () => {
@@ -46,7 +46,9 @@ const MyWallet = () => {
                       <span
                         onClick={() => {
                           navigator.clipboard.writeText('0x8d2135u1ne1xb51…')
-                          console.log('')
+                          notification.success({
+                            message: 'Copied wallet address!',
+                          })
                         }}
                       >
                         <CopyOutlined />
