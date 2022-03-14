@@ -50,7 +50,7 @@ const ContactUs = () => {
             >
               {({ isSubmitting }) => (
                 <Form layout="vertical">
-                  <Row gutter={[24, 24]}>
+                  <Row gutter={[24, 2]}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                       <div className="border">
                         <Form.Item name="name">
@@ -121,14 +121,10 @@ const StyledContactUs = styled.div`
     border-color: var(--primary);
     background: var(--primary);
   }
-  .textarea.ant-input {
-    height: 168px;
+  textarea {
+    min-height: 168px !important;
   }
-  /* .border {
-    padding: 24px;
-    border: 1px solid #dadada;
-    border-radius: 15px; 
-  } */
+
   .ant-form-item-label {
     font-size: 1.2em;
   }
