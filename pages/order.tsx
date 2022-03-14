@@ -6,7 +6,7 @@ import qs from 'qs'
 
 import useUser from '@/hooks/useUser'
 import OrderItemType from '@/interfaces/orderItem'
-import Privatefetcher from '@/lib/privateFetch'
+import privatefetcher from '@/lib/privateFetch'
 
 import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
@@ -55,7 +55,7 @@ const MyOrder = () => {
   const { data: orderData } = useSWR<{
     rows: OrderItemType[]
     count: number
-  }>(`${apiUrl}${queryToString}`, Privatefetcher)
+  }>(`${apiUrl}${queryToString}`, privatefetcher)
 
   const handlePageChange = (currentPage: number) => {
     const qsData = {

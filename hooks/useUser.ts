@@ -1,6 +1,6 @@
 import User, { UserHistoryStatus, UserStatus } from '@/interfaces/user'
 import useSWR from 'swr'
-import Privatefetcher from '@/lib/privateFetch'
+import privatefetcher from '@/lib/privateFetch'
 
 const useUser = (): {
   user: User
@@ -62,7 +62,7 @@ const useUser = (): {
     error,
     isValidating,
     mutate,
-  } = useSWR<User>('/app/auth/me', Privatefetcher)
+  } = useSWR<User>('/app/auth/me', privatefetcher)
 
   return { user: data, error, isValidating, mutate }
 }

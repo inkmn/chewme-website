@@ -5,7 +5,7 @@ import Layout from '@/components/layout'
 import FilterNavbar from '@/components/filterNavbar'
 import PageHeader from '@/components/pageHeader/cover'
 import qs from 'qs'
-import PublicFetcher from '@/lib/publicFetch'
+import publicFetcher from '@/lib/publicFetch'
 import ProductList from '@/components/product/list'
 import { ProductListItem } from '@/interfaces/product'
 import { Col, Row } from 'antd'
@@ -46,7 +46,6 @@ const Shop = () => {
       addQueryPrefix: true,
     }
   )
-
   const {
     data: productList,
     error,
@@ -54,7 +53,7 @@ const Shop = () => {
   } = useSWR<{
     rows: ProductListItem[]
     count: number
-  }>(`${apiUrl}${queryToString}`, PublicFetcher)
+  }>(`${apiUrl}${queryToString}`, publicFetcher)
 
   const handlePageChange = (query: any) => {
     router.push(

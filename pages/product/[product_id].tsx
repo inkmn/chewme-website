@@ -3,122 +3,46 @@ import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import PublicFetcher from '@/lib/publicFetch'
+import publicFetcher from '@/lib/publicFetch'
 import useSWR from 'swr'
 import ProductItem from '@/interfaces/product'
-import {
-  Alert,
-  Button,
-  Col,
-  Divider,
-  Image,
-  notification,
-  Row,
-  Space,
-  Tag,
-  Typography,
-} from 'antd'
-import { Pagination } from 'swiper'
-import Test from '../../assets/product/dogs (1).jpg'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { FreeMode, Navigation, Thumbs } from 'swiper'
-import BottomShape from '@/components/bottomShape'
-import BoneButtonFlat from '@/components/boneButtonFlat'
+import { Col, Row, Tag, Typography } from 'antd'
 import { HeartFilled, HeartOutlined, StarFilled } from '@ant-design/icons'
+import CarouselThumb from '@/components/product/thumbs'
 import useInit from '@/hooks/useInit'
-import useUser from '@/hooks/useUser'
-import Privatefetcher from '@/lib/privateFetch'
+import AddToCartForm from '@/components/forms/addToCart'
 
-const { Title, Paragraph, Text, Link } = Typography
+const { Paragraph, Link } = Typography
+
 const ProductDetail = () => {
-  const { mutate } = useUser()
+  const {
+    data: { categories_indexed },
+  } = useInit()
   const router = useRouter()
-  const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const [isFav, setIsFav] = useState(true)
   const { product_id } = router.query
-  const { data } = useInit()
   const { data: productData } = useSWR<ProductItem>(
     product_id ? `/pub/product/${product_id}` : null,
-    PublicFetcher
+    publicFetcher
   )
-
-  const addToCart = async () => {
-    try {
-      await Privatefetcher(`/app/order/add_cart`, {
-        method: 'POST',
-        body: JSON.stringify({
-          note: '',
-          products: [
-            {
-              product_id,
-              coupon_code: '',
-              quantity: 1,
-            },
-          ],
-        }),
-      })
-      mutate()
-    } catch (error: any) {
-      notification.error({
-        message: error.data.message,
-      })
-    }
-  }
 
   return (
     <Layout>
       <PageHeader image={`/paws-bg.png`} position="top" />
       <StyledProductDetail>
         <div className="container">
-          {/* <pre style={{ display: '' }}>
-            {JSON.stringify(productData, null, 2)}
-          </pre> */}
-
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={24} md={24} lg={10} xl={10} xxl={10}>
-              <StyledSwiper>
-                <Swiper
-                  loop={true}
-                  spaceBetween={2}
-                  navigation={true}
-                  thumbs={{ swiper: thumbsSwiper }}
-                  modules={[FreeMode, Navigation, Thumbs]}
-                  className="mySwiper2"
-                >
-                  {productData?.images?.map((item, index) => {
-                    return (
-                      <SwiperSlide key={index}>
-                        <ImageFull>
-                          <Image src={`${data?.s3 || ''}${item.url}`} />
-                        </ImageFull>
-                      </SwiperSlide>
-                    )
-                  })}
-                </Swiper>
-                <Swiper
-                  // onSwiper={(e) => setThumbsSwiper(e)}
-                  loop={false}
-                  spaceBetween={30}
-                  slidesPerView={4}
-                  freeMode={true}
-                  watchSlidesProgress={true}
-                  modules={[FreeMode, Navigation, Thumbs]}
-                  className="mySwiper"
-                >
-                  {productData?.images?.map((item, index) => {
-                    return (
-                      <SwiperSlide key={index}>
-                        <Items>
-                          <img src={`${data?.s3 || ''}${item.url}`} />
-                        </Items>
-                      </SwiperSlide>
-                    )
-                  })}
-                </Swiper>
-              </StyledSwiper>
+          <Row gutter={[24, 24]}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
+              <CarouselThumb images={productData?.images} />
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={10}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
               <Details>
+                <Tag>
+                  {
+                    (categories_indexed[productData?.category_id || ''] || {})
+                      .name
+                  }
+                </Tag>
                 <div className="head-title">
                   <h1>{productData?.name}</h1>
 
@@ -133,7 +57,7 @@ const ProductDetail = () => {
                     <StarFilled />
                     <StarFilled />
                   </div>
-                  <div className="txt">DC2020230</div>
+                  <div className="txt">{productData?.code}</div>
                 </div>
                 <hr style={{ minWidth: '300px', margin: '30px 0' }} />
                 <div className="price">
@@ -143,58 +67,39 @@ const ProductDetail = () => {
                 </div>
                 <hr style={{ minWidth: '300px', margin: '30px 0' }} />
 
-                <Alert
-                  style={{ width: '100%' }}
-                  message={
-                    <Paragraph style={{ maxWidth: '580px', width: '100%' }}>
-                      <h5>Key Benefits :</h5>
-                      <ul>
-                        <li>
-                          <Link href="/docs/spec/proximity">
-                            All-natural and easily digestible
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/docs/spec/overview">
-                            Great source of protein, heart-healthy fats, and
-                            niacin
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/docs/resources">
-                            Portable, quick, convenient training treat
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/docs/resources">
-                            Lactose, grain, and gluten-free
-                          </Link>
-                        </li>
-                      </ul>
-                    </Paragraph>
-                  }
-                  type="info"
-                />
-                <StyledAction>
-                  <Space>
-                    <Button size="small" shape="circle">
-                      -
-                    </Button>
-                    <div className="number">3</div>
-                    <Button size="small" shape="circle">
-                      +
-                    </Button>
-                  </Space>
-                  <Button
-                    className="add-cart"
-                    shape="round"
-                    type="primary"
-                    size="large"
-                  >
-                    Add cart
-                  </Button>
-                </StyledAction>
-                <p>{productData?.description || 'Empty'}</p>
+                <Paragraph style={{ maxWidth: '580px', width: '100%' }}>
+                  <h5>Key Benefits :</h5>
+                  <ul>
+                    <li>
+                      <Link href="/docs/spec/proximity">
+                        All-natural and easily digestible
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/docs/spec/overview">
+                        Great source of protein, heart-healthy fats, and niacin
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/docs/resources">
+                        Portable, quick, convenient training treat
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/docs/resources">
+                        Lactose, grain, and gluten-free
+                      </Link>
+                    </li>
+                  </ul>
+                </Paragraph>
+
+                {productData ? (
+                  <AddToCartForm
+                    productId={productData.id}
+                    stock={productData?.stock_available}
+                  />
+                ) : null}
+                <p>{productData?.description}</p>
               </Details>
             </Col>
           </Row>
@@ -204,38 +109,7 @@ const ProductDetail = () => {
   )
 }
 
-const StyledAction = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  gap: 10px;
-  height: 300px;
-  align-items: center;
-  margin-top: 40px;
-
-  .add-cart {
-    background: #ff4d4f;
-    border: none;
-    &:focus {
-    }
-
-    &.ant-btn.ant-btn-primary,
-    &.ant-btn-primary {
-      background-color: var(--primary-red);
-      border-color: var(--primary-red);
-      &:hover {
-        background-color: var(--primary-red) !important;
-        border-color: var(--primary-red) !important;
-      }
-    }
-  }
-  .number {
-    font-size: 23px;
-  }
-`
-
 const Details = styled.div`
-  height: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -246,6 +120,9 @@ const Details = styled.div`
     justify-content: space-between;
     flex-direction: row;
     width: 100%;
+    h1 {
+      color: var(--primary);
+    }
     .favorite {
       font-size: 26px;
       cursor: pointer;
@@ -339,7 +216,6 @@ const StyledSwiper = styled.div`
 
 const StyledProductDetail = styled.div`
   margin-top: 50px;
-  margin-bottom: 300px;
 `
 
 export default ProductDetail

@@ -3,7 +3,7 @@ import { Cookies } from 'react-cookie'
 
 const cookies = new Cookies()
 
-const Privatefetcher = async <T>(
+const privatefetcher = async <T>(
   input: string,
   args: RequestInit
 ): Promise<T> => {
@@ -40,4 +40,4 @@ const Privatefetcher = async <T>(
   return data
 }
 
-export default Privatefetcher
+export default privatefetcher

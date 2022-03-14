@@ -9,8 +9,8 @@ const ProductList = ({
 }): JSX.Element => {
   return (
     <StyledWrapper>
-      {data.map((item: any) => (
-        <div className="productListItem" key={item.id}>
+      {data.map((item, index) => (
+        <div className="productListItem" key={`${item.id}_${index}`}>
           <Card item={item} />
         </div>
       ))}

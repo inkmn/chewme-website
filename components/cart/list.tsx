@@ -2,12 +2,18 @@ import styled from 'styled-components'
 import Item from '@/components/cart/item'
 import CartType from '@/interfaces/cart'
 
-const CartList = ({ data = [] }: { data?: CartType[] }): JSX.Element => {
+const CartList = ({
+  data = [],
+  mutate,
+}: {
+  data?: CartType[]
+  mutate?: any
+}): JSX.Element => {
   return (
     <StyledWrapper>
       {data.map((item: any) => (
         <div className="item" key={item.id}>
-          <Item item={item} />
+          <Item mutate={mutate} item={item} />
         </div>
       ))}
     </StyledWrapper>

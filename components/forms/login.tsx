@@ -11,7 +11,7 @@ import { Form, FormItem, Input } from 'formik-antd'
 import * as Yup from 'yup'
 import { Cookies } from 'react-cookie'
 import { useRouter } from 'next/router'
-import http from '@/lib/publicFetch'
+import publicFetch from '@/lib/publicFetch'
 import styled from 'styled-components'
 import useUser from '@/hooks/useUser'
 
@@ -30,10 +30,13 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
     actions: { setSubmitting: (arg0: boolean) => void }
   ): Promise<void> => {
     try {
-      const res = await http<{ access_token: string }>(`/app/auth/login`, {
-        method: 'POST',
-        body: JSON.stringify(values),
-      })
+      const res = await publicFetch<{ access_token: string }>(
+        `/app/auth/login`,
+        {
+          method: 'POST',
+          body: JSON.stringify(values),
+        }
+      )
       cookies.set('token', res.access_token)
       // router.push(`/`)
       mutate()

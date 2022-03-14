@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import InitType from '@/interfaces/initType'
-import PublicFetcher from '@/lib/publicFetch'
+import publicFetcher from '@/lib/publicFetch'
 import arrayToTree from 'array-to-tree'
 
 const useInit = (): {
@@ -27,7 +27,7 @@ const useInit = (): {
   } = useSWR<InitType>(
     '/pub/general/init',
     async (input) => {
-      const initRes = await PublicFetcher<InitType>(input, {
+      const initRes = await publicFetcher<InitType>(input, {
         method: 'GET',
       })
       const gahai = {

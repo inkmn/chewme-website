@@ -3,8 +3,34 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import CartType from '@/interfaces/cart'
 import RemoveIcon from '../../assets/remove.svg'
+import privatefetcher from '@/lib/privateFetch'
+import { Button, Space } from 'antd'
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
 
-const CartItem = ({ item }: { item: CartType }): JSX.Element => {
+const CartItem = ({
+  item,
+  mutate,
+}: {
+  item: CartType
+  mutate: any
+}): JSX.Element => {
+  const removeItemFromCart = async (): Promise<void> => {
+    await privatefetcher(`/app/order/${item.id}/remove_cart`, {
+      method: 'DELETE',
+    })
+    mutate()
+  }
+
+  const updateQuantity = async (quantity: number): Promise<void> => {
+    await privatefetcher(`/app/order/${item.id}/update_cart`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        quantity: quantity,
+      }),
+    })
+    mutate()
+  }
+
   return (
     <StyledWrapper>
       <Image
@@ -22,13 +48,28 @@ const CartItem = ({ item }: { item: CartType }): JSX.Element => {
               <a>{item.name}</a>
             </Link>
           </div>
-          <a>
+          <a onClick={removeItemFromCart}>
             <RemoveIcon />
           </a>
         </div>
         <div className="if-bottom">
-          <div className="ifb-quantity">{item.quantity}</div>
-          <div className="ifb-price">{item.price}</div>
+          <div className="ifb-quantity">
+            <Space>
+              <Button
+                disabled={item.quantity <= 1}
+                onClick={() => updateQuantity(item.quantity - 1)}
+                type="link"
+                icon={<MinusCircleOutlined />}
+              />
+              <span>{item.quantity}</span>
+              <Button
+                onClick={() => updateQuantity(item.quantity + 1)}
+                type="link"
+                icon={<PlusCircleOutlined />}
+              />
+            </Space>
+          </div>
+          <div className="ifb-price">{item.price * item.quantity}</div>
         </div>
       </div>
     </StyledWrapper>
@@ -36,9 +77,8 @@ const CartItem = ({ item }: { item: CartType }): JSX.Element => {
 }
 
 const StyledWrapper = styled.div`
-  padding: 20px 30px;
+  padding: 20px 0;
   display: flex;
-  padding: 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   .item-info {
     flex: 1;

@@ -1,6 +1,6 @@
 enum InputType {
   OUT = 'OUT',
-  OTHER = 'OTHER',
+  IN = 'IN',
 }
 
 interface CartType {

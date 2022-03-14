@@ -25,6 +25,11 @@ const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
           <a>{item.name}</a>
         </Link>
       </div>
+      {!item.stock_avialable ? (
+        <div className="outofstock">Out of Stock</div>
+      ) : (
+        <div className="instock">In Stock</div>
+      )}
       <div className="card-footer">
         <span>${item.price} /</span>
         <span className="last-child"> {item.dc_price} DC</span>
@@ -39,6 +44,13 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .outofstock {
+    color: #ff4d4f;
+  }
+  .instock {
+    color: var(--primary);
+  }
 
   .card-title {
     padding: 0 1rem;

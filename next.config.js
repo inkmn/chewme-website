@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
-const proxyHost = 'http://dev-dc-app.goodtech.mn'
-// const proxyHost = 'http://192.168.1.210:30527'
+// const proxyHost = 'http://dev-dc-app.goodtech.mn'
+const proxyHost = 'http://192.168.1.210:30527'
 const nextConfig = {
   reactStrictMode: true,
   images: {

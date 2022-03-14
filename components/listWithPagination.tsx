@@ -1,7 +1,6 @@
 import Spinner from '@/components/spinner'
-import { Empty, Pagination, Row } from 'antd'
+import { Col, Empty, Pagination, Row } from 'antd'
 import { useRouter } from 'next/router'
-import qs from 'qs'
 
 const ListWithPagination = ({
   children,
@@ -53,12 +52,14 @@ const ListWithPagination = ({
       <div>{children}</div>
       {parseInt(data?.count || 0, 10) > limit ? (
         <Row justify="end">
-          <Pagination
-            pageSize={limit}
-            current={page}
-            total={data?.count}
-            onChange={handlePageChange}
-          />
+          <Col>
+            <Pagination
+              pageSize={limit}
+              current={page}
+              total={data?.count}
+              onChange={handlePageChange}
+            />
+          </Col>
         </Row>
       ) : null}
     </div>
