@@ -7,11 +7,13 @@ import {
 } from '@ant-design/icons'
 import { Space } from 'antd'
 import styled from 'styled-components'
+import Divider from './devider'
 
 const Footer = (): JSX.Element => {
   return (
     <StyledWrapper>
       <div className="container">
+        <Divider />
         <div className="ig-head">
           <div className="ig-image-btn">
             <img
