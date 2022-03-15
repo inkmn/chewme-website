@@ -69,7 +69,7 @@ const CartItem = ({
               />
             </Space>
           </div>
-          <div className="ifb-price">{item.price * item.quantity}</div>
+          <div className="ifb-price">${item.price * item.quantity}</div>
         </div>
       </div>
     </StyledWrapper>
