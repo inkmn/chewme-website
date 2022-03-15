@@ -4,7 +4,7 @@ import 'swiper/css/pagination'
 import 'swiper/css'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return <Component {...pageProps} />
 }
 

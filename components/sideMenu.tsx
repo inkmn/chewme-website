@@ -9,6 +9,7 @@ import {
 import { Drawer } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
+import ActiveLink from '@/components/activeLink'
 
 const cookies = new Cookies()
 
@@ -76,10 +77,34 @@ const SideMenu = ({
             </a>
           </>
         )}
+        <div className="drawer-menu-spacer" />
 
+        <div className="burger-header-links">
+          <div className="menu-item">
+            <Link href="/">
+              <a>Home</a>
+            </Link>
+          </div>
+          <div className="menu-item">
+            <ActiveLink href="/origin">
+              <a>Origin</a>
+            </ActiveLink>
+          </div>
+          <div className="menu-item">
+            <ActiveLink href="/shop">
+              <a>Products</a>
+            </ActiveLink>
+          </div>
+          <div className="menu-item">
+            <ActiveLink href="/dogechew">
+              <a>DC Coin</a>
+            </ActiveLink>
+          </div>
+        </div>
         <Link href="/contact-us">
           <a className="menu-item">Contact us</a>
         </Link>
+
         <div className="drawer-menu-spacer" />
         {!error ? (
           <>
@@ -100,6 +125,15 @@ const SideMenu = ({
 }
 
 const StyledMenu = styled(Drawer)`
+  .burger-header-links {
+    display: none;
+    .menu-item {
+      a {
+        color: #fff;
+      }
+    }
+  }
+
   .drawer-menu-spacer {
     margin: 1rem 0;
     border-bottom: 1px solid #fff;
@@ -108,6 +142,14 @@ const StyledMenu = styled(Drawer)`
   .drawerClose {
     color: #fff;
   }
+
+  .ant-drawer-content {
+    background-color: rgba(97, 126, 16, 0.8);
+  }
+  .ant-drawer-header {
+    background: transparent;
+  }
+
   .ant-drawer-footer {
     border: none;
     .drawer-footer {
@@ -124,12 +166,7 @@ const StyledMenu = styled(Drawer)`
       }
     }
   }
-  .ant-drawer-content {
-    background-color: rgba(97, 126, 16, 0.8);
-  }
-  .ant-drawer-header {
-    background: transparent;
-  }
+
   .ant-drawer-header-title {
     justify-content: flex-end;
     .ant-drawer-close {
@@ -187,6 +224,11 @@ const StyledMenu = styled(Drawer)`
       display: inline-block;
       opacity: 0;
       transition: transform 0.3s, opacity 0.2s;
+    }
+  }
+  @media (max-width: 1024px) {
+    .burger-header-links {
+      display: block;
     }
   }
 `

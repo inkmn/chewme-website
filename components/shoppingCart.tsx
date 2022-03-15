@@ -76,7 +76,7 @@ const ShoppingCart = () => {
           <div className="cart-total-amount">
             <Space>
               <span>Subtotal:</span>
-              <span>{(cartData?.cart_sum || {}).total_amount}</span>
+              <span>${(cartData?.cart_sum || {}).total_amount}</span>
             </Space>
           </div>
         </div>

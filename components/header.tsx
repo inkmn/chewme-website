@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 import ActiveLink from '@/components/activeLink'
-import { Badge, Button } from 'antd'
+import { Badge, Button, Drawer } from 'antd'
 import {
   MenuOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import useUser from '@/hooks/useUser'
+import { useState } from 'react'
 
 const Header = ({
   scroll,
@@ -18,7 +19,7 @@ const Header = ({
   setDrawer: (visible: boolean) => void
   setCartDrawer: (visible: boolean) => void
 }): JSX.Element => {
-  const { user, error, isValidating, mutate } = useUser()
+  const { user, error } = useUser()
   return (
     <SiteHeader className={scroll ? 'sticky' : ''}>
       <div className="nav-header container">
@@ -87,13 +88,13 @@ const Header = ({
     </SiteHeader>
   )
 }
-
 const SiteHeader = styled.div`
   width: 100%;
   position: fixed;
   z-index: 10;
   transition: all 0.4s ease-in-out;
   user-select: none;
+
   &.sticky {
     background-color: rgba(97, 126, 16, 0.8);
     backdrop-filter: saturate(180%) blur(20px);
@@ -168,6 +169,8 @@ const SiteHeader = styled.div`
     }
     .logo-wrapper {
       margin-right: 2rem;
+      display: flex;
+      align-items: center;
       a {
         display: flex;
         align-items: center;
@@ -183,6 +186,9 @@ const SiteHeader = styled.div`
       .header-links {
         display: none;
       }
+    }
+    .siteBurger {
+      display: block;
     }
   }
 `
