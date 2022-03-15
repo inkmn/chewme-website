@@ -29,16 +29,17 @@ const Settings = () => {
           <pre>{JSON.stringify(user, null, 2)}</pre> */}
 
           <h1>Edit Profile</h1>
-          <Formik
-            initialValues={{
-              username: '',
-            }}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form layout="vertical">
-                <Row gutter={[24, 24]}>
-                  <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+
+          <Row gutter={[24, 24]}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Formik
+                initialValues={{
+                  username: '',
+                }}
+                onSubmit={handleSubmit}
+              >
+                {({ isSubmitting }) => (
+                  <Form layout="vertical">
                     <div className="border">
                       <Row gutter={[16, 16]}>
                         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
@@ -71,26 +72,46 @@ const Settings = () => {
                         />
                       </Form.Item>
                     </div>
-                  </Col>
-                  <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                    <div className="flex-end">
+                      <Button
+                        htmlType="submit"
+                        type="primary"
+                        loading={isSubmitting}
+                        size="large"
+                        shape="round"
+                        className="btn-save"
+                      >
+                        Save changes
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Formik
+                initialValues={{
+                  username: '',
+                }}
+                onSubmit={handleSubmit}
+              >
+                {({ isSubmitting }) => (
+                  <Form layout="vertical">
                     <div className="border">
                       <Form.Item
                         name="current_password"
-                        label="Current password (leave blank to leave unchanged)"
+                        label="Current password"
                       >
                         <Input.Password
                           name="current_password"
-                          placeholder="Current password (leave blank to leave unchanged)"
+                          placeholder="Current password"
                           style={{ width: '100%' }}
                         />
                       </Form.Item>
-                      <Form.Item
-                        name="new_password"
-                        label="New password (leave blank to leave unchanged)"
-                      >
+                      <Form.Item name="new_password" label="New password">
                         <Input.Password
                           name="new_password"
-                          placeholder="New password (leave blank to leave unchanged)"
+                          placeholder="New password"
                         />
                       </Form.Item>
                       <Form.Item
@@ -103,22 +124,23 @@ const Settings = () => {
                         />
                       </Form.Item>
                     </div>
-                  </Col>
-                </Row>
-
-                <Button
-                  htmlType="submit"
-                  type="primary"
-                  loading={isSubmitting}
-                  size="large"
-                  shape="round"
-                  className="btn-save"
-                >
-                  Save changes
-                </Button>
-              </Form>
-            )}
-          </Formik>
+                    <div className="flex-end">
+                      <Button
+                        htmlType="submit"
+                        type="primary"
+                        loading={isSubmitting}
+                        size="large"
+                        shape="round"
+                        className="btn-save"
+                      >
+                        Save password
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </Col>
+          </Row>
         </div>
       </StyledSettings>
     </Layout>
