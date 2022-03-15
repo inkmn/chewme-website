@@ -207,3 +207,9 @@ body,
   transform: rotate(0deg);
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
+
+.flex-end {
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+}
