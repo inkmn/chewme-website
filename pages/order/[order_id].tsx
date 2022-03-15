@@ -18,6 +18,7 @@ import {
 import privatefetcher from '@/lib/privateFetch'
 import { FileImageOutlined } from '@ant-design/icons'
 import useInit from '@/hooks/useInit'
+import moment from 'moment'
 
 const OrderDetail = () => {
   const router = useRouter()
@@ -70,20 +71,21 @@ const OrderDetail = () => {
                   <Descriptions.Item label="Order no">
                     {orderData?.code}
                   </Descriptions.Item>
+                  <Descriptions.Item label="Create at">
+                    {moment(orderData?.created_at).format('YYYY MM/DD HH:mm') ||
+                      '-'}
+                  </Descriptions.Item>
                   <Descriptions.Item label="Retailer code">
-                    {orderData?.code}
+                    {orderData?.retailer_code || '-'}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Live">
-                    Hangzhou, Zhejiang
+                  <Descriptions.Item label="Retailer name">
+                    {orderData?.retailer_name || '-'}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Live">
-                    Hangzhou, Zhejiang
+                  <Descriptions.Item label="Product count">
+                    {orderData?.product_count || '-'}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Live">
-                    Hangzhou, Zhejiang
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Live">
-                    Hangzhou, Zhejiang
+                  <Descriptions.Item label="Product quantity">
+                    {orderData?.quantity || '-'}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>
@@ -93,10 +95,10 @@ const OrderDetail = () => {
                   column={2}
                   title={<h2 style={{ margin: 0 }}>Delivery information</h2>}
                 >
-                  <Descriptions.Item label="Delivery information">
+                  <Descriptions.Item label="shipping_address">
                     {orderData?.code}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Retailer code">
+                  <Descriptions.Item label="shipping address">
                     {orderData?.code}
                   </Descriptions.Item>
                   <Descriptions.Item label="Live">
