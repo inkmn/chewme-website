@@ -1,33 +1,46 @@
 import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
+import Image from 'next/Image'
 import useUser from '@/hooks/useUser'
 import {
   CaretUpOutlined,
   CopyOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
-import { Col, notification, Row } from 'antd'
+import { Col, message, notification, Row } from 'antd'
 import WalletIcon from '../assets/wallet1.svg'
+import useSWR from 'swr'
+import privatefetcher from '@/lib/privateFetch'
+import WalletType from '@/interfaces/walletType'
 
 const MyWallet = () => {
   const { user } = useUser()
+  const { data: walletData } = useSWR(
+    '/app/wallet/account',
+    async (input: string, args: RequestInit) => {
+      const res = await privatefetcher<WalletType[]>(input, args)
+
+      const returnData = {
+        addressList: res,
+        addressIndexed: res.reduce((acc: any, cur) => {
+          acc[cur.currency] = cur
+          return acc
+        }, {}),
+        dcAddress: res.find((item) => item.currency === 'DC'),
+      }
+
+      return returnData
+    }
+  )
   return (
     <Layout>
       <PageHeader title={`My wallet`} image={`/cover5.jpeg`} />
       <StyledMyWallet>
         <div className="container">
-          {/* This is MyWallet view
-          <pre>{JSON.stringify(user, null, 2)}</pre> */}
           <Row gutter={[32, 16]}>
             <Col span={24}>
-              <h1>My Cards</h1>
-              <p>
-                Excellent financial assistant, which enables to control your
-                income and expenses. One base for all devices. List reports on
-                different parameters. This is our in-house Digital Pass (Wallet)
-                application supporting all Apple Wallet-based digital cards.
-              </p>
+              <h1>My Wallet</h1>
             </Col>
             <Col xs={24} sm={24} md={12} lg={10} xl={10} xxl={10}>
               <VisaCard>
@@ -36,60 +49,50 @@ const MyWallet = () => {
                     <WalletIcon />
                     Wallet
                   </div>
-                  <span>DC 70.000</span>
+                  <span>DC {walletData?.dcAddress?.balance_amount}</span>
                 </div>
                 <div className="card-footer">
                   <div className="card-column">
                     <div className="crypto">Wallet address</div>
                     <div className="crypto-id">
-                      0x8d2135u1ne1xb51…{' '}
+                      <span className="walletDcAddress">
+                        {walletData?.dcAddress?.number}
+                      </span>
                       <span
                         onClick={() => {
-                          navigator.clipboard.writeText('0x8d2135u1ne1xb51…')
-                          notification.success({
-                            message: 'Copied wallet address!',
-                          })
+                          navigator.clipboard.writeText(
+                            walletData?.dcAddress?.number || ''
+                          )
+                          message.info('Copied wallet address!')
                         }}
                       >
                         <CopyOutlined />
                       </span>
                     </div>
                   </div>
-                  <div className="card-column">
-                    <div className="stonk-precent">
-                      <span>^</span>
-                      1.45%
-                    </div>
-                    <div className="stonk-value">820.320</div>
-                  </div>
+                  <div className="card-column"></div>
                 </div>
               </VisaCard>
             </Col>
             <Col xs={24} sm={24} md={12} lg={14} xl={14} xxl={14}>
               <div className="flex-end">
-                {[1, 2, 3].map((item, index) => {
+                {(walletData?.addressList || []).map((item, index) => {
                   return (
                     <Item key={index}>
                       <div>
-                        <img
+                        <Image
                           className="image"
+                          height={40}
+                          width={40}
                           src="/image 1.png"
                           alt=""
-                          srcSet=""
                         />
                       </div>
                       <div className="item-column">
                         <div className="balance">balance: </div>
-                        <div className="balance-total">USDT 4900.0 </div>
-                      </div>
-                      <div className="item-column">
-                        <div className="stonk">
-                          <div className="icon">
-                            <CaretUpOutlined />
-                          </div>
-                          <div className="precent">1.45%</div>
+                        <div className="balance-total">
+                          {item.currency} {item.balance_amount}
                         </div>
-                        <div className="precent-total">23.32</div>
                       </div>
                     </Item>
                   )
@@ -212,7 +215,7 @@ const Item = styled.div`
   justify-content: space-between;
   flex-direction: row;
   border-radius: 50px;
-  box-shadow: 0px 2px 10px -8px rgb(0 0 0 / 75%);
+  border: 1px solid var(--primary);
   align-items: center;
 
   .precent-total {
@@ -268,6 +271,14 @@ const VisaCard = styled.div`
     rgba(52, 83, 255, 1) 100%
   );
 
+  .walletDcAddress {
+    width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -283,6 +294,7 @@ const VisaCard = styled.div`
     }
     .crypto-id {
       font-size: 1.5em;
+      display: flex;
       span {
         cursor: pointer;
         font-size: 1em;

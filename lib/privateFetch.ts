@@ -8,7 +8,6 @@ const privatefetcher = async <T>(
   args: RequestInit
 ): Promise<T> => {
   const token = cookies.get('token')
-  console.log('token', token)
   if (!token) {
     const error = new ValidationError('Unauthorized')
     error.data = { code: 401, message: 'Unauthorized' }

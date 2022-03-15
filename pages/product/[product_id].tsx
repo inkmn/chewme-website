@@ -11,6 +11,7 @@ import { HeartFilled, HeartOutlined, StarFilled } from '@ant-design/icons'
 import CarouselThumb from '@/components/product/thumbs'
 import useInit from '@/hooks/useInit'
 import AddToCartForm from '@/components/forms/addToCart'
+import privatefetcher from '@/lib/privateFetch'
 
 const { Paragraph, Link } = Typography
 
@@ -21,7 +22,11 @@ const ProductDetail = () => {
   const router = useRouter()
   const [isFav, setIsFav] = useState(true)
   const { product_id } = router.query
-  const { data: productData, error } = useSWR<ProductItem>(
+  const {
+    data: productData,
+    error,
+    mutate,
+  } = useSWR<ProductItem>(
     product_id ? `/pub/product/${product_id}` : null,
     publicFetcher
   )
@@ -44,12 +49,22 @@ const ProductDetail = () => {
     )
   }
 
+  const setFavorite = async () => {
+    await privatefetcher(`/app/favorite`, {
+      method: 'POST',
+      body: JSON.stringify({ product_id }),
+    })
+    // await privatefetcher(`/app/favorite/${product_id}`, {
+    //   method: 'DELETE',
+    // })
+    mutate()
+  }
+
   return (
     <Layout>
       <PageHeader image={`/paws-bg.png`} position="top" />
       <StyledProductDetail>
         <div className="container">
-          <pre>{JSON.stringify(error, null, 2)}</pre>
           <Row gutter={[24, 24]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
               <CarouselThumb images={productData?.images} />
@@ -65,7 +80,7 @@ const ProductDetail = () => {
                 <div className="head-title">
                   <h1>{productData?.name}</h1>
 
-                  <div onClick={() => setIsFav(!isFav)} className="favorite">
+                  <div onClick={setFavorite} className="favorite">
                     {isFav ? <HeartFilled /> : <HeartOutlined />}
                   </div>
                 </div>
