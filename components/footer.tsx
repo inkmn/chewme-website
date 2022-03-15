@@ -5,6 +5,7 @@ import {
   InstagramFilled,
   InstagramOutlined,
   PhoneFilled,
+  QqOutlined,
   SendOutlined,
   TwitterOutlined,
   YoutubeFilled,
@@ -14,6 +15,7 @@ import { Col, Row, Space } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Divider from './devider'
+import Telegram from './../assets/telegram.svg'
 
 const Footer = (): JSX.Element => {
   return (
@@ -72,8 +74,8 @@ const Footer = (): JSX.Element => {
                 </a>
               </div>
               <div className="icon">
-                <a href="https://www.instagram.com/">
-                  <InstagramFilled />
+                <a href="https://twitter.com/?lang=en">
+                  <TwitterOutlined />
                 </a>
               </div>
               <div className="icon">
@@ -82,13 +84,13 @@ const Footer = (): JSX.Element => {
                 </a>
               </div>
               <div className="icon">
-                <a href="https://www.instagram.com/">
-                  <InstagramFilled />
+                <a href="https://en.mail.qq.com/">
+                  <QqOutlined />
                 </a>
               </div>
               <div className="icon">
-                <a href="https://www.instagram.com/">
-                  <InstagramFilled />
+                <a href="https://t.me/DCcoinmn">
+                  <Telegram />
                 </a>
               </div>
             </div>
@@ -158,6 +160,8 @@ const StyledWrapper = styled.div`
   .icons {
     display: flex;
     margin: auto -8px;
+    flex-wrap: wrap;
+    width: 150px;
   }
   .icon {
     cursor: pointer;
@@ -173,6 +177,7 @@ const StyledWrapper = styled.div`
     margin: 4px;
     a {
       color: var(--primary);
+      display: flex;
     }
   }
   .item-title {
@@ -258,10 +263,9 @@ const StyledWrapper = styled.div`
     }
   }
   @media only screen and (max-width: 767px) {
-    .nav-item {
-      text-align: center;
-    }
-    h3 {
+    h3,
+    .nav-item,
+    .logo-text {
       text-align: center;
     }
     .icons {
