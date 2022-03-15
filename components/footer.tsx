@@ -48,7 +48,11 @@ const Footer = (): JSX.Element => {
         </div>
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={24} lg={24} xl={6} xxl={6}>
-            <div className="logo-text">Dogechew</div>
+            <div className="logo-text">
+              <Link href="/">
+                <a>Dogechew</a>
+              </Link>
+            </div>
           </Col>
           <Col xs={24} sm={24} md={12} lg={8} xl={6} xxl={6}>
             <div className="nav-item">
@@ -57,7 +61,7 @@ const Footer = (): JSX.Element => {
               </Link>
             </div>
             <div className="nav-item">
-              <Link href="/contact">
+              <Link href="/contact-us">
                 <a>Contact us</a>
               </Link>
             </div>
@@ -113,7 +117,7 @@ const Footer = (): JSX.Element => {
               </Link>
             </div>
             <div className="nav-item">
-              <Link href="/fags">
+              <Link href="/faqs">
                 <a>FAQ</a>
               </Link>
             </div>
