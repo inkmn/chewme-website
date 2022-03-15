@@ -12,13 +12,16 @@ const CarouselThumb = ({
 }: {
   images: ProductImage[] | undefined
 }): JSX.Element => {
+  const [imagesList, setImageList] = useState(
+    images.length ? images : [{ url: '' }]
+  )
   const [thumbsSwiper, setThumbsSwiper] = useState<any>()
   return (
     <StyledWrapper>
       {/* Main Swiper -> pass thumbs swiper instance */}
       <div className="mainSwiperBox">
         <Swiper modules={[Thumbs]} thumbs={{ swiper: thumbsSwiper }}>
-          {images.map((item, index) => {
+          {imagesList.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 <div className="swiperItem">
@@ -47,7 +50,7 @@ const CarouselThumb = ({
           watchSlidesProgress
           onSwiper={setThumbsSwiper}
         >
-          {images.map((item, index) => {
+          {imagesList.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 {({ isActive }) => (
