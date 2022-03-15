@@ -1,11 +1,17 @@
 import {
   EnvironmentFilled,
+  FacebookFilled,
   FacebookOutlined,
+  InstagramFilled,
   InstagramOutlined,
   PhoneFilled,
+  SendOutlined,
+  TwitterOutlined,
+  YoutubeFilled,
   YoutubeOutlined,
 } from '@ant-design/icons'
-import { Space } from 'antd'
+import { Col, Row, Space } from 'antd'
+import Link from 'next/link'
 import styled from 'styled-components'
 import Divider from './devider'
 
@@ -26,7 +32,7 @@ const Footer = (): JSX.Element => {
           </div>
           <div>
             <h2>Dogechew</h2>
-            <p>follow to our Instagram</p>
+            <p>follow to our Instagram      </p>
           </div>
         </div>
         <div className="row">
@@ -38,66 +44,109 @@ const Footer = (): JSX.Element => {
             )
           })}
         </div>
-        <div className="nav-items">
-          If you have any question, please contact us at
-          <a href=""> doge-chew-mn@eshop.com </a>
-        </div>
-        <div className="nav-items">
-          <Space>
-            <EnvironmentFilled
-              style={{ fontSize: '22px', color: 'var(--primary)' }}
-            />
-            <span>4480 Chennault Beach Road Mukilteo, WA 98275</span>
-          </Space>
-        </div>
-        <div className="nav-items">
-          <Space>
-            <PhoneFilled
-              style={{ fontSize: '22px', color: 'var(--primary)' }}
-            />
-            <span>(+976) 8013-9260</span>
-          </Space>
-        </div>
-        <div className="nav-items">
-          <Space>
-            <a
-              className="icon"
-              target="_blank"
-              href="https://www.facebook.com"
-              rel="noreferrer"
-            >
-              <FacebookOutlined style={{ color: '#3b5998' }} />
-            </a>
-            <div className="drawer-icon-spacer" />
-            <a
-              className="icon"
-              target="_blank"
-              href="https://www.instagram.com"
-              rel="noreferrer"
-            >
-              <InstagramOutlined style={{ color: '#262626' }} />
-            </a>
-            <div className="drawer-icon-spacer" />
-            <a
-              className="icon"
-              target="_blank"
-              href="https://www.youtube.com"
-              rel="noreferrer"
-            >
-              <YoutubeOutlined style={{ color: '#cd201f' }} />
-            </a>
-          </Space>
-        </div>
-        <div className="space-between">
-          <p className="nav-items">
-            ©2022 DOGECHEW CORPORATION. ALL RIGHTS RESERVED | POWERED BY
-            GOODTECH TECHNOLOGY
-          </p>
-          {/* <img
-            src={'https://www.himalayan.pet/wp-content/uploads/paymet-1.png'}
-            alt=""
-          /> */}
-        </div>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={6} xxl={6}>
+            <div className="logo-text">Dogechew</div>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={8} xl={6} xxl={6}>
+            <div className="nav-item">
+              <Link href="/about">
+                <a>About us</a>
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link href="/contact">
+                <a>Contact us</a>
+              </Link>
+            </div>
+            <div className="nav-item">FOLLOW US</div>
+            <div className="icons">
+              <div className="icon">
+                <a href="https://www.facebook.com/dogechewcoin">
+                  <FacebookFilled />
+                </a>
+              </div>
+              <div className="icon">
+                <a href="https://www.youtube.com/watch?v=Y39QwuM6tGM">
+                  <YoutubeFilled />
+                </a>
+              </div>
+              <div className="icon">
+                <a href="https://www.instagram.com/">
+                  <InstagramFilled />
+                </a>
+              </div>
+              <div className="icon">
+                <a href="https://www.instagram.com/">
+                  <InstagramFilled />
+                </a>
+              </div>
+              <div className="icon">
+                <a href="https://www.instagram.com/">
+                  <InstagramFilled />
+                </a>
+              </div>
+              <div className="icon">
+                <a href="https://www.instagram.com/">
+                  <InstagramFilled />
+                </a>
+              </div>
+            </div>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={8} xl={6} xxl={6}>
+            <h3 className="item-title">Partnership</h3>
+            <div className="nav-item">
+              <Link href="/retailer">
+                <a>Retailer</a>
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link href="/representatives">
+                <a>Representatives</a>
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link href="/supplier">
+                <a>Become Supplier</a>
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link href="/fags">
+                <a>FAQ</a>
+              </Link>
+            </div>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={8} xl={6} xxl={6}>
+            <h3 className="item-title">Imported Links</h3>
+            <div className="nav-item">
+              <Link href="/privacy-policy">
+                <a>Privacy Policy</a>
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link href="/return-policy">
+                <a>Return and Refund policy</a>
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link href="/term">
+                <a>Terms & Conditions</a>
+              </Link>
+            </div>
+          </Col>
+          <Col span={24}>
+            <div className="powered-by">
+              &copy;2022 DOGECHEW.ALL RIGHT RESERVED | POWERED BY{' '}
+              <a
+                href="http://goodtech-soft.mn"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GOODTECH SOFT
+              </a>
+            </div>
+          </Col>
+        </Row>
       </div>
     </StyledWrapper>
   )
@@ -106,12 +155,60 @@ const Footer = (): JSX.Element => {
 const StyledWrapper = styled.div`
   margin-top: 60px;
 
+  .icons {
+    display: flex;
+    margin: auto -8px;
+  }
+  .icon {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+    color: var(--primary);
+    font-size: 1.3rem;
+    margin: 4px;
+    a {
+      color: var(--primary);
+    }
+  }
+  .item-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .nav-item {
+    font-size: 1rem;
+    a {
+      color: #000;
+      :hover {
+        color: var(--primary);
+      }
+    }
+  }
+  .powered-by {
+    text-align: center;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin: 20px 0;
+  }
+  .logo-text {
+    text-transform: uppercase;
+    font-size: 2.7rem;
+    line-height: 2.7rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 20px;
+  }
   .ig-head {
     display: flex;
     flex-direction: row;
     gap: 8px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     :hover {
       .ig-image-btn {
       }
@@ -154,19 +251,25 @@ const StyledWrapper = styled.div`
     width: 100%;
     align-items: center;
   }
-  .nav-items {
-    .icon {
-      font-size: 32px;
-    }
-  }
-  .nav-items {
-    max-width: 300px;
-    margin-top: 10px;
-  }
 
   @media only screen and (max-width: 1000px) {
     .row {
       justify-content: center;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .nav-item {
+      text-align: center;
+    }
+    h3 {
+      text-align: center;
+    }
+    .icons {
+      text-align: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 0;
     }
   }
 `
