@@ -98,7 +98,7 @@ const OrderDetail = () => {
                   </div>
 
                   <div className="headCol">
-                    <h3>Total</h3>
+                    <h3 className="text-end">Total</h3>
 
                     <div className="shipping-box paidAmount">
                       <span>{orderData?.paid_amount}</span>
@@ -199,8 +199,12 @@ const TotalStyled = styled.div`
   font-size: 1.1rem;
   color: #333;
 
+  .text-end {
+    text-align: end;
+  }
   h3 {
     color: #8e8e8e;
+    font-weight: 600;
   }
   .ant-tag {
     font-size: 2rem;
@@ -211,6 +215,7 @@ const TotalStyled = styled.div`
     flex-direction: column;
     &.paidAmount {
       font-size: 3rem;
+      color: var(--primary);
     }
     .orderStatus {
       font-size: 2rem;
