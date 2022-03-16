@@ -162,7 +162,7 @@ const OrderDetail = () => {
               </ProductsTable>
             </Col>
           </Row>
-          <pre>{JSON.stringify(orderData, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
         </div>
       </StyledOrderDetail>
     </Layout>
@@ -182,6 +182,7 @@ const ProductsTable = styled.table`
       margin: 0;
       color: #8e8e8e;
       font-size: 1rem;
+      line-height: 1.2rem;
       width: 300px;
     }
     text-align: end;
@@ -195,10 +196,9 @@ const ProductsTable = styled.table`
 `
 
 const TotalStyled = styled.div`
-  height: 300px;
   font-size: 1.1rem;
   color: #333;
-
+  margin-bottom: 10px;
   .text-end {
     text-align: end;
   }
@@ -231,6 +231,9 @@ const TotalStyled = styled.div`
 const StyledOrderDetail = styled.div`
   margin-top: 2rem;
 
+  .container {
+    max-width: 900px;
+  }
   h1 {
     font-size: 2rem;
     font-weight: 700;
