@@ -168,7 +168,7 @@ const OrderDetail = () => {
 const ProductsTable = styled.div`
   width: 100%;
   overflow: auto;
-  padding-bottom: 20px;
+  padding-bottom: 24px;
   margin-top: 20px;
 
   table {
