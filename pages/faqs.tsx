@@ -2,6 +2,7 @@ import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { Collapse } from 'antd'
+import Divider from '@/components/devider'
 
 const { Panel } = Collapse
 const Origin = () => {
@@ -14,21 +15,24 @@ const Origin = () => {
       <PageHeader title={`Frequently Ask Questions`} image={`/cover4.jpeg`} />
       <StyledOrigin>
         <div className="container">
-          <Collapse
-            // defaultActiveKey={['0']}
-            expandIcon={({ isActive }) =>
-              isActive ? <div>+</div> : <div>-</div>
-            }
-            expandIconPosition="right"
-          >
-            {data.map((item, index) => {
-              return (
-                <Panel header={item.title} key={index}>
-                  <p>{item.description}</p>
-                </Panel>
-              )
-            })}
-          </Collapse>
+          <Divider />
+          <div className="wrapper">
+            <Collapse
+              // defaultActiveKey={['0']}
+              expandIcon={({ isActive }) =>
+                isActive ? <div>+</div> : <div>-</div>
+              }
+              expandIconPosition="right"
+            >
+              {data.map((item, index) => {
+                return (
+                  <Panel header={item.title} key={index}>
+                    <p>{item.description}</p>
+                  </Panel>
+                )
+              })}
+            </Collapse>
+          </div>
         </div>
       </StyledOrigin>
     </Layout>
@@ -36,10 +40,11 @@ const Origin = () => {
 }
 
 const StyledOrigin = styled.div`
-  min-height: 500px;
-  margin: 50px auto;
-  max-width: 870px;
-
+  .wrapper {
+    min-height: 500px;
+    margin: 50px auto;
+    max-width: 870px;
+  }
   p {
     font-size: 1.2em;
   }

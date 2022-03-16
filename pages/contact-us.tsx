@@ -121,7 +121,6 @@ const ContactUs = () => {
                             loading={isSubmitting}
                             size="large"
                             shape="round"
-                            className="btn-save"
                           >
                             Message us
                           </Button>
