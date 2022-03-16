@@ -48,7 +48,7 @@ const OrderDetail = () => {
           <div className="container">
             <div>
               <Empty
-                description={error.data.message}
+                description={error?.data?.message}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
               />
             </div>
@@ -192,39 +192,14 @@ const ProductsTable = styled.table`
   }
 `
 
-const StyledList = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  gap: 20px;
-  border-bottom: 1px solid #dadada;
-  padding: 20px 0;
-
-  .productsCol {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    max-width: 300px;
-
-    .productDescription {
-      font-size: 1rem;
-      color: #8e8e8e;
-    }
-    span {
-      font-size: 1.2rem;
-    }
-
-    .productName {
-      font-weight: 600;
-    }
-  }
-`
-
 const TotalStyled = styled.div`
   height: 300px;
   font-size: 1.1rem;
   color: #333;
 
+  h3 {
+    color: #8e8e8e;
+  }
   .ant-tag {
     font-size: 2rem;
     padding: 5px;
@@ -243,11 +218,6 @@ const TotalStyled = styled.div`
   .head {
     display: flex;
     justify-content: space-between;
-    .label {
-      font-size: 1.1em;
-      font-weight: 700;
-      color: #8e8e8e;
-    }
   }
 `
 
