@@ -75,9 +75,18 @@ const OrderDetail = () => {
                         <span>{orderData?.order_shipping?.last_name}</span>
                         <span>{orderData?.order_shipping?.first_name}</span>
                       </Space>
-                      <span>{orderData?.order_shipping?.country_code}</span>
-                      <span>{orderData?.order_shipping?.state_code}</span>
-                      <span>{orderData?.order_shipping?.city_code}</span>
+                      <span>
+                        {orderData?.order_shipping?.country_code || '1010'}
+                        <span className="desc">(country code)</span>
+                      </span>
+                      <span>
+                        {orderData?.order_shipping?.state_code}
+                        <span className="desc">(state)</span>
+                      </span>
+                      <span>
+                        {orderData?.order_shipping?.city_code}
+                        <span className="desc">(city code)</span>
+                      </span>
                       <span>{orderData?.order_shipping?.phone}</span>
                       <span>{orderData?.order_shipping?.address}</span>
                     </div>
@@ -198,6 +207,13 @@ const TotalStyled = styled.div`
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 10px;
+
+  .desc {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-left: 8px;
+    color: #8e8e8e;
+  }
   .text-end {
     text-align: end;
   }
