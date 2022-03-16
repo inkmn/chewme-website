@@ -182,7 +182,6 @@ const ProductsTable = styled.table`
       margin: 0;
       color: #8e8e8e;
       font-size: 1rem;
-      line-height: 1.2rem;
       width: 300px;
     }
     text-align: end;
@@ -213,6 +212,7 @@ const TotalStyled = styled.div`
   .shipping-box {
     display: flex;
     flex-direction: column;
+    line-height: 2.5rem;
     &.paidAmount {
       font-size: 3rem;
       color: var(--primary);
