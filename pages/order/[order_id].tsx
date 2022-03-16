@@ -157,7 +157,12 @@ const OrderDetail = () => {
                 <div className="list-item" key={index}>
                   <div className="item-left">
                     <div className="item-image">
-                      <Image height={70} width={70} src={'/banner2.jpeg'} />
+                      <Image
+                        height={70}
+                        width={70}
+                        src={'/banner2.jpeg'}
+                        alt=""
+                      />
                     </div>
                     <div className="column">
                       <div className="item-title">{item?.name}</div>
