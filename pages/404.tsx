@@ -20,7 +20,7 @@ const Custom404 = () => {
             <Button
               className="btn-green"
               type="primary"
-              // onClick={() => router.push('/')}
+              onClick={() => router.push('/')}
             >
               Back Home
             </Button>
