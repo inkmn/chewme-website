@@ -62,8 +62,8 @@ const OrderDetail = () => {
     <Layout>
       <PageHeader title={`My Order`} image={`/cover5.jpeg`} height={400} />
       <StyledOrderDetail>
-        <div className="container" style={{ maxWidth: '900px' }}>
-          <h1>Order details</h1>
+        <div className="container">
+          <h1>Order no: {orderData?.code}</h1>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <TotalStyled>
