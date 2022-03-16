@@ -21,12 +21,14 @@ import { FileImageOutlined } from '@ant-design/icons'
 import useInit from '@/hooks/useInit'
 import moment from 'moment'
 import OrderItemType from '@/interfaces/orderItem'
-import { dateFormat, datetimeFormat } from '@/utils/index'
+import { dateFormat, datetimeFormat, formatterUSD } from '@/utils/index'
+import Item from 'antd/lib/list/Item'
 
 const OrderDetail = () => {
   const router = useRouter()
   const { data } = useInit()
   const { order_id } = router.query
+
   const { data: orderData, error } = useSWR<OrderItemType>(
     order_id ? `/app/order/${order_id}/get` : null,
     privatefetcher
@@ -94,7 +96,6 @@ const OrderDetail = () => {
 
                   <div className="headCol">
                     <h3>Order info</h3>
-
                     <div className="shipping-box">
                       <div className="orderStatus">
                         <Space>
@@ -109,8 +110,8 @@ const OrderDetail = () => {
                   <div className="headCol">
                     <h3 className="text-end">Total</h3>
 
-                    <div className="shipping-box paidAmount">
-                      <span>{orderData?.paid_amount}</span>
+                    <div className="shipping-box paidAmount text-end">
+                      {formatterUSD(orderData?.total_amount)}
                     </div>
                   </div>
                 </div>
@@ -124,54 +125,38 @@ const OrderDetail = () => {
                   <td>Quantity</td>
                   <td>Amount</td>
                 </tr>
-                <tr>
-                  <td>
-                    <div className="title">Item name</div>
-                    <p className="description">
-                      Item descriotion ggoes here ....
-                    </p>
-                  </td>
-                  <td>$ 9.99</td>
-                  <td>9</td>
-                  <td>$ 89.91</td>
+
+                {orderData?.products?.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>
+                        <div className="title">{item?.name}</div>
+                        <p className="description">{item.code}</p>
+                      </td>
+                      <td>{formatterUSD(item?.price)}</td>
+                      <td>{item.quantity}</td>
+                      <td>{formatterUSD(item?.total_amount)}</td>
+                    </tr>
+                  )
+                })}
+                <tr style={{ border: 'none' }}>
+                  <td></td>
+                  <td></td>
+                  <td>Total Quantity</td>
+                  <td>{orderData?.quantity}</td>
                 </tr>
-                <tr>
-                  <td>
-                    <div className="title">Item name</div>
-                    <p className="description">
-                      Item descriotion ggoes here ....
-                    </p>
+                <tr style={{ border: 'none' }}>
+                  <td></td>
+                  <td></td>
+                  <td>shipping additional fee</td>
+                  <td className="color-red bold">
+                    {formatterUSD(orderData?.shipping_additional_fee)}
                   </td>
-                  <td>$ 9.99</td>
-                  <td>9</td>
-                  <td>$ 89.91</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="title">Item name</div>
-                    <p className="description">
-                      Item descriotion ggoes here ....
-                    </p>
-                  </td>
-                  <td>$ 9.99</td>
-                  <td>9</td>
-                  <td>$ 89.91</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="title">Item name</div>
-                    <p className="description">
-                      Item descriotion ggoes here ....
-                    </p>
-                  </td>
-                  <td>$ 9.99</td>
-                  <td>9</td>
-                  <td>$ 89.91</td>
                 </tr>
               </ProductsTable>
             </Col>
           </Row>
-          {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
+          <pre>{JSON.stringify(orderData, null, 2)}</pre>
         </div>
       </StyledOrderDetail>
     </Layout>
@@ -182,11 +167,22 @@ const ProductsTable = styled.table`
   width: 100%;
   border-top: 2px solid var(--primary);
   color: #333;
+
+  .color-red {
+    color: #e8213a;
+  }
+  .bold {
+    font-weight: 600;
+  }
+
+  tr {
+    border-bottom: 1px solid #dadada;
+  }
   td {
     font-size: 1.2rem;
     padding: 15px 0;
-    border-bottom: 1px solid #dadada;
     width: max-content;
+    min-width: 100px;
     p {
       margin: 0;
       color: #8e8e8e;
@@ -228,7 +224,6 @@ const TotalStyled = styled.div`
   .shipping-box {
     display: flex;
     flex-direction: column;
-    line-height: 2.5rem;
     &.paidAmount {
       font-size: 3rem;
       color: var(--primary);
