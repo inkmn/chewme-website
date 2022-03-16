@@ -59,7 +59,7 @@ const OrderDetail = () => {
       <PageHeader title={`My Order`} image={`/cover5.jpeg`} height={400} />
       <StyledOrderDetail>
         <div className="container">
-          <h1>Order list</h1>
+          <h1>Order no: {orderData?.code}</h1>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={24} lg={12} xl={14} xxl={14}>
               <Card>
