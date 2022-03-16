@@ -10,8 +10,6 @@ body,
 #__next {
   height: 100%;
   font-family: 'Ubuntu Mono', monospace;
-  /* font-family: 'PetcoCircular-MediumItalic', 'Segoe UI', Roboto, Arial,
-    sans-serif; */
 }
 
 .container,

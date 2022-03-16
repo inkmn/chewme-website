@@ -19,8 +19,6 @@ const S3Image = ({
   const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
     return `${data?.s3 || ''}${src}?w=${width}&q=${quality || 75}`
   }
-  console.log('#######', srcProp)
-
   if (!srcProp || srcProp === '') {
     return (
       <Image

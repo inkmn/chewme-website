@@ -8,20 +8,20 @@ import Image from '@/components/s3Image'
 import classnames from 'classnames'
 
 const CarouselThumb = ({
-  images = [],
+  images,
 }: {
   images: ProductImage[] | undefined
 }): JSX.Element => {
-  const [imagesList, setImageList] = useState(
-    images.length ? images : [{ url: '' }]
-  )
   const [thumbsSwiper, setThumbsSwiper] = useState<any>()
+
+  if (!images) return <>loading</>
+
   return (
     <StyledWrapper>
       {/* Main Swiper -> pass thumbs swiper instance */}
       <div className="mainSwiperBox">
         <Swiper modules={[Thumbs]} thumbs={{ swiper: thumbsSwiper }}>
-          {imagesList.map((item, index) => {
+          {images.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 <div className="swiperItem">
@@ -50,7 +50,7 @@ const CarouselThumb = ({
           watchSlidesProgress
           onSwiper={setThumbsSwiper}
         >
-          {imagesList.map((item, index) => {
+          {images.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 {({ isActive }) => (
@@ -100,6 +100,8 @@ const StyledWrapper = styled.div`
   .swiperItem {
     border-radius: 10px;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 `
 export default CarouselThumb

@@ -4,22 +4,64 @@ import styled from 'styled-components'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import breedSizeData from '@/constants/breedSize.json'
+import qs from 'qs'
+import { useState } from 'react'
+import { CloseOutlined } from '@ant-design/icons'
 
 const FilterNavbar = ({
   pathname = '/',
+  options = [],
 }: {
   pathname: string
+  options: any[]
 }): JSX.Element => {
+  const {
+    data: { categories_tree },
+  } = useInit()
   const router = useRouter()
   const {
     page = 1,
-    limit = 4,
+    limit = 12,
     query = '',
     category_id = '',
     start_date = '',
     end_date = '',
+    optional = '',
+    optional_type = '',
   } = router.query as any
-  const { data } = useInit()
+
+  const [optionalList, setIsOptionalList] = useState(
+    optional ? optional.split('|') : []
+  )
+
+  const updateQueryString = (id: string) => {
+    let newOptionalList = []
+    if (optionalList.includes(id)) {
+      newOptionalList = optionalList.filter((item: string) => item !== id)
+    } else {
+      newOptionalList = [...optionalList, id]
+    }
+    router.push(
+      `${pathname}${qs.stringify(
+        {
+          page,
+          limit,
+          query,
+          category_id,
+          start_date,
+          end_date,
+          optional: newOptionalList.join('|'),
+          optional_type,
+        },
+        {
+          encode: false,
+          addQueryPrefix: true,
+        }
+      )}`
+    )
+    setIsOptionalList(newOptionalList)
+  }
+
   return (
     <StyledFilterBar>
       <div className="categories filterSection">
@@ -34,7 +76,7 @@ const FilterNavbar = ({
             <a>All</a>
           </Link>
         </div>
-        {data.categories_tree.map((category) => (
+        {categories_tree.map((category) => (
           <div
             className={classnames([
               'category-item',
@@ -65,18 +107,23 @@ const FilterNavbar = ({
         ))}
       </div>
       <div className="breed-size filterSection">
-        <h2>Breed Size</h2>
-        {breedSizeData.map((size) => (
-          <div
-            className={classnames([
-              'category-item',
-              category_id === size.id ? 'selected' : undefined,
-            ])}
-            key={size.id}
-          >
-            <Link href={`${pathname}?category_id=${size.id}`}>
-              <a>{size.name}</a>
-            </Link>
+        {options.map((option) => (
+          <div key={option.code}>
+            <h2>{option.name}</h2>
+            {option.optionals.map((item: any) => (
+              <div
+                className={classnames([
+                  'category-item',
+                  optionalList.indexOf(item.id) !== -1 ? 'selected' : undefined,
+                ])}
+                key={item.id}
+              >
+                <a onClick={() => updateQueryString(item.id)}>
+                  <span>{item.name}</span>
+                  <CloseOutlined />
+                </a>
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -92,23 +139,38 @@ const StyledFilterBar = styled.div`
     flex-direction: column;
     margin-bottom: 2rem;
     .category-item {
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
+      margin-bottom: 0.5rem;
 
       &.sub-category {
         margin-left: 1rem;
       }
-
       a {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 12px;
+        border-radius: 6px;
         color: #4e4e4e;
         font-size: 1rem;
+        .anticon-close {
+          display: none;
+          & > svg {
+            font-size: 12px;
+          }
+        }
       }
       &.selected {
         & > a {
           color: var(--primary);
           font-weight: 700;
+          background-color: #eee;
+          .anticon-close {
+            display: flex;
+            align-items: center;
+          }
         }
       }
     }

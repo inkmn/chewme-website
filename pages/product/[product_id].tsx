@@ -12,6 +12,7 @@ import CarouselThumb from '@/components/product/thumbs'
 import useInit from '@/hooks/useInit'
 import AddToCartForm from '@/components/forms/addToCart'
 import privatefetcher from '@/lib/privateFetch'
+import Item from 'antd/lib/list/Item'
 
 const { Paragraph, Link } = Typography
 
@@ -19,6 +20,7 @@ const ProductDetail = () => {
   const {
     data: { categories_indexed },
   } = useInit()
+
   const router = useRouter()
   const [isFav, setIsFav] = useState(true)
   const { product_id } = router.query
@@ -93,46 +95,35 @@ const ProductDetail = () => {
                   </div>
                   <div className="txt">{productData?.code}</div>
                 </div>
-                <hr style={{ minWidth: '300px', margin: '30px 0' }} />
-                <div className="price">
-                  PRICE: ${productData?.price}{' '}
-                  <span style={{ color: '#8e8e8e' }}>/</span> DC
-                  {productData?.dc_price}
+
+                <div className="price-box">
+                  <div className="price">
+                    <div className="inner-price usd-price">
+                      <span className="price-value">{productData?.price}</span>
+                      <span>USD</span>
+                    </div>
+                    <div className="inner-price dc-price">
+                      <span className="price-value">
+                        {productData?.dc_price}
+                      </span>
+                      <span>DC</span>
+                    </div>
+                  </div>
+                  <div className="addingcart">
+                    {productData ? (
+                      <AddToCartForm
+                        productId={productData.id}
+                        stock={productData?.stock_available}
+                      />
+                    ) : null}
+                  </div>
                 </div>
-                <hr style={{ minWidth: '300px', margin: '30px 0' }} />
 
                 <Paragraph style={{ maxWidth: '580px', width: '100%' }}>
                   <h5>Key Benefits :</h5>
-                  <ul>
-                    <li>
-                      <Link href="/docs/spec/proximity">
-                        All-natural and easily digestible
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/docs/spec/overview">
-                        Great source of protein, heart-healthy fats, and niacin
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/docs/resources">
-                        Portable, quick, convenient training treat
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/docs/resources">
-                        Lactose, grain, and gluten-free
-                      </Link>
-                    </li>
-                  </ul>
+                  {productData?.short_description}
                 </Paragraph>
 
-                {productData ? (
-                  <AddToCartForm
-                    productId={productData.id}
-                    stock={productData?.stock_available}
-                  />
-                ) : null}
                 <p>{productData?.description}</p>
               </Details>
             </Col>
@@ -185,22 +176,54 @@ const Details = styled.div`
     font-size: 22px;
     align-items: center;
   }
+
+  .price-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    width: 100%;
+  }
+
+  .addingcart {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .price {
+    display: flex;
+    justify-content: flex-end;
     font-size: 2em;
     font-weight: 700;
     color: var(--primary);
+
+    .usd-price {
+      color: #8e8e8e;
+      font-weight: 400;
+    }
+    .dc-price {
+      color: var(--primary-red);
+    }
+
+    .inner-price {
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      .price-value {
+        font-size: 1.5em;
+        margin-right: 0.5rem;
+      }
+    }
   }
   h1 {
     font-size: 2.5em;
     font-weight: 700;
     text-transform: uppercase;
   }
-  p {
-    width: 100%;
-    text-align: center;
-    max-width: 580px;
-    margin-top: 30px;
-    text-align: justify;
+  @media (max-width: 1024px) {
+    .price-box {
+      flex-direction: column;
+    }
   }
 `
 

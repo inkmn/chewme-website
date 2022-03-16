@@ -9,16 +9,10 @@ import {
 } from '@ant-design/icons'
 import useUser from '@/hooks/useUser'
 import { useState } from 'react'
+import { useAppContext } from '@/context/state'
 
-const Header = ({
-  scroll,
-  setDrawer,
-  setCartDrawer,
-}: {
-  scroll: boolean
-  setDrawer: (visible: boolean) => void
-  setCartDrawer: (visible: boolean) => void
-}): JSX.Element => {
+const Header = ({ scroll }: { scroll: boolean }): JSX.Element => {
+  const { setCartDrawer, setMenuDrawer } = useAppContext()
   const { user, error } = useUser()
   return (
     <SiteHeader className={scroll ? 'sticky' : ''}>
@@ -67,7 +61,7 @@ const Header = ({
               <div className="nav-item">
                 <Button
                   icon={<UserOutlined />}
-                  onClick={() => setDrawer(true)}
+                  onClick={() => setMenuDrawer(true)}
                   type="link"
                 />
               </div>
@@ -77,7 +71,7 @@ const Header = ({
               <div className="nav-item">
                 <Button
                   icon={<MenuOutlined />}
-                  onClick={() => setDrawer(true)}
+                  onClick={() => setMenuDrawer(true)}
                   type="link"
                 />
               </div>

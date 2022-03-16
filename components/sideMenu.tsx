@@ -6,22 +6,17 @@ import {
   InstagramOutlined,
   YoutubeOutlined,
 } from '@ant-design/icons'
-import { Drawer } from 'antd'
+import { Drawer, Space } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 import ActiveLink from '@/components/activeLink'
+import { useAppContext } from '@/context/state'
 
 const cookies = new Cookies()
 
-const SideMenu = ({
-  drawer = false,
-  setDrawer,
-  setLoginModal,
-}: {
-  drawer: boolean
-  setDrawer: (visible: boolean) => void
-  setLoginModal: (visible: boolean) => void
-}): JSX.Element => {
+const SideMenu = (): JSX.Element => {
+  const { loginModal, setLoginModal, menuDrawer, setMenuDrawer } =
+    useAppContext()
   const { user, error, isValidating, mutate } = useUser()
   const logout = async () => {
     cookies.remove('token')
@@ -32,8 +27,8 @@ const SideMenu = ({
       title={false}
       placement="right"
       width={400}
-      onClose={() => setDrawer(false)}
-      visible={drawer}
+      onClose={() => setMenuDrawer(false)}
+      visible={menuDrawer}
       closeIcon={<CloseOutlined className="drawerClose" />}
       footer={
         <div className="drawer-footer">
@@ -54,6 +49,15 @@ const SideMenu = ({
       <div className="menu">
         {!error ? (
           <>
+            <div className="profile-head">
+              <div className="username">
+                <Space>
+                  <span>{user.last_name}</span>
+                  <span>{user.first_name}</span>
+                  <span>{user.country_code}</span>
+                </Space>
+              </div>
+            </div>
             <Link href="/wallet">
               <a className="menu-item">My wallet</a>
             </Link>
@@ -70,7 +74,7 @@ const SideMenu = ({
               className="menu-item"
               onClick={() => {
                 setLoginModal(true)
-                setDrawer(false)
+                setMenuDrawer(false)
               }}
             >
               Sign in
@@ -112,7 +116,7 @@ const SideMenu = ({
               className="menu-item"
               onClick={() => {
                 logout()
-                setDrawer(false)
+                setMenuDrawer(false)
               }}
             >
               Sign out
@@ -125,6 +129,16 @@ const SideMenu = ({
 }
 
 const StyledMenu = styled(Drawer)`
+  .profile-head {
+    margin-bottom: 2rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    .username {
+      font-size: 1.5rem;
+    }
+  }
+
   .burger-header-links {
     display: none;
     .menu-item {

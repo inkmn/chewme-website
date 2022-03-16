@@ -28,7 +28,7 @@ const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
       {!item.stock_avialable ? (
         <div className="outofstock">Out of Stock</div>
       ) : (
-        <div className="instock">In Stock</div>
+        <div className="instock">{item.stock_avialable} In Stock</div>
       )}
       <div className="card-footer">
         <span>${item.price} /</span>
@@ -73,7 +73,6 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    font-family: tahoma;
     .last-child {
       font-weight: 700;
     }

@@ -3,6 +3,13 @@ export interface ProductImage {
   url: string
 }
 
+export interface OptionalType {
+  parent_code: string
+  parent_name: string
+  id: string
+  name: string
+}
+
 export interface ProductListItem {
   id: string
   category_id: string
@@ -16,7 +23,7 @@ export interface ProductListItem {
   object_id: string
   object_type: string
   is_main: boolean
-  parent_id: string | null
+  parent_id: string | string | null
   language: string
   is_active: boolean
   created_at: string
@@ -43,14 +50,25 @@ interface ProductItem {
   dc_price: number
   unit: string
   description: string
+  short_description: string | null
   language: string
-  childrens: ProductListItem[]
+  optional_flavor: string | null
+  optional_type: string
+  optional_chewmeter: string | null
+  optional_breed_size: string | null
   object_id: string
   object_type: string
   is_main: boolean
   parent_id: string | null
   created_at: string
   images: ProductImage[]
+  category: {
+    id: string
+    name: string
+  }
+  childrens: ProductItem[]
+  optionals: OptionalType[]
+  is_favorite: boolean
   stock_available: number
 }
 

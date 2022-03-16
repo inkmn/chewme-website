@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react'
 import Head from 'next/head'
-import { Affix, Badge, Button, Divider, Drawer, Modal } from 'antd'
-import { Cookies } from 'react-cookie'
+import { Affix, Divider, Drawer, Modal } from 'antd'
 import styled from 'styled-components'
 import {
   CloseOutlined,
@@ -16,15 +15,14 @@ import SideMenu from '@/components/sideMenu'
 import Header from '@/components/header'
 import RegisterForm from './forms/register'
 
-const cookies = new Cookies()
+import { useAppContext } from '@/context/state'
 
 const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
+  const { loginModal, setLoginModal, cartDrawer, setCartDrawer } =
+    useAppContext()
   const { mutate } = useUser()
   const [isRegister, setIsRegister] = useState(false)
   const [scroll, setScroll] = useState(false)
-  const [drawer, setDrawer] = useState(false)
-  const [cartDrawer, setCartDrawer] = useState(false)
-  const [loginModal, setLoginModal] = useState(false)
   useEffect(() => {
     const scroll = () => {
       if (window.scrollY > 0) {
@@ -34,6 +32,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
     window.addEventListener('scroll', scroll, false)
     return () => window.removeEventListener('scroll', scroll, false)
   }, [])
+
   return (
     <StyledWrapper>
       <Head>
@@ -41,11 +40,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
         <meta name="description" content="Doge-Chew Shop" />
       </Head>
       <Affix offsetTop={0}>
-        <Header
-          scroll={scroll}
-          setDrawer={setDrawer}
-          setCartDrawer={setCartDrawer}
-        />
+        <Header scroll={scroll} />
       </Affix>
       <StyledLayout>
         <main>{children}</main>
@@ -61,11 +56,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       >
         <ShoppingCart />
       </StyledCartDrawer>
-      <SideMenu
-        drawer={drawer}
-        setDrawer={setDrawer}
-        setLoginModal={setLoginModal}
-      />
+      <SideMenu />
 
       <StyledModal
         width={480}

@@ -14,6 +14,9 @@ import ListWithPagination from '@/components/listWithPagination'
 
 const Shop = () => {
   const apiUrl = '/pub/product'
+  const {
+    data: { categories_indexed },
+  } = useInit()
   const router = useRouter()
   const {
     page = 1,
@@ -22,11 +25,9 @@ const Shop = () => {
     category_id = '',
     start_date = '',
     end_date = '',
+    optional = '',
+    optional_type = '',
   } = router.query as any
-
-  const {
-    data: { categories_indexed },
-  } = useInit()
 
   const queryToString = qs.stringify(
     {
@@ -39,6 +40,8 @@ const Shop = () => {
         category_id,
         start_date,
         end_date,
+        optional,
+        optional_type,
       },
     },
     {
@@ -53,6 +56,7 @@ const Shop = () => {
   } = useSWR<{
     rows: ProductListItem[]
     count: number
+    filter_bars: any
   }>(`${apiUrl}${queryToString}`, publicFetcher)
 
   const handlePageChange = (query: any) => {
@@ -76,7 +80,10 @@ const Shop = () => {
         <div className="container">
           <Row gutter={24}>
             <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
-              <FilterNavbar pathname={router.pathname} />
+              <FilterNavbar
+                options={productList?.filter_bars}
+                pathname={router.pathname}
+              />
             </Col>
             <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
               <Row>

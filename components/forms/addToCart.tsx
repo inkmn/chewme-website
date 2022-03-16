@@ -4,6 +4,7 @@ import { Form, FormItem, InputNumber } from 'formik-antd'
 import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import useUser from '@/hooks/useUser'
+import { useAppContext } from '@/context/state'
 
 const AddToCartForm = ({
   productId,
@@ -14,6 +15,7 @@ const AddToCartForm = ({
   stock: number
   onSuccess?: any
 }) => {
+  const { setLoginModal } = useAppContext()
   const { mutate } = useUser()
   const handleSubmit = async (
     values: any,
@@ -31,15 +33,20 @@ const AddToCartForm = ({
       mutate()
       actions.setSubmitting(false)
     } catch (error: any) {
-      notification.error({
-        message: error.data.message,
-      })
+      setLoginModal(true)
       actions.setSubmitting(false)
     }
   }
 
   return (
-    <StyledLogin>
+    <StyledCart>
+      <div style={{ textAlign: 'right' }}>
+        {stock ? (
+          <p>{stock} in stock</p>
+        ) : (
+          <p style={{ color: 'red' }}>Out of stock</p>
+        )}
+      </div>
       <Formik
         initialValues={{
           product_id: productId,
@@ -57,11 +64,6 @@ const AddToCartForm = ({
       >
         {({ isSubmitting }) => (
           <Form layout="inline">
-            {stock ? (
-              <p>{stock} in stock</p>
-            ) : (
-              <p style={{ color: 'red' }}>Out of stock</p>
-            )}
             <FormItem name="quantity">
               <InputNumber disabled={!stock} min={1} name="quantity" />
             </FormItem>
@@ -79,10 +81,14 @@ const AddToCartForm = ({
           </Form>
         )}
       </Formik>
-    </StyledLogin>
+    </StyledCart>
   )
 }
 
-const StyledLogin = styled.div``
+const StyledCart = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`
 
 export default AddToCartForm

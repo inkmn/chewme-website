@@ -9,49 +9,55 @@ export enum UserHistoryStatus {
 }
 
 interface User {
-  id: string | undefined
-  is_active: boolean
-  username: string | undefined
-  api_version: string | undefined
-  language: string | undefined
-  has_pin: boolean
-  pin_method: string | null
-  pin_method_id: string | null
-  pin: string | null
-  first_name: string | undefined
-  last_name: string | undefined
-  phone: string | undefined
-  change_phone: string | null
-  email: string | undefined
-  change_email: string | null
+  address: string
+  apartment: string
+  api_version: string
   avatar_url: string | null
-  session_id: string | undefined
-  otp_method: string | undefined
-  otp_code: string | undefined
-  otp_sent: string | undefined
-  change_otp_type: string | undefined
-  change_otp_code: string | undefined
-  change_otp_sent: string | undefined
-  device_type: string | null
+  cart_count: number
+  change_email: string | null
+  change_otp_code: string | null
+  change_otp_sent: string | null
+  change_otp_type: string | null
+  change_phone: string | null
+  city_code: string
+  country_code: string
+  created_at: string
+  created_by: string
+  device_imei: string | null
   device_info: string | null
   device_token: string | null
-  device_imei: string | null
-  last_logged_in: string | undefined
-  failed_login_attempt: string | undefined
-  lock_date: string | undefined
+  device_type: string | null
+  email: string
+  failed_login_attempt: string | null
+  favorite_count: number
+  first_name: string
+  has_pin: boolean
+  id: string
+  is_active: true
   is_lock: boolean
+  language: string
+  last_logged_in: string
+  last_name: string
+  lock_date: string | null
+  note: string | null
+  order_count: number
+  otp_code: string | null
+  otp_method: string | null
+  otp_sent: string | null
+  phone: string
+  pin: string | null
+  pin_method: string | null
+  pin_method_id: string | null
+  session_id: string
+  state_code: string
+  status: boolean
+  updated_at: string
+  updated_by: string
   user_history_status: UserHistoryStatus
   user_status: UserStatus
-  user_status_date: string | undefined
-  note: string | null
-  created_by: string | undefined
-  created_at: string | undefined
-  updated_by: string | undefined
-  updated_at: string | undefined
-  status: boolean
-  cart_count: number
-  order_count: number
-  favorite_count: number
+  user_status_date: string
+  username: string
+  zipcode: string
 }
 
 export default User
