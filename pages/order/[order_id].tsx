@@ -3,26 +3,13 @@ import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import ProductItem from '@/interfaces/product'
-import {
-  Avatar,
-  Card,
-  Col,
-  Descriptions,
-  Empty,
-  List,
-  Row,
-  Skeleton,
-  Space,
-  Tag,
-} from 'antd'
+import { Empty, Space, Tag } from 'antd'
 import privatefetcher from '@/lib/privateFetch'
-import { FileImageOutlined } from '@ant-design/icons'
 import useInit from '@/hooks/useInit'
-import moment from 'moment'
 import OrderItemType from '@/interfaces/orderItem'
-import { dateFormat, datetimeFormat, formatterUSD } from '@/utils/index'
-import Item from 'antd/lib/list/Item'
+import { datetimeFormat, formatterUSD } from '@/utils/index'
+import ProductItem from '@/interfaces/product'
+import Image from 'next/image'
 
 const OrderDetail = () => {
   const router = useRouter()
@@ -66,7 +53,7 @@ const OrderDetail = () => {
       <StyledOrderDetail>
         <div className="container">
           <h1>Order details</h1>
-          <TotalStyled>
+          <StyledPadan>
             <div className="head">
               <div className="headCol">
                 <h3>Shipping addres</h3>
@@ -91,7 +78,6 @@ const OrderDetail = () => {
                   <span>{orderData?.order_shipping?.address}</span>
                 </div>
               </div>
-
               <div className="headCol">
                 <h3 className="text-end">Order info</h3>
                 <div className="shipping-box">
@@ -106,18 +92,87 @@ const OrderDetail = () => {
                   </span>
                 </div>
               </div>
-
-              {/* <div className="headCol">
-                <h3 className="text-end">Total</h3>
-
-                <div className="shipping-box paidAmount text-end">
-                  {formatterUSD(orderData?.total_amount)}
-                </div>
-              </div> */}
             </div>
-          </TotalStyled>
+          </StyledPadan>
 
-          <ProductsTable>
+          <MobilePadan>
+            <div className="shipping-box-mobile">
+              <div className="mobile-row">
+                <div className="label order-code">Status:</div>
+                <span className="value order-code-value">
+                  {renderStatus(orderData?.order_status)}
+                </span>
+              </div>
+              <div className="mobile-row">
+                <div className="label order-code">Order code:</div>
+                <span className="value order-code-value">
+                  {orderData?.code}
+                </span>
+              </div>
+              <div className="mobile-row">
+                <div className="label">Name:</div>
+                <Space>
+                  <span className="value">
+                    {orderData?.order_shipping?.last_name}
+                  </span>
+                  <span className="value">
+                    {orderData?.order_shipping?.first_name}
+                  </span>
+                </Space>
+              </div>
+              <div className="mobile-row">
+                <div className="label">Country code:</div>
+                <div className="value">
+                  {orderData?.order_shipping?.country_code || '1010'}
+                </div>
+              </div>
+              <div className="mobile-row">
+                <div className="label">State code:</div>
+                <div className="value">
+                  {orderData?.order_shipping?.state_code}
+                </div>
+              </div>
+              <div className="mobile-row">
+                <div className="label">City code:</div>
+                <div className="value">
+                  {orderData?.order_shipping?.city_code}
+                </div>
+              </div>
+              <div className="mobile-row">
+                <div className="label">Order shipping phone:</div>
+                <div className="value">{orderData?.order_shipping?.phone}</div>
+              </div>
+              <div className="mobile-row">
+                <div className="label">Order shipping address:</div>
+                <div className="value">
+                  {orderData?.order_shipping?.address}
+                </div>
+              </div>
+            </div>
+          </MobilePadan>
+
+          <MobilePadanList>
+            {orderData?.products?.map((item, index) => {
+              return (
+                <div className="list-item" key={index}>
+                  <div className="item-left">
+                    <div className="item-image">
+                      <Image height={70} width={70} src={'/banner2.jpeg'} />
+                    </div>
+                    <div className="column">
+                      <div className="item-title">{item?.name}</div>
+                      <div className="item-price">
+                        {formatterUSD(item?.price)} /<div className="dc"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="quantity">{item.quantity}</div>
+                </div>
+              )
+            })}
+          </MobilePadanList>
+
+          <StyledPadanList>
             <table>
               <tr className="list-header">
                 <td>Description</td>
@@ -135,12 +190,14 @@ const OrderDetail = () => {
                     </td>
                     <td>{formatterUSD(item?.price)}</td>
                     <td>{item.quantity}</td>
-                    <td>{formatterUSD(item?.total_amount)}</td>
                   </tr>
                 )
               })}
             </table>
-            <table style={{ borderTop: 'none', marginTop: '30px' }}>
+          </StyledPadanList>
+
+          <StyledPadanTotal>
+            <table>
               <tr className="amount">
                 <td></td>
                 <td></td>
@@ -156,8 +213,7 @@ const OrderDetail = () => {
                 </td>
               </tr>
             </table>
-          </ProductsTable>
-
+          </StyledPadanTotal>
           {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
         </div>
       </StyledOrderDetail>
@@ -165,17 +221,116 @@ const OrderDetail = () => {
   )
 }
 
-const ProductsTable = styled.div`
+const MobilePadanList = styled.div`
   width: 100%;
-  overflow: auto;
-  padding-bottom: 24px;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  .text-primary {
+    color: var(--primary);
+  }
+
+  .list-item {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.15) !important;
+    .item-left {
+      display: flex;
+      gap: 8px;
+
+      .column {
+        min-height: 100%;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    .item-image {
+      display: flex;
+      border-radius: 5px;
+      img {
+        border-radius: 5px;
+      }
+    }
+    .item-price {
+      font-size: 1rem;
+    }
+    .item-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .quantity {
+      background-color: var(--primary);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+  }
+
+  @media only screen and (min-width: 790px) {
+    display: none;
+  }
+`
+
+const MobilePadan = styled.div`
+  color: #333;
+  font-size: 1rem;
+
+  .value {
+    font-weight: 700;
+  }
+  .shipping-box-mobile {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+    .mobile-row {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .order-code-value {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--primary);
+    .ant-tag {
+      font-size: 1.8rem;
+      padding: 5px;
+      min-width: 110px;
+      text-align: center;
+      margin: 0;
+    }
+  }
+
+  @media only screen and (min-width: 790px) {
+    display: none;
+  }
+`
+
+const StyledPadanTotal = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
   table {
     width: 100%;
-    border-top: 2px solid var(--primary);
     color: #333;
-
+    max-width: 500px;
     .amount {
       border: none;
       padding: 0;
@@ -186,8 +341,27 @@ const ProductsTable = styled.div`
       }
       td {
         padding: 0;
+        font-size: 1.2rem;
+        text-align: end;
       }
     }
+  }
+
+  @media only screen and (max-width: 790px) {
+  }
+`
+
+const StyledPadanList = styled.div`
+  width: 100%;
+  overflow: auto;
+  padding-bottom: 24px;
+  margin-top: 20px;
+
+  table {
+    width: 100%;
+    border-top: 2px solid var(--primary);
+    color: #333;
+
     .color-primary {
       color: var(--primary);
     }
@@ -224,10 +398,14 @@ const ProductsTable = styled.div`
     .list-header {
       color: var(--primary);
     }
+
+    @media only screen and (max-width: 790px) {
+      display: none;
+    }
   }
 `
 
-const TotalStyled = styled.div`
+const StyledPadan = styled.div`
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 10px;
@@ -268,17 +446,22 @@ const TotalStyled = styled.div`
   }
 
   @media only screen and (max-width: 790px) {
-    .headCol {
-      min-width: 100%;
-      border-top: 1px solid #dadada;
-      padding: 20px 0;
-    }
+    display: none;
   }
 `
 
 const StyledOrderDetail = styled.div`
   margin-top: 2rem;
-
+  .header-title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .ant-tag {
+      font-size: 2rem;
+      height: min-content;
+      padding: 5px 10px;
+    }
+  }
   .container {
     max-width: 900px;
   }
