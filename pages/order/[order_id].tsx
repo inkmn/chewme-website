@@ -108,141 +108,59 @@ const OrderDetail = () => {
               </TotalStyled>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-              <StyledList>
-                <div className="productsCol">
-                  <div className="productName">
-                    <span>DogeChew cheese Large </span>
-                  </div>
-                  <div className="productDescription">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa officiis deleniti voluptas optio vero, asperiores
-                    repellat unde perferendis, doloribus nulla cum sunt dolores
-                    mollitia deserunt numquam minima dolore. Porro, enim?
-                  </div>
-                </div>
-                <div className="productsCol">
-                  <span>{'9.49 $'}</span>
-                </div>
-                <div className="productsCol">
-                  <span>{'10'}</span>
-                </div>
-                <div className="productsCol">
-                  <span>{'90.49 $'}</span>
-                </div>
-              </StyledList>
-              <StyledList>
-                <div className="productsCol">
-                  <div className="productName">
-                    <span>DogeChew cheese Large </span>
-                  </div>
-                  <div className="productDescription">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa officiis deleniti voluptas optio vero, asperiores
-                    repellat unde perferendis, doloribus nulla cum sunt dolores
-                    mollitia deserunt numquam minima dolore. Porro, enim?
-                  </div>
-                </div>
-                <div className="productsCol">
-                  <span>{'9.49 $'}</span>
-                </div>
-                <div className="productsCol">
-                  <span>{'10'}</span>
-                </div>
-                <div className="productsCol">
-                  <span>{'90.49 $'}</span>
-                </div>
-              </StyledList>
-              <StyledList>
-                <div className="productsCol">
-                  <div className="productName">
-                    <span>DogeChew cheese Large </span>
-                  </div>
-                  <div className="productDescription">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa officiis deleniti voluptas optio vero, asperiores
-                    repellat unde perferendis, doloribus nulla cum sunt dolores
-                    mollitia deserunt numquam minima dolore. Porro, enim?
-                  </div>
-                </div>
-                <div className="productsCol">
-                  <span>{'9.49 $'}</span>
-                </div>
-                <div className="productsCol">
-                  <span>{'10'}</span>
-                </div>
-                <div className="productsCol">
-                  <span>{'90.49 $'}</span>
-                </div>
-              </StyledList>
+              <ProductsTable>
+                <tr className="header">
+                  <td>Description</td>
+                  <td>Unit Cost</td>
+                  <td>Quantity</td>
+                  <td>Amount</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="title">Item name</div>
+                    <p className="description">
+                      Item descriotion ggoes here ....
+                    </p>
+                  </td>
+                  <td>$ 9.99</td>
+                  <td>9</td>
+                  <td>$ 89.91</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="title">Item name</div>
+                    <p className="description">
+                      Item descriotion ggoes here ....
+                    </p>
+                  </td>
+                  <td>$ 9.99</td>
+                  <td>9</td>
+                  <td>$ 89.91</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="title">Item name</div>
+                    <p className="description">
+                      Item descriotion ggoes here ....
+                    </p>
+                  </td>
+                  <td>$ 9.99</td>
+                  <td>9</td>
+                  <td>$ 89.91</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className="title">Item name</div>
+                    <p className="description">
+                      Item descriotion ggoes here ....
+                    </p>
+                  </td>
+                  <td>$ 9.99</td>
+                  <td>9</td>
+                  <td>$ 89.91</td>
+                </tr>
+              </ProductsTable>
             </Col>
-            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-              <Card>
-                <List
-                  header={
-                    <div
-                      style={{
-                        width: '100%',
-                        fontSize: '16px',
-                        fontWeight: '500',
-                        justifyContent: 'space-between',
-                        display: 'flex',
-                      }}
-                    >
-                      <div>Order products</div>
-                      <div style={{ fontSize: '14px' }}>
-                        Status: {renderStatus({ e: orderData?.order_status })}
-                      </div>
-                    </div>
-                  }
-                  dataSource={[1, 2, 3]}
-                  // dataSource={orderData?.products || [1, 2, 3]}
-                  renderItem={(item) => (
-                    <List.Item>
-                      <Skeleton avatar title={false} loading={!item} active>
-                        <List.Item.Meta
-                          title={'ddd'}
-                          description={
-                            <p style={{ fontWeight: '400', color: '#000' }}>
-                              Product code:
-                              <span
-                                style={{ color: '#000', fontWeight: '500' }}
-                              >
-                                PR10000041
-                              </span>
-                              <br />
-                              Product name:
-                              <span
-                                style={{ color: '#000', fontWeight: '500' }}
-                              >
-                                {item?.name}
-                              </span>
-                              <br />
-                              Quantity:
-                              <span style={{ color: 'red', fontWeight: '500' }}>
-                                ( {item?.quantity} )
-                              </span>
-                            </p>
-                          }
-                        />
-                        <h2> 34,00 $</h2>
-                      </Skeleton>
-                    </List.Item>
-                  )}
-                />
-              </Card>
-              <br />
-              <Total>
-                <div>
-                  Total count: <b>{10}</b>
-                </div>
-                <div>
-                  Shipping amount : <b>12</b>
-                </div>
-                <div>
-                  Total amount: <b>12</b>
-                </div>
-              </Total>
-            </Col> */}
           </Row>
           <pre>{JSON.stringify(orderData, null, 2)}</pre>
         </div>
@@ -250,6 +168,29 @@ const OrderDetail = () => {
     </Layout>
   )
 }
+
+const ProductsTable = styled.table`
+  width: 100%;
+  border-top: 2px solid var(--primary);
+  color: #333;
+  td {
+    font-size: 1.2rem;
+    padding: 15px 0;
+    border-bottom: 1px solid #dadada;
+    p {
+      margin: 0;
+      color: #8e8e8e;
+      font-size: 1rem;
+      width: 300px;
+    }
+    :last-child {
+      text-align: end;
+    }
+  }
+  .header {
+    color: var(--primary);
+  }
+`
 
 const StyledList = styled.div`
   display: flex;
@@ -281,7 +222,13 @@ const StyledList = styled.div`
 
 const TotalStyled = styled.div`
   height: 300px;
+  font-size: 1.1rem;
+  color: #333;
 
+  .ant-tag {
+    font-size: 2rem;
+    padding: 5px;
+  }
   .shipping-box {
     display: flex;
     flex-direction: column;
