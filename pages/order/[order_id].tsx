@@ -65,7 +65,7 @@ const OrderDetail = () => {
       <PageHeader title={`My Order`} image={`/cover5.jpeg`} height={400} />
       <StyledOrderDetail>
         <div className="container">
-          <h1>Order no: {orderData?.code}</h1>
+          <h1>Order details</h1>
           <TotalStyled>
             <div className="head">
               <div className="headCol">
@@ -93,28 +93,29 @@ const OrderDetail = () => {
               </div>
 
               <div className="headCol">
-                <h3>Order info</h3>
+                <h3 className="text-end">Order info</h3>
                 <div className="shipping-box">
-                  <div className="orderStatus">
+                  <div className="orderStatus text-end">
                     <Space>
-                      <span>{orderData?.code}</span>
                       {renderStatus(orderData?.order_status)}
+                      <span>{orderData?.code}</span>
                     </Space>
                   </div>
-                  <span>{datetimeFormat(orderData?.created_at)}</span>
+                  <span className="text-end">
+                    {datetimeFormat(orderData?.created_at)}
+                  </span>
                 </div>
               </div>
 
-              <div className="headCol">
+              {/* <div className="headCol">
                 <h3 className="text-end">Total</h3>
 
                 <div className="shipping-box paidAmount text-end">
                   {formatterUSD(orderData?.total_amount)}
                 </div>
-              </div>
+              </div> */}
             </div>
           </TotalStyled>
-          {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
 
           <ProductsTable>
             <table>
@@ -138,22 +139,26 @@ const OrderDetail = () => {
                   </tr>
                 )
               })}
-              <tr style={{ border: 'none' }}>
+            </table>
+            <table style={{ borderTop: 'none', marginTop: '30px' }}>
+              <tr className="amount">
                 <td></td>
                 <td></td>
                 <td>Total Quantity</td>
                 <td>{orderData?.quantity}</td>
               </tr>
-              <tr style={{ border: 'none' }}>
+              <tr className="amount">
                 <td></td>
                 <td></td>
-                <td>shipping additional fee</td>
-                <td className="bold color-primary">
-                  {formatterUSD(orderData?.shipping_additional_fee)}
+                <td className="amount total">Total Amount</td>
+                <td className="amount total">
+                  {formatterUSD(orderData?.total_amount)}
                 </td>
               </tr>
             </table>
           </ProductsTable>
+
+          {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
         </div>
       </StyledOrderDetail>
     </Layout>
@@ -163,14 +168,26 @@ const OrderDetail = () => {
 const ProductsTable = styled.div`
   width: 100%;
   overflow: auto;
-  padding-bottom: 10px;
-  margin-top: 10px;
+  padding-bottom: 20px;
+  margin-top: 20px;
 
   table {
     width: 100%;
     border-top: 2px solid var(--primary);
     color: #333;
 
+    .amount {
+      border: none;
+      padding: 0;
+      .total {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--primary);
+      }
+      td {
+        padding: 0;
+      }
+    }
     .color-primary {
       color: var(--primary);
     }
@@ -253,6 +270,8 @@ const TotalStyled = styled.div`
   @media only screen and (max-width: 790px) {
     .headCol {
       min-width: 100%;
+      border-top: 1px solid #dadada;
+      padding: 20px 0;
     }
   }
 `
