@@ -7,10 +7,20 @@ export const datetimeFormat = (date: moment.MomentInput): string =>
 
 export const startsWithHttp = /^https?:\/\//i
 
-export const checkAbsoluteUrl = (urlString: string): boolean => startsWithHttp.test(urlString)
+export const checkAbsoluteUrl = (urlString: string): boolean =>
+  startsWithHttp.test(urlString)
 
 export const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * Math.floor(max))
+}
+
+export const formatterUSD = (value: any): any => {
+  let formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+
+  return formatter.format(value)
 }
 
 export const getStatusData = (val: string): any => {
