@@ -71,10 +71,10 @@ const OrderDetail = () => {
                   <div className="headCol">
                     <h3>Shipping addres</h3>
                     <div className="shipping-box">
-                      <div>
+                      <Space>
                         <span>{orderData?.order_shipping?.last_name}</span>
                         <span>{orderData?.order_shipping?.first_name}</span>
-                      </div>
+                      </Space>
                       <span>{orderData?.order_shipping?.country_code}</span>
                       <span>{orderData?.order_shipping?.state_code}</span>
                       <span>{orderData?.order_shipping?.city_code}</span>
@@ -177,14 +177,16 @@ const ProductsTable = styled.table`
     font-size: 1.2rem;
     padding: 15px 0;
     border-bottom: 1px solid #dadada;
+    width: max-content;
     p {
       margin: 0;
       color: #8e8e8e;
       font-size: 1rem;
       width: 300px;
     }
-    :last-child {
-      text-align: end;
+    text-align: end;
+    :first-child {
+      text-align: start;
     }
   }
   .header {
