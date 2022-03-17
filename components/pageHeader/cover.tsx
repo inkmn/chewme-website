@@ -1,12 +1,15 @@
 import styled from 'styled-components'
 import BottomCircleShape from '@/components/bottomCircleShape'
+import { ReactNode } from 'react'
 
 const HeroCover = ({
+  children,
   image,
   title,
   position,
   height = title ? 400 : undefined,
 }: {
+  children?: ReactNode
   image?: string
   title?: string
   position?: string
@@ -25,13 +28,14 @@ const HeroCover = ({
         />
         <div className="slide-image-filter" />
 
-        {title ? (
-          <div className="content-wrapper">
+        <div className="content-wrapper">
+          {title ? (
             <div className="content">
               <h1>{title}</h1>
             </div>
-          </div>
-        ) : null}
+          ) : null}
+          {children}
+        </div>
       </StyledHeader>
     </StyledWrapper>
   )
@@ -63,18 +67,18 @@ const StyledHeader = styled.div<{ height?: number }>`
   }
 
   .content-wrapper {
+    flex-direction: column;
     text-align: left;
-    justify-content: flex-start;
     color: #fff;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     background-repeat: no-repeat;
     background-position: 50%;
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 0;
+    bottom: 50px;
     right: 0;
     margin: auto;
     .content {

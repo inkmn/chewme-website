@@ -8,7 +8,7 @@ const useCart = (): {
   data: {
     rows: CartType[]
     count: number
-    filter_bars: 
+    filter_bars: any[]
   }
   error: {
     status: number
@@ -70,13 +70,7 @@ const useCart = (): {
     data: {
       rows: cartData,
       count: cartData.length,
-      cart_sum: {
-        total_amount: cartData.reduce(
-          (acc, cur) => acc + cur.price * cur.quantity,
-          0
-        ),
-        total_count: cartData.reduce((acc, cur) => acc + cur.quantity, 0),
-      },
+      filter_bars: [],
     },
     error,
     isValidating,

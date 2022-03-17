@@ -49,11 +49,7 @@ const Shop = () => {
       addQueryPrefix: true,
     }
   )
-  const {
-    data: productList,
-    error,
-    isValidating,
-  } = useSWR<{
+  const { data: productList, error } = useSWR<{
     rows: ProductListItem[]
     count: number
     filter_bars: any
@@ -75,7 +71,9 @@ const Shop = () => {
         image={`/cover6.jpeg`}
         position="76%"
         height={300}
-      />
+      >
+        <div></div>
+      </PageHeader>
       <StyledShop>
         <div className="container">
           <Row gutter={24}>
