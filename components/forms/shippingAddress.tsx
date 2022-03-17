@@ -48,9 +48,9 @@ const ShippingAddress = () => {
         initialValues={{
           first_name: 'Myagmardorj',
           last_name: 'Baatar',
-          country: 'EN',
-          state: 'jsjsj',
-          city: 'jsjsj',
+          country: '',
+          state: '',
+          city: '',
           apartment: 'lorem',
           phone: '86696268',
           postcode: '8669',
@@ -127,6 +127,24 @@ const ShippingAddress = () => {
     </StyledForm>
   )
 }
+
+// first_name: 'Myagmardorj',
+// last_name: 'Baatar',
+// country: 'EN',
+// state: 'jsjsj',
+// city: 'jsjsj',
+// apartment: 'lorem',
+// phone: '86696268',
+// postcode: '8669',
+// street_address: 'apartment',
+
+// {
+//   "name": "Arkhangai Province",
+//   "isoCode": "073",
+//   "countryCode": "MN",
+//   "latitude": "47.89711010",
+//   "longitude": "100.72401650"
+// },
 
 const StyledForm = styled.div``
 
