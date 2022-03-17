@@ -3,7 +3,6 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
-import breedSizeData from '@/constants/breedSize.json'
 import qs from 'qs'
 import { useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
@@ -89,7 +88,7 @@ const FilterNavbar = ({
             key={category.id}
           >
             {category_id === category.id ? (
-              <Link href={`${pathname}?category_id=''`}>
+              <Link href={`${pathname}`}>
                 <a>
                   <span>{category.name}</span>
                   <CloseOutlined />
@@ -115,7 +114,7 @@ const FilterNavbar = ({
                   key={subCategory.id}
                 >
                   {category_id === subCategory.id ? (
-                    <Link href={`${pathname}?category_id=''`}>
+                    <Link href={`${pathname}`}>
                       <a>
                         <span>{subCategory.name}</span>
                         <CloseOutlined />

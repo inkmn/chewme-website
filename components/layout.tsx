@@ -9,7 +9,6 @@ import {
 } from '@ant-design/icons'
 import ShoppingCart from '@/components/shoppingCart'
 import LoginForm from './forms/login'
-import useUser from '@/hooks/useUser'
 import Footer from '@/components/footer'
 import SideMenu from '@/components/sideMenu'
 import Header from '@/components/header'
@@ -20,7 +19,6 @@ import { useAppContext } from '@/context/state'
 const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
   const { loginModal, setLoginModal, cartDrawer, setCartDrawer } =
     useAppContext()
-  const { mutate } = useUser()
   const [isRegister, setIsRegister] = useState(false)
   const [scroll, setScroll] = useState(false)
   useEffect(() => {
