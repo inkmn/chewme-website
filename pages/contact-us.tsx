@@ -150,11 +150,6 @@ const StyledContactUs = styled.div`
     justify-content: flex-end;
     display: flex;
   }
-  .btn-save {
-    align-self: flex-end;
-    border-color: var(--primary);
-    background: var(--primary);
-  }
   textarea {
     min-height: 168px !important;
   }
