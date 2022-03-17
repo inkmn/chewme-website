@@ -66,11 +66,7 @@ const MyOrder = () => {
 
   return (
     <Layout>
-      <PageHeader
-        title={`My Orderqe qw `}
-        image={`/cover5.jpeg`}
-        height={400}
-      />
+      <PageHeader title={`My Order`} image={`/cover5.jpeg`} height={400} />
       <StyledMyOrder>
         <div className="container">
           <h2 className="pageTitle">My Orders</h2>

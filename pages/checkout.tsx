@@ -190,13 +190,17 @@ const Checkout = () => {
                 {({ isSubmitting }) => (
                   <Form layout={'vertical'}>
                     <FormItem name="first_name" label="Firstname">
-                      <Input name="first_name" />
+                      <Input size="large" name="first_name" />
                     </FormItem>
                     <FormItem name="last_name" label="Lastname">
-                      <Input name="last_name" />
+                      <Input size="large" name="last_name" />
                     </FormItem>
                     <FormItem name="country_code" label="Country code">
-                      <Select name="country_code" placeholder="Салбар сонгох">
+                      <Select
+                        size="large"
+                        name="country_code"
+                        placeholder="Салбар сонгох"
+                      >
                         {[{ code: 'US', name: 'US - United States' }].map(
                           (item: { name: string; code: string }) => (
                             <Select.Option key={item.code} value={item.code}>
@@ -207,22 +211,22 @@ const Checkout = () => {
                       </Select>
                     </FormItem>
                     <FormItem name="state_code" label="State code">
-                      <Input name="state_code" />
+                      <Input size="large" name="state_code" />
                     </FormItem>
                     <FormItem name="city_code" label="City code">
-                      <Input name="city_code" />
+                      <Input size="large" name="city_code" />
                     </FormItem>
                     <FormItem name="apartment" label="Apartment">
-                      <Input name="apartment" />
+                      <Input size="large" name="apartment" />
                     </FormItem>
                     <FormItem name="phone" label="Phone">
-                      <Input name="phone" />
+                      <Input size="large" name="phone" />
                     </FormItem>
                     <FormItem name="zipcode" label="Zipcode">
-                      <Input name="zipcode" />
+                      <Input size="large" name="zipcode" />
                     </FormItem>
                     <FormItem name="address" label="Address">
-                      <Input name="address" />
+                      <Input size="large" name="address" />
                     </FormItem>
 
                     <Button

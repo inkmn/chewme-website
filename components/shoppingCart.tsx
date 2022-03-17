@@ -7,50 +7,17 @@ import ListWithPagination from '@/components/listWithPagination'
 import { useState } from 'react'
 import { Button, Space } from 'antd'
 import { useRouter } from 'next/router'
+import useCart from '@/hooks/useCart'
 
 const ShoppingCart = () => {
   const router = useRouter()
-  const apiUrl = '/app/order/carts'
-  const [offset, setOffset] = useState({
-    page: 1,
-    limit: 12,
-  })
-  const queryObj = {
-    offset,
-    filter: {
-      query: '',
-      category_id: '',
-      start_date: '',
-      end_date: '',
-    },
-  }
-  const [queryString, setQueryString] = useState(
-    qs.stringify(queryObj, {
-      encode: false,
-      addQueryPrefix: true,
-    })
-  )
   const {
     data: cartData,
     error,
     mutate,
-  }: any = useSWR(`${apiUrl}${queryString}`, privatefetcher)
-
-  const handlePageChange = (offset: any) => {
-    setOffset(offset)
-    setQueryString(
-      qs.stringify(
-        {
-          ...queryObj,
-          offset,
-        },
-        {
-          encode: false,
-          addQueryPrefix: true,
-        }
-      )
-    )
-  }
+    handlePageChange,
+    offset,
+  }: any = useCart()
 
   return (
     <StyledShoppingCart>
@@ -76,7 +43,7 @@ const ShoppingCart = () => {
           <div className="cart-total-amount">
             <Space>
               <span>Subtotal:</span>
-              <span>${(cartData?.cart_sum || {}).total_amount}</span>
+              <span>${(cartData?.cart_sum || {}).total_amount.toFixed(2)}</span>
             </Space>
           </div>
         </div>

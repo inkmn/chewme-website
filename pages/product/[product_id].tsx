@@ -112,6 +112,7 @@ const ProductDetail = () => {
                   <div className="addingcart">
                     {productData ? (
                       <AddToCartForm
+                        onSuccess={() => {}}
                         productId={productData.id}
                         stock={productData?.stock_available}
                       />
