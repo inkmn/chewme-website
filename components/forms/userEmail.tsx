@@ -40,7 +40,7 @@ const UserEmail = () => {
     <StyledForm>
       <Formik
         initialValues={{
-          email: undefined,
+          email: 'EMAIL',
           type: undefined,
         }}
         validationSchema={formSchema}
@@ -57,7 +57,7 @@ const UserEmail = () => {
                 </Select>
               </Form.Item>
               <Form.Item name="email" label="Email">
-                <Input.Password name="password" placeholder="Email" />
+                <Input name="password" placeholder="Email" />
               </Form.Item>
             </div>
             <div className="flex-end">
