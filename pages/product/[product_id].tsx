@@ -83,7 +83,11 @@ const ProductDetail = () => {
                   <h1>{productData?.name}</h1>
 
                   <div onClick={setFavorite} className="favorite">
-                    {isFav ? <HeartFilled /> : <HeartOutlined />}
+                    {productData?.is_favorite ? (
+                      <HeartFilled />
+                    ) : (
+                      <HeartOutlined />
+                    )}
                   </div>
                 </div>
                 <div className="space-between">

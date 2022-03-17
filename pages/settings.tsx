@@ -72,15 +72,15 @@ const Settings = () => {
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               <Formik
                 initialValues={{
-                  first_name: 'Myagmardorj',
-                  last_name: 'Baatar',
-                  country: 'EN',
-                  state: 'jsjsj',
-                  city: 'jsjsj',
-                  apartment: 'lorem',
-                  phone: '86696268',
-                  postcode: '8669',
-                  street_address: 'apartment',
+                  first_name: '',
+                  last_name: '',
+                  country: '',
+                  state: '',
+                  city: '',
+                  apartment: '',
+                  phone: '',
+                  postcode: '',
+                  street_address: '',
                 }}
                 validationSchema={formSchema}
                 onSubmit={handleSubmit}

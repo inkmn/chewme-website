@@ -195,6 +195,7 @@ const OrderDetail = () => {
                     </td>
                     <td>{formatterUSD(item?.price)}</td>
                     <td>{item.quantity}</td>
+                    <td>{formatterUSD(item?.price * item.quantity)}</td>
                   </tr>
                 )
               })}
