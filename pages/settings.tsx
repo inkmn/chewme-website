@@ -37,8 +37,6 @@ const Settings = () => {
               <UserEmail />
             </Col>
           </Row>
-          This is Settings view
-          <pre>{JSON.stringify(user, null, 2)}</pre>
         </div>
       </StyledSettings>
     </Layout>
