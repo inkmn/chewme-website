@@ -46,15 +46,15 @@ const ShippingAddress = () => {
     <StyledForm>
       <Formik
         initialValues={{
-          first_name: 'Myagmardorj',
-          last_name: 'Baatar',
+          first_name: '',
+          last_name: '',
           country: '',
           state: '',
           city: '',
-          apartment: 'lorem',
-          phone: '86696268',
-          postcode: '8669',
-          street_address: 'apartment',
+          apartment: '',
+          phone: '',
+          postcode: '',
+          street_address: '',
         }}
         validationSchema={formSchema}
         onSubmit={handleSubmit}

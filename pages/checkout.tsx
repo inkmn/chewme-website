@@ -1,4 +1,4 @@
-import { Button, notification } from 'antd'
+import { Button, notification, Space } from 'antd'
 import { Formik } from 'formik'
 import { Form, FormItem, Input, Select } from 'formik-antd'
 import * as Yup from 'yup'
@@ -7,50 +7,13 @@ import PageHeader from '@/components/pageHeader/cover'
 import { Col, Row } from 'antd'
 import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
-import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import qs from 'qs'
 import CartType from '@/interfaces/cart'
+import useCart from '@/hooks/useCart'
 
 const Checkout = () => {
-  const apiUrl = '/app/order/carts'
   const router = useRouter()
-  const {
-    page = 1,
-    limit = 1000,
-    query = '',
-    category_id = '',
-    start_date = '',
-    end_date = '',
-  } = router.query as any
-
-  const queryToString = qs.stringify(
-    {
-      offset: {
-        page,
-        limit,
-      },
-      filter: {
-        query,
-        category_id,
-        start_date,
-        end_date,
-      },
-    },
-    {
-      encode: false,
-      addQueryPrefix: true,
-    }
-  )
-  const {
-    data: cartData,
-    error,
-    isValidating,
-  } = useSWR<{
-    rows: CartType[]
-    count: number
-    cart_sum: { total_amount: number; total_count: number }
-  }>(`${apiUrl}${queryToString}`, privatefetcher)
+  const { data: cartData } = useCart()
 
   const formSchema = Yup.object().shape({
     first_name: Yup.string().required('Firstname is required'),
@@ -111,18 +74,24 @@ const Checkout = () => {
                       cartData.rows.map((item, index: number) => (
                         <tr key={`${item.id}_${index}`} className="cart_item">
                           <td className="product-name">
-                            {item.name}
-                            <strong className="product-quantity">
-                              {' '}
-                              × {item.quantity}
-                            </strong>{' '}
+                            <Space>
+                              <span>{item.name}</span>
+                              <strong className="product-quantity">
+                                (
+                                <Space>
+                                  <span>{item.price}</span>
+                                  <span>*</span>
+                                  <span>
+                                    {item.quantity} {item.unit}
+                                  </span>
+                                </Space>
+                                )
+                              </strong>
+                            </Space>
                           </td>
                           <td className="product-total">
                             <span className="price-amount amount">
-                              <bdi>
-                                <span className="price-currencySymbol">$</span>
-                                {item.price * item.quantity}
-                              </bdi>
+                              <strong>${item.price * item.quantity}</strong>
                             </span>
                           </td>
                         </tr>
@@ -133,10 +102,10 @@ const Checkout = () => {
                       <th>Subtotal</th>
                       <td>
                         <span className="price-amount amount">
-                          <bdi>
+                          <strong>
                             <span className="price-currencySymbol">$</span>
                             {cartData?.cart_sum.total_amount}
-                          </bdi>
+                          </strong>
                         </span>
                       </td>
                     </tr>

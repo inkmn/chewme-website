@@ -20,7 +20,7 @@ const privatefetcher = async <T>(
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   }
-
+  let data
   const response = await fetch(input, {
     ...args,
     headers: {
@@ -28,8 +28,15 @@ const privatefetcher = async <T>(
       ...(args || {}).headers,
     },
   })
-  // if the server replies, there's always some data in json
-  const data = await response.json()
+  let error = new ValidationError(response.statusText)
+  try {
+    // if the server replies, there's always some data in json
+    data = await response.json()
+  } catch (err) {
+    error.data = { code: '500', message: 'Internal error' }
+    error.status = response.status
+    throw error
+  }
   if (!response.ok) {
     const error = new ValidationError(response.statusText)
     error.data = data
