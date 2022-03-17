@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import breedSizeData from '@/constants/breedSize.json'
 import qs from 'qs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 
 const FilterNavbar = ({
@@ -31,8 +31,12 @@ const FilterNavbar = ({
   } = router.query as any
 
   const [optionalList, setIsOptionalList] = useState(
-    optional ? optional.split('|') : []
+    optional !== '' ? optional.split('|') : []
   )
+
+  useEffect(() => {
+    setIsOptionalList([])
+  }, [category_id])
 
   const updateQueryString = (id: string) => {
     let newOptionalList = []
@@ -84,9 +88,21 @@ const FilterNavbar = ({
             ])}
             key={category.id}
           >
-            <Link href={`${pathname}?category_id=${category.id}`}>
-              <a>{category.name}</a>
-            </Link>
+            {category_id === category.id ? (
+              <Link href={`${pathname}?category_id=''`}>
+                <a>
+                  <span>{category.name}</span>
+                  <CloseOutlined />
+                </a>
+              </Link>
+            ) : (
+              <Link href={`${pathname}?category_id=${category.id}`}>
+                <a>
+                  <span>{category.name}</span>
+                  <CloseOutlined />
+                </a>
+              </Link>
+            )}
             {category.children &&
               category.children.length &&
               category.children.map((subCategory) => (
@@ -98,9 +114,21 @@ const FilterNavbar = ({
                   ])}
                   key={subCategory.id}
                 >
-                  <Link href={`${pathname}?category_id=${subCategory.id}`}>
-                    <a>{subCategory.name}</a>
-                  </Link>
+                  {category_id === subCategory.id ? (
+                    <Link href={`${pathname}?category_id=''`}>
+                      <a>
+                        <span>{subCategory.name}</span>
+                        <CloseOutlined />
+                      </a>
+                    </Link>
+                  ) : (
+                    <Link href={`${pathname}?category_id=${subCategory.id}`}>
+                      <a>
+                        <span>{subCategory.name}</span>
+                        <CloseOutlined />
+                      </a>
+                    </Link>
+                  )}
                 </div>
               ))}
           </div>

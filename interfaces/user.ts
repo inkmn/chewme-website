@@ -33,7 +33,7 @@ interface User {
   first_name: string
   has_pin: boolean
   id: string
-  is_active: true
+  is_active: boolean
   is_lock: boolean
   language: string
   last_logged_in: string
@@ -53,8 +53,8 @@ interface User {
   status: boolean
   updated_at: string
   updated_by: string
-  user_history_status: UserHistoryStatus
-  user_status: UserStatus
+  user_history_status: UserHistoryStatus | undefined
+  user_status: UserStatus | undefined
   user_status_date: string
   username: string
   zipcode: string

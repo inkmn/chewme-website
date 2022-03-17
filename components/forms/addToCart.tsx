@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import useUser from '@/hooks/useUser'
 import { useAppContext } from '@/context/state'
+import useCart from '@/hooks/useCart'
 
 const AddToCartForm = ({
   productId,
@@ -17,6 +18,8 @@ const AddToCartForm = ({
 }) => {
   const { setLoginModal } = useAppContext()
   const { mutate } = useUser()
+  const { mutate: mutateCart } = useCart()
+
   const handleSubmit = async (
     values: any,
     actions: { setSubmitting: (arg0: boolean) => void }
@@ -30,10 +33,18 @@ const AddToCartForm = ({
         }),
       })
       onSuccess()
+      mutateCart()
       mutate()
       actions.setSubmitting(false)
     } catch (error: any) {
-      setLoginModal(true)
+      if (error.status === 401) {
+        setLoginModal(true)
+      } else {
+        notification.error({
+          message: 'Error',
+          description: error.data.message,
+        })
+      }
       actions.setSubmitting(false)
     }
   }

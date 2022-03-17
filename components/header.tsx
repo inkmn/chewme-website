@@ -10,10 +10,12 @@ import {
 import useUser from '@/hooks/useUser'
 import { useState } from 'react'
 import { useAppContext } from '@/context/state'
+import useCart from '@/hooks/useCart'
 
 const Header = ({ scroll }: { scroll: boolean }): JSX.Element => {
   const { setCartDrawer, setMenuDrawer } = useAppContext()
   const { user, error } = useUser()
+  const { data: cartData } = useCart()
   return (
     <SiteHeader className={scroll ? 'sticky' : ''}>
       <div className="nav-header container">
@@ -50,7 +52,7 @@ const Header = ({ scroll }: { scroll: boolean }): JSX.Element => {
           {!error ? (
             <>
               <div className="nav-item">
-                <Badge count={user.cart_count} size="small">
+                <Badge count={cartData.cart_sum.total_count} size="small">
                   <Button
                     icon={<ShoppingCartOutlined />}
                     onClick={() => setCartDrawer(true)}
