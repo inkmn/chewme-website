@@ -85,6 +85,7 @@ const AddToCartForm = ({
                 htmlType="submit"
                 type="primary"
                 loading={isSubmitting}
+                shape="round"
               >
                 {stock ? 'Add to cart' : 'Not available'}
               </Button>

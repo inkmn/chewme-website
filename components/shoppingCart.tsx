@@ -54,6 +54,7 @@ const ShoppingCart = () => {
           disabled={!cartData?.count}
           type="primary"
           block
+          shape="round"
           size="large"
         >
           Checkout
