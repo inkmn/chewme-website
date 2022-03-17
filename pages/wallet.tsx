@@ -8,11 +8,12 @@ import {
   CopyOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
-import { Col, message, notification, Row } from 'antd'
+import { Col, message, notification, Row, Space } from 'antd'
 import WalletIcon from '../assets/wallet1.svg'
 import useSWR from 'swr'
 import privatefetcher from '@/lib/privateFetch'
 import WalletType from '@/interfaces/walletType'
+import Link from 'next/link'
 
 const MyWallet = () => {
   const { user } = useUser()
@@ -40,64 +41,45 @@ const MyWallet = () => {
         <div className="container">
           <Row gutter={[32, 16]}>
             <Col span={24}>
-              <h1>My Wallet</h1>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={10} xl={10} xxl={10}>
-              <VisaCard>
-                <div className="card-header">
-                  <div className="wallet">
-                    <WalletIcon />
-                    Wallet
-                  </div>
-                  <span>DC {walletData?.dcAddress?.balance_amount}</span>
-                </div>
-                <div className="card-footer">
-                  <div className="card-column">
-                    <div className="crypto">Wallet address</div>
-                    <div className="crypto-id">
-                      <span className="walletDcAddress">
-                        {walletData?.dcAddress?.number}
-                      </span>
-                      <span
-                        onClick={() => {
-                          navigator.clipboard.writeText(
-                            walletData?.dcAddress?.number || ''
-                          )
-                          message.info('Copied wallet address!')
-                        }}
-                      >
-                        <CopyOutlined />
-                      </span>
+              <h1>Deposit</h1>
+              {(walletData?.addressList || []).map((item, index) => {
+                return (
+                  <Item key={index}>
+                    <div className="wallet-image">
+                      <Image
+                        className="image"
+                        height={45}
+                        width={45}
+                        src="/image 1.png"
+                        alt=""
+                      />
+                      <div className="title">USD Thether</div>
                     </div>
-                  </div>
-                  <div className="card-column"></div>
-                </div>
-              </VisaCard>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={14} xl={14} xxl={14}>
-              <div className="flex-end">
-                {(walletData?.addressList || []).map((item, index) => {
-                  return (
-                    <Item key={index}>
-                      <div>
-                        <Image
-                          className="image"
-                          height={40}
-                          width={40}
-                          src="/image 1.png"
-                          alt=""
-                        />
+                    <div className="item-column">
+                      <div className="balance">balance: </div>
+                      <div className="balance-total">
+                        {item.currency} {item.balance_amount}
                       </div>
-                      <div className="item-column">
-                        <div className="balance">balance: </div>
-                        <div className="balance-total">
-                          {item.currency} {item.balance_amount}
-                        </div>
+                    </div>
+                    <div className="item-column">
+                      <div className="balance">Crypto address: </div>
+                      <div className="balance-total">
+                        0x9928b2F4d3287e021e7C08cC9Ff3dDbDE6b661e0
                       </div>
-                    </Item>
-                  )
-                })}
-              </div>
+                    </div>
+                    <div className="item-column">
+                      <Space size={24}>
+                        <Link href="deposit">
+                          <a className="action">Deposit</a>
+                        </Link>
+                        <Link href="deposit">
+                          <a className="action">Convert</a>
+                        </Link>
+                      </Space>
+                    </div>
+                  </Item>
+                )
+              })}
             </Col>
             <Col span={24}>
               <h1>Transaction history</h1>
@@ -208,16 +190,28 @@ const HistoryList = styled.div`
 const Item = styled.div`
   margin-bottom: 10px;
   width: 100%;
-  max-width: 550px;
   height: 75px;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  border-radius: 50px;
+  border-radius: 5px;
   border: 1px solid var(--primary);
   align-items: center;
 
+  .action {
+    font-size: 1.2rem;
+    color: var(--primary);
+    :hover {
+      color: #1bbc1b;
+    }
+  }
+  .wallet-image {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
+  }
   .precent-total {
     font-size: 1.2rem;
     text-align: end;
@@ -254,94 +248,9 @@ const Item = styled.div`
   }
 `
 
-const VisaCard = styled.div`
-  padding: 20px;
-  max-height: 245px;
-  min-height: 245px;
-  height: 100%;
-  width: 100%;
-  max-width: 450px;
-  min-width: 350px;
-  background: red;
-  border-radius: 15px;
-  background: rgb(110, 115, 255);
-  background: linear-gradient(
-    0deg,
-    rgba(110, 115, 255, 1) 0%,
-    rgba(52, 83, 255, 1) 100%
-  );
-
-  .walletDcAddress {
-    width: 320px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-  }
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    color: #fff;
-
-    .crypto {
-      font-size: 1rem;
-    }
-    .crypto-id {
-      font-size: 1.5em;
-      display: flex;
-      span {
-        cursor: pointer;
-        font-size: 1em;
-      }
-    }
-    .stonk-precent {
-      font-size: 1rem;
-      color: #1bbc1b;
-      text-align: end;
-    }
-    .stonk-value {
-      font-size: 1.5em;
-      text-align: end;
-    }
-  }
-  .card-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    color: #fff;
-    font-size: 24px;
-    line-height: 24px;
-    span {
-      display: flex;
-      align-items: center;
-    }
-    .wallet {
-      display: flex;
-      align-items: center;
-      & > svg {
-        height: 35px;
-        width: auto;
-        margin-right: 10px;
-      }
-    }
-  }
-
-  @media only screen and (max-width: 767px) {
-    margin-left: auto;
-    margin-right: auto;
-  }
-`
-
 const StyledMyWallet = styled.div`
   min-height: 500px;
   margin-top: 40px;
-
   .flex-end {
     width: 100%;
     display: flex;
