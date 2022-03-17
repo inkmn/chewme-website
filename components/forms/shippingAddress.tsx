@@ -117,7 +117,6 @@ const ShippingAddress = () => {
                 loading={isSubmitting}
                 size="large"
                 shape="round"
-                className="btn-save"
               >
                 Save changes
               </Button>

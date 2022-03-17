@@ -166,7 +166,6 @@ const Settings = () => {
                         loading={isSubmitting}
                         size="large"
                         shape="round"
-                        className="btn-save"
                       >
                         Save changes
                       </Button>
@@ -219,7 +218,7 @@ const Settings = () => {
                         loading={isSubmitting}
                         size="large"
                         shape="round"
-                        className="btn-save"
+                        
                       >
                         Save password
                       </Button>
@@ -252,10 +251,6 @@ const StyledSettings = styled.div`
     border-radius: 15px;
     width: 100%;
     margin-bottom: 24px;
-  }
-  .btn-save {
-    background: var(--primary);
-    border-color: var(--primary);
   }
 `
 

@@ -13,6 +13,7 @@ import qs from 'qs'
 import User from '@/interfaces/user'
 import ShippingAddress from '@/components/forms/shippingAddress'
 import UserPassword from '@/components/forms/userPassword'
+import UserEmail from '@/components/forms/userEmail'
 
 const Settings = () => {
   const { user } = useUser()
@@ -30,6 +31,10 @@ const Settings = () => {
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               <h1>Password changes</h1>
               <UserPassword />
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <h1>Email changes</h1>
+              <UserEmail />
             </Col>
           </Row>
           This is Settings view
@@ -55,10 +60,6 @@ const StyledSettings = styled.div`
     border-radius: 15px;
     width: 100%;
     margin-bottom: 24px;
-  }
-  .btn-save {
-    background: var(--primary);
-    border-color: var(--primary);
   }
 `
 

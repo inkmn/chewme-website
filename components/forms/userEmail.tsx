@@ -6,21 +6,18 @@ import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
 
 const formSchema = Yup.object().shape({
-  old_password: Yup.string().required('Old password is required'),
-  password: Yup.string().required('New password is required'),
-  confirm_password: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'New passwords must match')
-    .required('Confirm password is require'),
+  email: Yup.string().email().required('Email is required'),
+  type: Yup.string().required('Type is required'),
 })
 
-const UserPassword = () => {
+const UserEmail = () => {
   const handleSubmit = async (
     values: any,
     actions: { setSubmitting: (arg0: boolean) => void }
   ): Promise<void> => {
     try {
       let res = await privatefetcher<{ access_token: string }>(
-        `/app/user/password`,
+        `/app/user/change`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -43,9 +40,8 @@ const UserPassword = () => {
     <StyledForm>
       <Formik
         initialValues={{
-          password: '',
-          old_password: '',
-          confirm_password: '',
+          email: undefined,
+          type: undefined,
         }}
         validationSchema={formSchema}
         onSubmit={handleSubmit}
@@ -53,21 +49,15 @@ const UserPassword = () => {
         {({ isSubmitting }) => (
           <Form layout="vertical">
             <div className="border">
-              <Form.Item name="old_password" label="Old password">
-                <Input.Password
-                  name="old_password"
-                  placeholder="Old password"
-                  style={{ width: '100%' }}
-                />
+              <Form.Item name="type" label="Type">
+                <Select name="type" placeholder="Select">
+                  <Select.Option value="EMAIL" key="email">
+                    EMAIL
+                  </Select.Option>
+                </Select>
               </Form.Item>
-              <Form.Item name="password" label="New password">
-                <Input.Password name="password" placeholder="New password" />
-              </Form.Item>
-              <Form.Item name="confirm_password" label="Confirm new password">
-                <Input.Password
-                  name="confirm_password"
-                  placeholder="Confirm new password"
-                />
+              <Form.Item name="email" label="Email">
+                <Input.Password name="password" placeholder="Email" />
               </Form.Item>
             </div>
             <div className="flex-end">
@@ -78,7 +68,7 @@ const UserPassword = () => {
                 size="large"
                 shape="round"
               >
-                Save password
+                Save
               </Button>
             </div>
           </Form>
@@ -90,4 +80,4 @@ const UserPassword = () => {
 
 const StyledForm = styled.div``
 
-export default UserPassword
+export default UserEmail
