@@ -16,7 +16,7 @@ const UserEmail = () => {
     actions: { setSubmitting: (arg0: boolean) => void }
   ): Promise<void> => {
     try {
-      let res = await privatefetcher<{ access_token: string }>(
+      let res: any = await privatefetcher<{ access_token: string }>(
         `/app/user/change`,
         {
           method: 'POST',
@@ -26,7 +26,10 @@ const UserEmail = () => {
         }
       )
       console.log(res)
-      notification.success({ message: 'Request successful' })
+      notification.success({
+        message: 'Request successful',
+        description: ` 'A 6-digit verification code has been sent to your new email address /${res.dev_code}/`,
+      })
       actions.setSubmitting(false)
     } catch (error: any) {
       notification.error({
@@ -40,8 +43,8 @@ const UserEmail = () => {
     <StyledForm>
       <Formik
         initialValues={{
-          email: 'EMAIL',
-          type: undefined,
+          email: '',
+          type: 'EMAIL',
         }}
         validationSchema={formSchema}
         onSubmit={handleSubmit}
@@ -57,7 +60,7 @@ const UserEmail = () => {
                 </Select>
               </Form.Item>
               <Form.Item name="email" label="Email">
-                <Input name="password" placeholder="Email" />
+                <Input name="email" placeholder="Email" />
               </Form.Item>
             </div>
             <div className="flex-end">
