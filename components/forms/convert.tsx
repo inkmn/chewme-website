@@ -1,18 +1,25 @@
-import { Button, Col, notification, Select as SelectAnt } from 'antd'
+import {
+  Button,
+  Col,
+  notification,
+  Select as SelectAnt,
+  Input as InputAnt,
+} from 'antd'
 import { Formik } from 'formik'
-import { Form, FormItem, Input, Select } from 'formik-antd'
+import { Form, Input, Select } from 'formik-antd'
 import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
 import { CaretDownOutlined, SwapOutlined } from '@ant-design/icons'
 import Image from 'next/image'
 import DogeChew from '../../assets/dogechew-coin.png'
+import Shiba from '../../assets/dogcoin.png'
 
 const Option = SelectAnt.Option
 
 const formSchema = Yup.object().shape({
-  // email: Yup.string().email().required('Email is required'),
-  // type: Yup.string().required('Type is required'),
+  curency: Yup.string().email().required('curency is required'),
+  value: Yup.string().required('value is required'),
 })
 
 const Convert = () => {
@@ -22,7 +29,7 @@ const Convert = () => {
   ): Promise<void> => {
     try {
       let res: any = await privatefetcher<{ access_token: string }>(
-        `/app/user/change`,
+        `/app/user/convert`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -33,7 +40,6 @@ const Convert = () => {
       console.log(res)
       notification.success({
         message: 'Request successful',
-        description: ` 'A 6-digit verification code has been sent to your new email address /${res.dev_code}/`,
       })
       actions.setSubmitting(false)
     } catch (error: any) {
@@ -44,32 +50,12 @@ const Convert = () => {
     }
   }
 
-  const selectAfter = (): any => {
-    return (
-      <SelectAnt
-        defaultValue="USD"
-        style={{ width: '100px' }}
-        suffixIcon={<CaretDownOutlined />}
-      >
-        <OptionAnt value="USD">
-          <span className="icon">
-            <Image src={DogeChew} width={30} height={30} alt="" />
-          </span>
-          USD
-        </OptionAnt>
-        <OptionAnt value="EUR">EUR</OptionAnt>
-        <OptionAnt value="GBP">GBP</OptionAnt>
-        <OptionAnt value="CNY">CNY</OptionAnt>
-      </SelectAnt>
-    )
-  }
-
   return (
     <StyledForm>
       <Formik
         initialValues={{
-          email: '',
-          type: 'EMAIL',
+          valute: '123',
+          curency: 'USD',
         }}
         validationSchema={formSchema}
         onSubmit={handleSubmit}
@@ -83,18 +69,87 @@ const Convert = () => {
               </span>
             </Label>
             <Form.Item name="email">
-              <Input
-                name="email"
-                size="large"
-                placeholder="Email"
-                // addonAfter={selectAfter()}
-              />
+              <InputAnt.Group compact>
+                <Input
+                  type={'number'}
+                  max={100}
+                  size="large"
+                  name="valute"
+                  style={{ width: 'calc(100% - 120px)' }}
+                  defaultValue="SHIBA"
+                  suffix={
+                    <div
+                      style={{ color: 'var(--primary)', paddingLeft: '5px' }}
+                    >
+                      MAX
+                    </div>
+                  }
+                />
+                <Select
+                  style={{ width: '120px' }}
+                  size="large"
+                  name="curency"
+                  suffixIcon={<CaretDownOutlined />}
+                >
+                  <Option value="DC">
+                    <OptionItem>
+                      <span className="icon">
+                        <Image src={DogeChew} width={25} height={25} alt="" />
+                      </span>
+                      <span>DC</span>
+                    </OptionItem>
+                  </Option>
+                  <Option value="SHIBA">
+                    <OptionItem>
+                      <span className="icon">
+                        <Image src={Shiba} width={25} height={25} alt="" />
+                      </span>
+                      <span>SHIBA</span>
+                    </OptionItem>
+                  </Option>
+                </Select>
+              </InputAnt.Group>
             </Form.Item>
             <Icon>
               <SwapOutlined rotate={90} />
             </Icon>
             <Form.Item name="email">
-              <Input name="email" size="large" placeholder="Email" disabled />
+              <InputAnt.Group compact>
+                <Input
+                  type={'number'}
+                  max={100}
+                  size="large"
+                  name="valute"
+                  style={{ width: 'calc(100% - 120px)' }}
+                  defaultValue="SHIBA"
+                  suffix={<div style={{ color: 'var(--primary)' }}></div>}
+                  disabled
+                />
+                <Select
+                  style={{ width: '120px' }}
+                  size="large"
+                  name="curency"
+                  suffixIcon={<CaretDownOutlined />}
+                  disabled
+                >
+                  <Option value="DC">
+                    <OptionItem>
+                      <span className="icon">
+                        <Image src={DogeChew} width={25} height={25} alt="" />
+                      </span>
+                      <span>DC</span>
+                    </OptionItem>
+                  </Option>
+                  <Option value="SHIBA">
+                    <OptionItem>
+                      <span className="icon">
+                        <Image src={Shiba} width={25} height={25} alt="" />
+                      </span>
+                      <span>SHIBA</span>
+                    </OptionItem>
+                  </Option>
+                </Select>
+              </InputAnt.Group>
             </Form.Item>
             <Button
               style={{
@@ -115,15 +170,13 @@ const Convert = () => {
   )
 }
 
-const OptionAnt = styled(Option)`
-  font-size: 40px;
+const OptionItem = styled.div`
+  /* font-size: 40px; */
   display: flex;
   align-items: center;
-  flex-direction: row;
-  background-color: rebeccapurple;
-
-  .ant-select-item-option-content {
-    background-color: rebeccapurple;
+  justify-content: space-between;
+  .icon {
+    height: 25px;
   }
 `
 
