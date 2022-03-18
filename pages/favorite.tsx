@@ -2,20 +2,17 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import useSWR from 'swr'
 import Layout from '@/components/layout'
-import FilterNavbar from '@/components/filterNavbar'
 import PageHeader from '@/components/pageHeader/cover'
 import qs from 'qs'
-import publicFetcher from '@/lib/publicFetch'
 import ProductList from '@/components/product/list'
 import { ProductListItem } from '@/interfaces/product'
-import { Col, notification, Row } from 'antd'
+import { Col, Row } from 'antd'
 import useInit from '@/hooks/useInit'
 import ListWithPagination from '@/components/listWithPagination'
 import privatefetcher from '@/lib/privateFetch'
-import { useEffect, useState } from 'react'
 
 const Favorite = () => {
-  const apiUrl = '/pub/product'
+  const apiUrl = '/app/favorite'
   const {
     data: { categories_indexed },
   } = useInit()
@@ -54,8 +51,7 @@ const Favorite = () => {
   const { data: productList, error } = useSWR<{
     rows: ProductListItem[]
     count: number
-    filter_bars: any
-  }>(`${apiUrl}${queryToString}`, publicFetcher)
+  }>(`${apiUrl}${queryToString}`, privatefetcher)
 
   const handlePageChange = (query: any) => {
     router.push(
@@ -65,6 +61,7 @@ const Favorite = () => {
       })}`
     )
   }
+
   return (
     <Layout>
       <PageHeader
@@ -78,23 +75,12 @@ const Favorite = () => {
       <StyledShop>
         <div className="container">
           <Row gutter={24}>
-            <Col xs={24} sm={24} md={24} lg={18} xl={18} xxl={18}>
+            <Col span={24}>
               <Row>
                 <div>
                   <h2>Favorite</h2>
                 </div>
               </Row>
-              <Row justify="space-between">
-                <div>
-                  {productList
-                    ? `Showing ${limit * page - limit + 1}–${limit * page} of ${
-                        productList?.count
-                      } results`
-                    : 'no results'}
-                </div>
-                <div>Default sorting</div>
-              </Row>
-
               <ListWithPagination
                 data={productList}
                 error={error}

@@ -110,7 +110,8 @@ body,
   border-color: var(--primary);
 } */
 
-.ant-btn-primary {
+.ant-btn-primary,
+.ant-btn-lg {
   background: var(--primary);
   border-color: var(--primary);
 }
@@ -119,7 +120,6 @@ body,
   background: #5d712cd4;
   border-color: #5d712cd4;
 }
-
 .ant-btn-primary:focus {
   background: #779139;
   border-color: #779139;
