@@ -6,10 +6,8 @@ import ShippingAddress from '@/components/forms/shippingAddress'
 import UserPassword from '@/components/forms/userPassword'
 import UserEmail from '@/components/forms/userEmail'
 import classnames from 'classnames'
-import { CloseOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import useUser from '@/hooks/useUser'
 
 const { TabPane } = Tabs
 const Settings = () => {
@@ -26,15 +24,14 @@ const Settings = () => {
             <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
               <StyledNav>
                 <h2>Settings</h2>
-                <Link href="password">
+                <Link href="address">
                   <a
                     className={classnames([
                       'item',
-                      selected === 'password' ? 'selected' : '',
+                      selected === 'address' ? 'selected' : '',
                     ])}
                   >
-                    <span>Password</span>
-                    <CloseOutlined />
+                    <span>Shipping Address</span>
                   </a>
                 </Link>
                 <Link href="email">
@@ -45,18 +42,16 @@ const Settings = () => {
                     ])}
                   >
                     <span>Email</span>
-                    <CloseOutlined />
                   </a>
                 </Link>
-                <Link href="address">
+                <Link href="password">
                   <a
                     className={classnames([
                       'item',
-                      selected === 'address' ? 'selected' : '',
+                      selected === 'password' ? 'selected' : '',
                     ])}
                   >
-                    <span>Shipping Address</span>
-                    <CloseOutlined />
+                    <span>Password</span>
                   </a>
                 </Link>
               </StyledNav>
@@ -79,21 +74,6 @@ const Settings = () => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}></Col>
           </Row>
-
-          {/* <Row gutter={[24, 24]}>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              <h1>Shipping Address</h1>
-              <ShippingAddress />
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              <h1>Password changes</h1>
-              <UserPassword />
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              <h1>Email changes</h1>
-              <UserEmail />
-            </Col>
-          </Row> */}
           {/* This is Settings view
           <pre>{JSON.stringify(user, null, 2)}</pre> */}
         </div>

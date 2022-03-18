@@ -3,13 +3,8 @@ import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import Image from 'next/Image'
 import useUser from '@/hooks/useUser'
-import {
-  CaretUpOutlined,
-  CopyOutlined,
-  ShoppingOutlined,
-} from '@ant-design/icons'
-import { Col, message, notification, Row, Space } from 'antd'
-import WalletIcon from '../assets/wallet1.svg'
+import { CopyFilled, ShoppingOutlined } from '@ant-design/icons'
+import { Col, message, Row, Space } from 'antd'
 import useSWR from 'swr'
 import privatefetcher from '@/lib/privateFetch'
 import WalletType from '@/interfaces/walletType'
@@ -64,15 +59,26 @@ const MyWallet = () => {
                     <div className="item-column">
                       <div className="balance">Crypto address: </div>
                       <div className="balance-total">
-                        0x9928b2F4d3287e021e7C08cC9Ff3dDbDE6b661e0
+                        <span>{walletData?.dcAddress?.number}</span>
+                        <span
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              walletData?.dcAddress?.number || ''
+                            )
+                            message.info('Copied wallet address!')
+                          }}
+                          className="copy-btn"
+                        >
+                          <CopyFilled />
+                        </span>
                       </div>
                     </div>
                     <div className="item-column">
                       <Space size={24}>
-                        <Link href="deposit">
+                        <Link href={`deposit/${item?.id}`}>
                           <a className="action">Deposit</a>
                         </Link>
-                        <Link href="deposit">
+                        <Link href={`convert/${item?.id}`}>
                           <a className="action">Convert</a>
                         </Link>
                       </Space>
@@ -130,6 +136,10 @@ const MyWallet = () => {
               </HistoryList>
             </Col>
           </Row>
+
+          <pre style={{ color: 'red' }}>
+            {JSON.stringify(walletData, null, 2)}
+          </pre>
         </div>
       </StyledMyWallet>
     </Layout>
@@ -228,6 +238,15 @@ const Item = styled.div`
   }
   .balance-total {
     font-size: 1.2rem;
+    display: flex;
+    .copy-btn {
+      margin-left: 15px;
+      color: var(--primary);
+      cursor: pointer;
+      :hover {
+        color: #1bbc1b;
+      }
+    }
   }
   .balance {
     color: #707070;

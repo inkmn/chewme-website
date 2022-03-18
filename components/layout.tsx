@@ -151,6 +151,13 @@ const StyledModal = styled(Modal)`
 `
 
 const StyledCartDrawer = styled(Drawer)`
+  @media only screen and (max-width: 480px) {
+    .ant-drawer-content-wrapper {
+      max-width: 100%;
+      width: 100%;
+      min-width: 100%;
+    }
+  }
   .cart-header {
     font-size: 2rem;
   }
