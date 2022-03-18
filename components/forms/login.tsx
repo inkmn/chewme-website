@@ -73,12 +73,12 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               />
             </FormItem>
             <FormItem name="password">
-              <Input
+              <Input.Password
+                suffix={<LockFilled />}
                 bordered={false}
-                type="password"
                 prefix={<LockFilled />}
                 size="large"
-                placeholder="Password"
+                placeholder="Password s"
                 name="password"
               />
             </FormItem>

@@ -5,6 +5,8 @@ import {
   UserOutlined,
   MailFilled,
   GlobalOutlined,
+  CaretDownFilled,
+  KeyOutlined,
 } from '@ant-design/icons'
 import { Button, notification, Row, Space } from 'antd'
 import { Formik } from 'formik'
@@ -114,7 +116,13 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
           {({ isSubmitting }) => (
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="code">
-                <Input size="large" name="code" placeholder="Code" />
+                <Input
+                  prefix={<KeyOutlined />}
+                  size="large"
+                  name="code"
+                  placeholder="Code"
+                  className=""
+                />
               </FormItem>
               <Button
                 htmlType="submit"
@@ -159,6 +167,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               </FormItem>
               <FormItem name="country_code">
                 <Select
+                  suffixIcon={<CaretDownFilled style={{ color: '#fff' }} />}
                   size="large"
                   name="country_code"
                   placeholder="Салбар сонгох"

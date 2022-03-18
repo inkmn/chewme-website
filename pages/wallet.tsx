@@ -3,7 +3,11 @@ import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import Image from 'next/Image'
 import useUser from '@/hooks/useUser'
-import { CopyFilled, ShoppingOutlined } from '@ant-design/icons'
+import {
+  CloseCircleFilled,
+  CopyFilled,
+  ShoppingOutlined,
+} from '@ant-design/icons'
 import { Col, message, Modal, Row, Space } from 'antd'
 import useSWR from 'swr'
 import privatefetcher from '@/lib/privateFetch'
@@ -155,30 +159,46 @@ const MyWallet = () => {
           <pre style={{ color: 'red' }}>
             {JSON.stringify(walletData, null, 2)}
           </pre>
-          <Modal
-            title={<ModalTitle>Deposit</ModalTitle>}
+          <StyledModal
+            closeIcon={
+              <CloseCircleFilled style={{ fontSize: 24, marginTop: '20px' }} />
+            }
+            title={false}
             visible={action?.type === 'deposit'}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
           >
+            <ModalTitle>Deposit</ModalTitle>
             <DepositView data={action?.item} />
-          </Modal>
-          <Modal
-            title={<ModalTitle>Convert</ModalTitle>}
+          </StyledModal>
+          <StyledModal
+            closeIcon={
+              <CloseCircleFilled style={{ fontSize: 24, marginTop: '20px' }} />
+            }
+            title={false}
             visible={action?.type === 'convert'}
+            // visible={true}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
           >
+            <ModalTitle>Convert</ModalTitle>
             <Convert />
-          </Modal>
+          </StyledModal>
         </div>
       </StyledMyWallet>
     </Layout>
   )
 }
 
+const StyledModal = styled(Modal)`
+  .ant-modal-body {
+  }
+`
 const ModalTitle = styled.div`
-  font-size: 1.2rem;
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--primary);
 `
@@ -307,6 +327,7 @@ const Item = styled.div`
 const StyledMyWallet = styled.div`
   min-height: 500px;
   margin-top: 40px;
+
   .flex-end {
     width: 100%;
     display: flex;
