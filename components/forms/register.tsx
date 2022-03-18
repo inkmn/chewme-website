@@ -4,6 +4,9 @@ import {
   GooglePlusOutlined,
   UserOutlined,
   MailFilled,
+  GlobalOutlined,
+  CaretDownFilled,
+  KeyOutlined,
 } from '@ant-design/icons'
 import { Button, notification, Row, Space } from 'antd'
 import { Formik } from 'formik'
@@ -113,7 +116,13 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
           {({ isSubmitting }) => (
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="code">
-                <Input size="large" name="code" placeholder="Code" />
+                <Input
+                  prefix={<KeyOutlined />}
+                  size="large"
+                  name="code"
+                  placeholder="Code"
+                  className=""
+                />
               </FormItem>
               <Button
                 htmlType="submit"
@@ -156,8 +165,13 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                   name="password"
                 />
               </FormItem>
-              <FormItem name="country_code" label="Country code">
-                <Select name="country_code" placeholder="Салбар сонгох">
+              <FormItem name="country_code">
+                <Select
+                  suffixIcon={<CaretDownFilled style={{ color: '#fff' }} />}
+                  size="large"
+                  name="country_code"
+                  placeholder="Салбар сонгох"
+                >
                   {[{ code: 'US', name: 'US - United States' }].map(
                     (item: { name: string; code: string }) => (
                       <Select.Option key={item.code} value={item.code}>
@@ -192,6 +206,21 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 const StyledWrapper = styled.div`
   padding-top: 40px;
   .dc-form {
+    .ant-col {
+      &.ant-form-item-label {
+        label {
+          color: #fff;
+        }
+      }
+    }
+    .ant-select-selector {
+      background: transparent;
+      color: #fff;
+      border: none;
+      border-bottom: 1px solid #fff;
+      border-radius: 0;
+      font-size: 24px;
+    }
     *:focus {
       outline: none;
     }

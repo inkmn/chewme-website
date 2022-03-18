@@ -3,7 +3,11 @@ import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import Image from 'next/Image'
 import useUser from '@/hooks/useUser'
-import { CopyFilled, ShoppingOutlined } from '@ant-design/icons'
+import {
+  CloseCircleFilled,
+  CopyFilled,
+  ShoppingOutlined,
+} from '@ant-design/icons'
 import { Col, message, Modal, Row, Space } from 'antd'
 import useSWR from 'swr'
 import privatefetcher from '@/lib/privateFetch'
@@ -49,15 +53,17 @@ const MyWallet = () => {
               {(walletData?.addressList || []).map((item, index) => {
                 return (
                   <Item key={index}>
-                    <div className="wallet-image">
-                      <Image
-                        className="image"
-                        height={45}
-                        width={45}
-                        src="/image 1.png"
-                        alt=""
-                      />
-                      <div className="title"> {item.currency} </div>
+                    <div className="item-column">
+                      <div className="wallet-image ">
+                        <Image
+                          className="image"
+                          height={45}
+                          width={45}
+                          src="/image 1.png"
+                          alt=""
+                        />
+                        <div className="title"> {item.currency} </div>
+                      </div>
                     </div>
                     <div className="item-column">
                       <div className="balance">balance: </div>
@@ -68,7 +74,7 @@ const MyWallet = () => {
                     <div className="item-column">
                       <div className="balance">Crypto address: </div>
                       <div className="balance-total">
-                        <span>{item?.number}</span>
+                        <span className="token-id">{item?.number}</span>
                         <span
                           onClick={() => {
                             navigator.clipboard.writeText(item?.number || '')
@@ -152,33 +158,49 @@ const MyWallet = () => {
             </Col>
           </Row>
 
-          <pre style={{ color: 'red' }}>
+          {/* <pre style={{ color: 'red' }}>
             {JSON.stringify(walletData, null, 2)}
-          </pre>
-          <Modal
-            title={<ModalTitle>Deposit</ModalTitle>}
+          </pre> */}
+          <StyledModal
+            closeIcon={
+              <CloseCircleFilled style={{ fontSize: 24, marginTop: '20px' }} />
+            }
+            title={false}
             visible={action?.type === 'deposit'}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
           >
+            <ModalTitle>Deposit</ModalTitle>
             <DepositView data={action?.item} />
-          </Modal>
-          <Modal
-            title={<ModalTitle>Convert</ModalTitle>}
+          </StyledModal>
+          <StyledModal
+            closeIcon={
+              <CloseCircleFilled style={{ fontSize: 24, marginTop: '20px' }} />
+            }
+            title={false}
             visible={action?.type === 'convert'}
+            // visible={true}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
           >
+            <ModalTitle>Convert</ModalTitle>
             <Convert />
-          </Modal>
+          </StyledModal>
         </div>
       </StyledMyWallet>
     </Layout>
   )
 }
 
+const StyledModal = styled(Modal)`
+  .ant-modal-body {
+  }
+`
 const ModalTitle = styled.div`
-  font-size: 1.2rem;
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--primary);
 `
@@ -245,7 +267,15 @@ const Item = styled.div`
   border-radius: 5px;
   border: 1px solid var(--primary);
   align-items: center;
+  flex-wrap: wrap;
+  height: auto;
 
+  .token-id {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 250px;
+  }
   .action {
     font-size: 1.2rem;
     color: var(--primary);
@@ -297,6 +327,15 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     margin-right: 10px;
+    flex: 1 1;
+    min-width: max-content;
+    white-space: nowrap;
+
+    :last-child {
+      text-align: end;
+      align-items: flex-end;
+      display: flex;
+    }
   }
 
   @media only screen and (max-width: 767px) {
@@ -307,6 +346,7 @@ const Item = styled.div`
 const StyledMyWallet = styled.div`
   min-height: 500px;
   margin-top: 40px;
+
   .flex-end {
     width: 100%;
     display: flex;
