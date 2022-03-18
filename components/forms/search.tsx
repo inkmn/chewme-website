@@ -1,78 +1,63 @@
-import { Button, notification, Row } from 'antd'
+import { Button, Row, Input as AntInput } from 'antd'
 import { Formik } from 'formik'
-import { Form, FormItem, InputNumber } from 'formik-antd'
+import { Form, FormItem, Input } from 'formik-antd'
+import { useRouter } from 'next/router'
+import qs from 'qs'
 import styled from 'styled-components'
-import privatefetcher from '@/lib/privateFetch'
 
 const SearchForm = () => {
-  const handleSubmit = async (
-    values: any,
-    actions: { setSubmitting: (arg0: boolean) => void }
-  ): Promise<void> => {
-    // try {
-    //   await privatefetcher(`/app/order/add_cart`, {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       note: 'adding to cart',
-    //       products: [values],
-    //     }),
-    //   })
-    //   onSuccess()
-    //   mutateCart()
-    //   mutate()
-    //   actions.setSubmitting(false)
-    // } catch (error: any) {
-    //   if (error.status === 401) {
-    //     setLoginModal(true)
-    //   } else {
-    //     notification.error({
-    //       message: 'Error',
-    //       description: error.data.message,
-    //     })
-    //   }
-    //   actions.setSubmitting(false)
-    // }
+  const router = useRouter()
+  const { query = '' } = router.query as any
+
+  const handleSubmit = async (values: any): Promise<void> => {
+    router.push(`${router.pathname}?query=${values.query}`)
   }
 
   return (
-    <StyledCart>
+    <StyledSearch>
       <Formik
+        enableReinitialize
         initialValues={{
-          coupon_code: '',
-          quantity: 1,
-        }}
-        validate={(values: any) => {
-          const errors: any = {}
-
-          return errors
+          query,
         }}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form layout="inline">
-            <FormItem name="quantity">
-              <InputNumber min={1} name="quantity" />
+          <Form className="search-form">
+            <FormItem name="query">
+              <AntInput.Group>
+                <Input size="large" name="query" />
+                <Button
+                  size="large"
+                  htmlType="submit"
+                  loading={isSubmitting}
+                  type="primary"
+                >
+                  Search
+                </Button>
+              </AntInput.Group>
             </FormItem>
-
-            <Row justify="center">
-              <Button
-                htmlType="submit"
-                type="primary"
-                loading={isSubmitting}
-                shape="round"
-              ></Button>
-            </Row>
           </Form>
         )}
       </Formik>
-    </StyledCart>
+    </StyledSearch>
   )
 }
 
-const StyledCart = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+const StyledSearch = styled.div`
+  width: 100%;
+  max-width: 600px;
+  .search-form {
+    .ant-input-group {
+      display: flex;
+    }
+    .ant-form-item {
+      margin-bottom: 0;
+      .ant-input {
+        resize: none;
+      }
+    }
+  }
 `
 
 export default SearchForm

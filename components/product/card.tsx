@@ -73,6 +73,7 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+    font-family: Helvetica Neue;
     .last-child {
       font-weight: 700;
     }

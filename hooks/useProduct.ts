@@ -1,83 +1,56 @@
 import useSWR from 'swr'
-import privatefetcher from '@/lib/privateFetch'
-import CartType from '@/interfaces/cart'
-import { useState } from 'react'
+import publicFetcher from '@/lib/publicFetch'
 import qs from 'qs'
+import OptionalInterface from '@/interfaces/optionalType'
+import { ProductListItem } from '@/interfaces/product'
+import { useRouter } from 'next/router'
 
-const useCart = (): {
-  data: {
-    rows: CartType[]
-    count: number
-    filter_bars: any[]
-  }
-  error: {
-    status: number
-    data: any
-  }
-  isValidating: boolean
-  mutate: () => void
-  handlePageChange: (page: number) => void
-  offset: {
-    page: number
-    limit: number
-  }
-} => {
-  const apiUrl = '/app/order/carts'
-  const [offset, setOffset] = useState({
-    page: 1,
-    limit: 12,
-  })
-  const queryObj = {
-    offset,
-    filter: {
-      query: '',
-      category_id: '',
-      start_date: '',
-      end_date: '',
+const useProduct = () => {
+  const apiUrl = '/pub/product'
+  const router = useRouter()
+  const {
+    page = 1,
+    limit = 12,
+    query = '',
+    category_id = '',
+    start_date = '',
+    end_date = '',
+    optional = '',
+    optional_type = '',
+  } = router.query as any
+
+  const queryToString = qs.stringify(
+    {
+      offset: {
+        page,
+        limit,
+      },
+      filter: {
+        query,
+        category_id,
+        start_date,
+        end_date,
+        optional,
+        optional_type,
+      },
     },
-  }
-  const [queryString, setQueryString] = useState(
-    qs.stringify(queryObj, {
+    {
       encode: false,
       addQueryPrefix: true,
-    })
+    }
   )
-
-  const handlePageChange = (offset: any) => {
-    setOffset(offset)
-    setQueryString(
-      qs.stringify(
-        {
-          ...queryObj,
-          offset,
-        },
-        {
-          encode: false,
-          addQueryPrefix: true,
-        }
-      )
-    )
-  }
-
-  const {
-    data: cartData = [],
-    error,
-    isValidating,
-    mutate,
-  } = useSWR<CartType[]>(`${apiUrl}${queryString}`, privatefetcher)
+  const { data, error, isValidating, mutate } = useSWR<{
+    rows: ProductListItem[]
+    count: number
+    filter_bars: OptionalInterface[]
+  }>(`${apiUrl}${queryToString}`, publicFetcher)
 
   return {
-    data: {
-      rows: cartData,
-      count: cartData.length,
-      filter_bars: [],
-    },
+    data,
     error,
     isValidating,
     mutate,
-    handlePageChange,
-    offset,
   }
 }
 
-export default useCart
+export default useProduct

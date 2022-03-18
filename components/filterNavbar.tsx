@@ -1,18 +1,18 @@
 import useInit from '@/hooks/useInit'
-import Link from 'next/link'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import qs from 'qs'
 import { useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons'
+import OptionalInterface from '@/interfaces/optionalType'
 
 const FilterNavbar = ({
   pathname = '/',
   options = [],
 }: {
   pathname: string
-  options: any[]
+  options?: OptionalInterface[]
 }): JSX.Element => {
   const {
     data: { categories_tree },
@@ -65,100 +65,132 @@ const FilterNavbar = ({
     setIsOptionalList(newOptionalList)
   }
 
+  const chnageCategory = (id: string) => {
+    if (id === category_id) {
+      router.push(
+        `${pathname}${qs.stringify(
+          {
+            page,
+            limit,
+            query,
+            category_id: '',
+            start_date,
+            end_date,
+            optional,
+            optional_type,
+          },
+          {
+            encode: false,
+            addQueryPrefix: true,
+          }
+        )}`
+      )
+    } else {
+      router.push(
+        `${pathname}${qs.stringify(
+          {
+            page,
+            limit,
+            query,
+            category_id: id,
+            start_date,
+            end_date,
+            optional,
+            optional_type,
+          },
+          {
+            encode: false,
+            addQueryPrefix: true,
+          }
+        )}`
+      )
+    }
+  }
+
   return (
     <StyledFilterBar>
-      <div className="categories filterSection">
-        <h2>Category</h2>
-        <div
-          className={classnames([
-            'category-item',
-            !category_id ? 'selected' : undefined,
-          ])}
-        >
-          <Link href={`${pathname}`}>
-            <a>All</a>
-          </Link>
-        </div>
-        {categories_tree.map((category) => (
+      <div className="desktop-view">
+        <div className="categories filterSection">
+          <h2>Category</h2>
           <div
             className={classnames([
               'category-item',
-              category_id === category.id ? 'selected' : undefined,
+              !category_id ? 'selected' : undefined,
             ])}
-            key={category.id}
           >
-            {category_id === category.id ? (
-              <Link href={`${pathname}`}>
-                <a>
-                  <span>{category.name}</span>
-                  <CloseOutlined />
-                </a>
-              </Link>
-            ) : (
-              <Link href={`${pathname}?category_id=${category.id}`}>
-                <a>
-                  <span>{category.name}</span>
-                  <CloseOutlined />
-                </a>
-              </Link>
-            )}
-            {category.children &&
-              category.children.length &&
-              category.children.map((subCategory) => (
+            <a onClick={() => chnageCategory('')}>All</a>
+          </div>
+          {categories_tree.map((category) => (
+            <div
+              className={classnames([
+                'category-item',
+                category_id === category.id ? 'selected' : undefined,
+              ])}
+              key={category.id}
+            >
+              <a onClick={() => chnageCategory(category.id)}>
+                <span>{category.name}</span>
+                <CloseOutlined />
+              </a>
+
+              {category.children &&
+                category.children.length &&
+                category.children.map((subCategory) => (
+                  <div
+                    className={classnames([
+                      'category-item',
+                      'sub-category',
+                      category_id === subCategory.id ? 'selected' : undefined,
+                    ])}
+                    key={subCategory.id}
+                  >
+                    <a onClick={() => chnageCategory(subCategory.id)}>
+                      <span>{subCategory.name}</span>
+                      <CloseOutlined />
+                    </a>
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div>
+        <div className="breed-size filterSection">
+          {options.map((option) => (
+            <div key={option.code}>
+              <h2>{option.name}</h2>
+              {option.optionals.map((item: any) => (
                 <div
                   className={classnames([
                     'category-item',
-                    'sub-category',
-                    category_id === subCategory.id ? 'selected' : undefined,
+                    optionalList.indexOf(item.id) !== -1
+                      ? 'selected'
+                      : undefined,
                   ])}
-                  key={subCategory.id}
+                  key={item.id}
                 >
-                  {category_id === subCategory.id ? (
-                    <Link href={`${pathname}`}>
-                      <a>
-                        <span>{subCategory.name}</span>
-                        <CloseOutlined />
-                      </a>
-                    </Link>
-                  ) : (
-                    <Link href={`${pathname}?category_id=${subCategory.id}`}>
-                      <a>
-                        <span>{subCategory.name}</span>
-                        <CloseOutlined />
-                      </a>
-                    </Link>
-                  )}
+                  <a onClick={() => updateQueryString(item.id)}>
+                    <span>{item.name}</span>
+                    <CloseOutlined />
+                  </a>
                 </div>
               ))}
-          </div>
-        ))}
-      </div>
-      <div className="breed-size filterSection">
-        {options.map((option) => (
-          <div key={option.code}>
-            <h2>{option.name}</h2>
-            {option.optionals.map((item: any) => (
-              <div
-                className={classnames([
-                  'category-item',
-                  optionalList.indexOf(item.id) !== -1 ? 'selected' : undefined,
-                ])}
-                key={item.id}
-              >
-                <a onClick={() => updateQueryString(item.id)}>
-                  <span>{item.name}</span>
-                  <CloseOutlined />
-                </a>
-              </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
     </StyledFilterBar>
   )
 }
 
 const StyledFilterBar = styled.div`
+  .desktop-view {
+  }
+
+  @media (max-width: 1024px) {
+    .desktop-view {
+      display: none;
+    }
+  }
+
   .categories {
   }
   .filterSection {

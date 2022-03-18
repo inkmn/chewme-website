@@ -97,6 +97,15 @@ const StyledHeader = styled.div<{ height?: number }>`
       }
     }
   }
+  .header-product-search {
+    width: 600px;
+    padding: 0 2rem;
+  }
+  @media (max-width: 1024px) {
+    .header-product-search {
+      width: 100%;
+    }
+  }
 `
 const StyledWrapper = styled.div<{ height?: number }>`
   background: var(--primary);

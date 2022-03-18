@@ -1,20 +1,22 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import useSWR from 'swr'
 import Layout from '@/components/layout'
 import FilterNavbar from '@/components/filterNavbar'
 import PageHeader from '@/components/pageHeader/cover'
 import qs from 'qs'
+import publicFetcher from '@/lib/publicFetch'
 import ProductList from '@/components/product/list'
+import { ProductListItem } from '@/interfaces/product'
 import { Col, Row } from 'antd'
 import useInit from '@/hooks/useInit'
 import ListWithPagination from '@/components/listWithPagination'
-import useProduct from '@/hooks/useProduct'
-import SearchForm from '@/components/forms/search'
 
 const Shop = () => {
   const {
     data: { categories_indexed },
   } = useInit()
+  const apiUrl = '/pub/product'
   const router = useRouter()
   const {
     page = 1,
@@ -26,7 +28,32 @@ const Shop = () => {
     optional = '',
     optional_type = '',
   } = router.query as any
-  const { data: productList, error } = useProduct()
+
+  const queryToString = qs.stringify(
+    {
+      offset: {
+        page,
+        limit,
+      },
+      filter: {
+        query,
+        category_id,
+        start_date,
+        end_date,
+        optional,
+        optional_type,
+      },
+    },
+    {
+      encode: false,
+      addQueryPrefix: true,
+    }
+  )
+  const { data: productList, error } = useSWR<{
+    rows: ProductListItem[]
+    count: number
+    filter_bars: any
+  }>(`${apiUrl}${queryToString}`, publicFetcher)
 
   const handlePageChange = (query: any) => {
     router.push(
@@ -45,9 +72,7 @@ const Shop = () => {
         position="76%"
         height={300}
       >
-        <div className="header-product-search">
-          <SearchForm />
-        </div>
+        <div></div>
       </PageHeader>
       <StyledShop>
         <div className="container">

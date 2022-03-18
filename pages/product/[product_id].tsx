@@ -187,6 +187,7 @@ const Details = styled.div`
     justify-content: space-between;
     padding: 2rem 0;
     width: 100%;
+    font-family: Helvetica Neue;
   }
 
   .addingcart {
