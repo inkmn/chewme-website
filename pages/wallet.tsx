@@ -69,10 +69,10 @@ const MyWallet = () => {
                     </div>
                     <div className="item-column">
                       <Space size={24}>
-                        <Link href="deposit">
+                        <Link href="deposit/id">
                           <a className="action">Deposit</a>
                         </Link>
-                        <Link href="deposit">
+                        <Link href="convert/id">
                           <a className="action">Convert</a>
                         </Link>
                       </Space>
