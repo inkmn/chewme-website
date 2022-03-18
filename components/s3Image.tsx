@@ -19,26 +19,26 @@ const S3Image = ({
   const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
     return `${data?.s3 || ''}${src}?w=${width}&q=${quality || 75}`
   }
-  if (!srcProp || srcProp === '') {
-    return (
-      <Image
-        alt=""
-        {...rest}
-        src={'/product-placeholder.jpeg'}
-        className="pawprint"
-        width={width}
-        height={width}
-        objectFit="contain"
-      />
-    )
-  }
+  // if (!srcProp || srcProp === '') {
+  //   return (
+  //     <Image
+  //       alt=""
+  //       {...rest}
+  //       src={'/product-placeholder.jpeg'}
+  //       className="pawprint"
+  //       width={width}
+  //       height={width}
+  //       objectFit="contain"
+  //     />
+  //   )
+  // }
 
   return (
     <Image
       alt=""
-      loader={imageLoader}
+      // loader={imageLoader}
       {...rest}
-      src={srcProp}
+      src={`${data?.s3 || ''}${srcProp}`}
       width={width}
       height={height}
       layout={width || height ? layout : 'fill'}

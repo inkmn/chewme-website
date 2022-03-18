@@ -1,28 +1,27 @@
-import {
-  LockFilled,
-  FacebookOutlined,
-  GooglePlusOutlined,
-  UserOutlined,
-  MailFilled,
-} from '@ant-design/icons'
-import { Button, notification, Row, Space } from 'antd'
-import { Formik } from 'formik'
-import { Form, FormItem, Input, Select } from 'formik-antd'
+import { LockFilled, MailFilled } from '@ant-design/icons'
+import { Button, notification } from 'antd'
+import { Formik, FormikHelpers } from 'formik'
+import { Form, FormItem, Input } from 'formik-antd'
 import * as Yup from 'yup'
 import { Cookies } from 'react-cookie'
 import publicFetch from '@/lib/publicFetch'
-import styled from 'styled-components'
 import useUser from '@/hooks/useUser'
 import { useState } from 'react'
+import styled from 'styled-components'
+import { useRouter } from 'next/router'
 
 const cookies = new Cookies()
 
-const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
+const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
+  const router = useRouter()
   const { mutate } = useUser()
   const [otpCode, setOtpCode] = useState<string | undefined>()
+  const [passwordForm, setPasswordForm] = useState(false)
   const [tempToken, setTempToken] = useState<string | undefined>()
   const formSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required'),
+    username: Yup.string().required('Email is required'),
+  })
+  const passwordFormSchema = Yup.object().shape({
     password: Yup.string()
       .min(8, 'Password at least 8 characters')
       .matches(/^(?=.*[a-z])/, 'Must contain at least one lowercase character')
@@ -31,13 +30,45 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       .required('Password is required'),
   })
 
+  interface FormValuesInterface {
+    username: string
+  }
+
+  interface FormValuesForgotInterface {
+    password: string
+    confirm_password: string
+  }
+
+  const handleSetPasswordSubmit = async (
+    values: FormValuesForgotInterface,
+    actions: FormikHelpers<FormValuesForgotInterface>
+  ): Promise<void> => {
+    try {
+      await publicFetch<{ access_token: string }>(`/app/user/password`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${tempToken}`,
+        },
+        body: JSON.stringify(values),
+      })
+
+      notification.success({ message: 'Successfully password resetted' })
+
+      router.push('/')
+      actions.setSubmitting(false)
+    } catch (error: any) {
+      actions.setFieldError('username', error.data.message)
+      actions.setSubmitting(false)
+    }
+  }
+
   const handleSubmit = async (
-    values: any,
-    actions: { setSubmitting: (arg0: boolean) => void }
+    values: FormValuesInterface,
+    actions: FormikHelpers<FormValuesInterface>
   ): Promise<void> => {
     try {
       const res = await publicFetch<{ access_token: string }>(
-        `/app/auth/register`,
+        `/app/auth/forgot`,
         {
           method: 'POST',
           body: JSON.stringify(values),
@@ -56,9 +87,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       setOtpCode(otpRes.dev_code)
       actions.setSubmitting(false)
     } catch (error: any) {
-      notification.error({
-        message: error.data.message,
-      })
+      actions.setFieldError('username', error.data.message)
       actions.setSubmitting(false)
     }
   }
@@ -78,9 +107,8 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
           body: JSON.stringify(values),
         }
       )
-      cookies.set('token', tempToken)
-      mutate()
-      onSuccess()
+      setTempToken(res.access_token)
+      setPasswordForm(true)
       notification.success({ message: 'Request successful' })
       actions.setSubmitting(false)
     } catch (error: any) {
@@ -91,14 +119,75 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
     }
   }
 
+  const initialValues: FormValuesInterface = {
+    username: '',
+  }
+
+  const initialPasswordValues: FormValuesForgotInterface = {
+    password: '',
+    confirm_password: '',
+  }
+
   return (
     <StyledWrapper>
-      {otpCode ? (
+      {passwordForm ? (
+        <Formik
+          initialValues={initialPasswordValues}
+          validationSchema={passwordFormSchema}
+          validate={(values) => {
+            const errors: any = {}
+            if (!values.confirm_password) {
+              errors.confirm_password = 'password confirm is required'
+            }
+            if (
+              values.confirm_password &&
+              values.confirm_password !== values.password
+            ) {
+              errors.confirm_password = 'password confirm is not match!'
+            }
+            return errors
+          }}
+          onSubmit={handleSetPasswordSubmit}
+        >
+          {({ isSubmitting, errors }) => (
+            <Form layout={'vertical'} className="dc-form">
+              <FormItem name="password">
+                <Input
+                  bordered={false}
+                  type="password"
+                  prefix={<LockFilled />}
+                  size="large"
+                  placeholder="Password"
+                  name="password"
+                />
+              </FormItem>
+              <FormItem name="confirm_password">
+                <Input
+                  bordered={false}
+                  type="password"
+                  prefix={<LockFilled />}
+                  size="large"
+                  placeholder="Confirm password"
+                  name="confirm_password"
+                />
+              </FormItem>
+              <Button
+                htmlType="submit"
+                type="primary"
+                size="large"
+                loading={isSubmitting}
+                block
+                style={{ marginBottom: '24px' }}
+              >
+                Set new password
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      ) : otpCode ? (
         <Formik
           enableReinitialize
-          initialValues={{
-            code: otpCode,
-          }}
+          initialValues={{ code: otpCode }}
           validate={(values) => {
             const errors: any = {}
 
@@ -130,42 +219,19 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         </Formik>
       ) : (
         <Formik
-          initialValues={{
-            email: undefined,
-            password: undefined,
-            country_code: 'US',
-          }}
+          initialValues={initialValues}
           validationSchema={formSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
             <Form layout={'vertical'} className="dc-form">
-              <FormItem name="email">
+              <FormItem name="username">
                 <Input
                   prefix={<MailFilled />}
                   size="large"
-                  name="email"
+                  name="username"
                   placeholder="Email"
                 />
-              </FormItem>
-              <FormItem name="password">
-                <Input.Password
-                  prefix={<LockFilled />}
-                  size="large"
-                  placeholder="Password"
-                  name="password"
-                />
-              </FormItem>
-              <FormItem name="country_code" label="Country code">
-                <Select name="country_code" placeholder="Салбар сонгох">
-                  {[{ code: 'US', name: 'US - United States' }].map(
-                    (item: { name: string; code: string }) => (
-                      <Select.Option key={item.code} value={item.code}>
-                        {item.name}
-                      </Select.Option>
-                    )
-                  )}
-                </Select>
               </FormItem>
               <Button
                 htmlType="submit"
@@ -175,15 +241,15 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                 block
                 style={{ marginBottom: '24px' }}
               >
-                Register
+                Reset password
               </Button>
             </Form>
           )}
         </Formik>
       )}
       <p className="login-text">
-        Register for a Free Account and get Exclusive Discounts, Subscribe &
-        Save, Manage your Personalized Wishlist & do much more.
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.
       </p>
     </StyledWrapper>
   )
@@ -279,4 +345,4 @@ const StyledWrapper = styled.div`
   }
 `
 
-export default RegisterForm
+export default ForgotPasswordForm

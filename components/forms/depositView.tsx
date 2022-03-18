@@ -28,7 +28,7 @@ interface DataType {
   status: boolean | string
 }
 
-const DepositView = ({ data }: { data: DataType | any }) => {
+const DepositView = ({ data }: { data?: DataType | any }) => {
   return (
     <StyledForm>
       <Formik
@@ -54,7 +54,7 @@ const DepositView = ({ data }: { data: DataType | any }) => {
               label={<div className="label-ant">Deposit to</div>}
             >
               <Input
-                value={data.balance_amount}
+                value={data?.balance_amount}
                 size="large"
                 name=""
                 placeholder="USD Thether ect."
@@ -63,7 +63,7 @@ const DepositView = ({ data }: { data: DataType | any }) => {
             <Form.Item name="email" label={<div className="label-ant"></div>}>
               <span className="color-grey">Address</span>
               <Input
-                value={data.number}
+                value={data?.number}
                 size="large"
                 name="email"
                 placeholder="xxxxxxxxxxx-xxxxxxxxxx"

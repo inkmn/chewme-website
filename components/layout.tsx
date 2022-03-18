@@ -15,11 +15,12 @@ import Header from '@/components/header'
 import RegisterForm from './forms/register'
 
 import { useAppContext } from '@/context/state'
+import ForgotPasswordForm from './forms/forgot'
 
 const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
   const { loginModal, setLoginModal, cartDrawer, setCartDrawer } =
     useAppContext()
-  const [isRegister, setIsRegister] = useState(false)
+  const [authType, setAuthType] = useState('')
   const [scroll, setScroll] = useState(false)
   useEffect(() => {
     const scroll = () => {
@@ -30,6 +31,11 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
     window.addEventListener('scroll', scroll, false)
     return () => window.removeEventListener('scroll', scroll, false)
   }, [])
+
+  const resetAuthType = () => {
+    setAuthType('')
+    setLoginModal(false)
+  }
 
   return (
     <StyledWrapper>
@@ -59,18 +65,16 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
       <StyledModal
         width={480}
         visible={loginModal}
-        onCancel={() => setLoginModal(false)}
+        onCancel={resetAuthType}
         footer={false}
         title={false}
         destroyOnClose
       >
         <h2 className="login-modal-header">Login or Signup</h2>
-        {isRegister ? (
-          <RegisterForm onSuccess={() => setLoginModal(false)} />
-        ) : (
-          <LoginForm onSuccess={() => setLoginModal(false)} />
-        )}
-
+        {{
+          register: <RegisterForm onSuccess={resetAuthType} />,
+          forgot: <ForgotPasswordForm onSuccess={resetAuthType} />,
+        }[authType] || <LoginForm onSuccess={resetAuthType} />}
         <div className="login-links">
           <div className="fg">
             <div>
@@ -82,14 +86,20 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
             </div>
           </div>
           <div className="ll-others">
-            <a
-              className="login-text"
-              onClick={() => setIsRegister(!isRegister)}
-            >
-              {!isRegister ? 'Register' : 'login'}
-            </a>
+            {authType === 'register' ? (
+              <a className="login-text" onClick={() => setAuthType('login')}>
+                Already have an account?
+              </a>
+            ) : (
+              <a className="login-text" onClick={() => setAuthType('register')}>
+                Register
+              </a>
+            )}
+
             <Divider style={{ borderColor: '#fff' }} type="vertical" />
-            <a className="login-text">Forget Password ?</a>
+            <a className="login-text" onClick={() => setAuthType('forgot')}>
+              Forget Password ?
+            </a>
           </div>
         </div>
       </StyledModal>
@@ -127,8 +137,6 @@ const StyledModal = styled(Modal)`
 
     .login-text {
       color: #fff;
-      text-transform: uppercase;
-      font-weight: 600;
       margin-bottom: 0;
       font-size: 16px;
     }
