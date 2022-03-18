@@ -26,15 +26,14 @@ const Settings = () => {
             <Col xs={24} sm={24} md={24} lg={6} xl={6} xxl={6}>
               <StyledNav>
                 <h2>Settings</h2>
-                <Link href="password">
+                <Link href="address">
                   <a
                     className={classnames([
                       'item',
-                      selected === 'password' ? 'selected' : '',
+                      selected === 'address' ? 'selected' : '',
                     ])}
                   >
-                    <span>Password</span>
-                    <CloseOutlined />
+                    <span>Shipping Address</span>
                   </a>
                 </Link>
                 <Link href="email">
@@ -45,18 +44,16 @@ const Settings = () => {
                     ])}
                   >
                     <span>Email</span>
-                    <CloseOutlined />
                   </a>
                 </Link>
-                <Link href="address">
+                <Link href="password">
                   <a
                     className={classnames([
                       'item',
-                      selected === 'address' ? 'selected' : '',
+                      selected === 'password' ? 'selected' : '',
                     ])}
                   >
-                    <span>Shipping Address</span>
-                    <CloseOutlined />
+                    <span>Password</span>
                   </a>
                 </Link>
               </StyledNav>
