@@ -156,7 +156,7 @@ const MyWallet = () => {
             {JSON.stringify(walletData, null, 2)}
           </pre>
           <Modal
-            title="Deposit"
+            title={<ModalTitle>Deposit</ModalTitle>}
             visible={action?.type === 'deposit'}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
