@@ -2,7 +2,6 @@ import DepositView from '@/components/forms/depositView'
 import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import { Col, Row } from 'antd'
-import Link from 'next/link'
 import styled from 'styled-components'
 
 const Term = () => {

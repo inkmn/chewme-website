@@ -8,7 +8,6 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import useUser from '@/hooks/useUser'
-import { useState } from 'react'
 import { useAppContext } from '@/context/state'
 import useCart from '@/hooks/useCart'
 

@@ -2,7 +2,7 @@
 // const proxyHost = 'http://dev-dc-app.goodtech.mn'
 const proxyHost = 'http://192.168.1.210:30527'
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ['dev-dc-s3.goodtech.mn', '192.168.1.157'],
   },

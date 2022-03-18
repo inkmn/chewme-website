@@ -1,4 +1,4 @@
-import User, { UserHistoryStatus, UserStatus } from '@/interfaces/user'
+import User from '@/interfaces/user'
 import useSWR from 'swr'
 import privatefetcher from '@/lib/privateFetch'
 

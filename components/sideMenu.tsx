@@ -19,7 +19,7 @@ const SideMenu = (): JSX.Element => {
     useAppContext()
   const { user, error, isValidating, mutate } = useUser()
   const logout = () => {
-    cookies.set('token', null)
+    cookies.remove('token')
     console.log('doing logout')
     mutate()
   }
