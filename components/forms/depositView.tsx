@@ -1,43 +1,83 @@
 import { Formik } from 'formik'
-import { Form, FormItem, Input, Select } from 'formik-antd'
+import { Form, Input } from 'formik-antd'
 import styled from 'styled-components'
-import * as Yup from 'yup'
 import Link from 'next/link'
+import { CopyFilled } from '@ant-design/icons'
+import { message } from 'antd'
 
-const DepositView = () => {
+interface DataType {
+  id: string | undefined
+  is_active: boolean | undefined
+  owner_type: string | undefined
+  owner_id: string | undefined
+  type: string | undefined
+  number: string | undefined
+  name: string | undefined
+  code: string | undefined
+  qr_code: string | undefined
+  currency: string | undefined
+  balance_amount: number | undefined
+  hold_amount: number | undefined
+  account_status: string | undefined
+  account_status_date: Date | undefined | string
+  note: string | undefined
+  created_by: Date | undefined | string
+  created_at: Date | undefined | string
+  updated_by: Date | undefined | string
+  updated_at: Date | undefined | string
+  status: boolean | string
+}
+
+const DepositView = ({ data }: { data: DataType | any }) => {
   return (
     <StyledForm>
       <Formik
         initialValues={{
-          email: '',
-          type: 'EMAIL',
+          balance_amount: data?.balance_amount || undefined,
         }}
         onSubmit={() => {}}
       >
         {({ isSubmitting }) => (
-          <Form
-            layout="horizontal"
-            labelCol={{ xs: 24, sm: 6, md: 6, lg: 8, xl: 6, xxl: 6 }}
-            wrapperCol={{ xs: 24, sm: 16, md: 14, lg: 14, xl: 14, xxl: 16 }}
-          >
+          <Form layout="vertical">
             <Form.Item
               name="email"
               label={<div className="label-ant">Coin</div>}
             >
-              <Input size="large" name="email" placeholder="USD Thether ect." />
+              <Input
+                size="large"
+                name="balance_amount"
+                placeholder="USD Thether ect."
+              />
             </Form.Item>
             <Form.Item
               name="email"
               label={<div className="label-ant">Deposit to</div>}
             >
-              <Input size="large" name="email" placeholder="USD Thether ect." />
+              <Input
+                value={data.balance_amount}
+                size="large"
+                name=""
+                placeholder="USD Thether ect."
+              />
             </Form.Item>
             <Form.Item name="email" label={<div className="label-ant"></div>}>
               <span className="color-grey">Address</span>
               <Input
+                value={data.number}
                 size="large"
                 name="email"
                 placeholder="xxxxxxxxxxx-xxxxxxxxxx"
+                suffix={
+                  <span
+                    onClick={() => {
+                      navigator.clipboard.writeText(data?.number || '')
+                      message.info('Copied wallet address!')
+                    }}
+                    className="copy-btn"
+                  >
+                    <CopyFilled />
+                  </span>
+                }
               />
               <ul className="footer-content">
                 <li>Send only BUSD to this deposit address</li>
@@ -63,6 +103,12 @@ const DepositView = () => {
 }
 
 const StyledForm = styled.div`
+  .copy-btn {
+    color: var(--primary);
+    :hover {
+      color: green;
+    }
+  }
   .green {
     color: var(--primary);
   }

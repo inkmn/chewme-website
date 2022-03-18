@@ -4,14 +4,22 @@ import styled from 'styled-components'
 import Image from 'next/Image'
 import useUser from '@/hooks/useUser'
 import { CopyFilled, ShoppingOutlined } from '@ant-design/icons'
-import { Col, message, Row, Space } from 'antd'
+import { Col, message, Modal, Row, Space } from 'antd'
 import useSWR from 'swr'
 import privatefetcher from '@/lib/privateFetch'
 import WalletType from '@/interfaces/walletType'
-import Link from 'next/link'
+import { useState } from 'react'
+import Convert from '@/components/forms/convert'
+import DepositView from '@/components/forms/depositView'
+
+interface Action {
+  type: string | undefined
+  item: object | undefined
+}
 
 const MyWallet = () => {
-  const { user } = useUser()
+  const [action, setAction] = useState<Action>()
+
   const { data: walletData } = useSWR(
     '/app/wallet/account',
     async (input: string, args: RequestInit) => {
@@ -29,6 +37,7 @@ const MyWallet = () => {
       return returnData
     }
   )
+
   return (
     <Layout>
       <PageHeader title={`My wallet`} image={`/cover5.jpeg`} />
@@ -48,7 +57,7 @@ const MyWallet = () => {
                         src="/image 1.png"
                         alt=""
                       />
-                      <div className="title">USD Thether</div>
+                      <div className="title"> {item.currency} </div>
                     </div>
                     <div className="item-column">
                       <div className="balance">balance: </div>
@@ -59,12 +68,10 @@ const MyWallet = () => {
                     <div className="item-column">
                       <div className="balance">Crypto address: </div>
                       <div className="balance-total">
-                        <span>{walletData?.dcAddress?.number}</span>
+                        <span>{item?.number}</span>
                         <span
                           onClick={() => {
-                            navigator.clipboard.writeText(
-                              walletData?.dcAddress?.number || ''
-                            )
+                            navigator.clipboard.writeText(item?.number || '')
                             message.info('Copied wallet address!')
                           }}
                           className="copy-btn"
@@ -75,12 +82,20 @@ const MyWallet = () => {
                     </div>
                     <div className="item-column">
                       <Space size={24}>
-                        <Link href={`deposit/${item?.id}`}>
+                        <div
+                          onClick={() =>
+                            setAction({ type: 'deposit', item: item })
+                          }
+                        >
                           <a className="action">Deposit</a>
-                        </Link>
-                        <Link href={`convert/${item?.id}`}>
+                        </div>
+                        <div
+                          onClick={() =>
+                            setAction({ type: 'convert', item: item })
+                          }
+                        >
                           <a className="action">Convert</a>
-                        </Link>
+                        </div>
                       </Space>
                     </div>
                   </Item>
@@ -140,11 +155,33 @@ const MyWallet = () => {
           <pre style={{ color: 'red' }}>
             {JSON.stringify(walletData, null, 2)}
           </pre>
+          <Modal
+            title="Deposit"
+            visible={action?.type === 'deposit'}
+            footer={false}
+            onCancel={() => setAction({ type: undefined, item: undefined })}
+          >
+            <DepositView data={action?.item} />
+          </Modal>
+          <Modal
+            title={<ModalTitle>Convert</ModalTitle>}
+            visible={action?.type === 'convert'}
+            footer={false}
+            onCancel={() => setAction({ type: undefined, item: undefined })}
+          >
+            <Convert />
+          </Modal>
         </div>
       </StyledMyWallet>
     </Layout>
   )
 }
+
+const ModalTitle = styled.div`
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+`
 
 const HistoryList = styled.div`
   margin-top: 10px;

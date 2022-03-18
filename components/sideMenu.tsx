@@ -65,7 +65,10 @@ const SideMenu = (): JSX.Element => {
             <Link href="/order">
               <a className="menu-item">My order</a>
             </Link>
-            <Link href="/settings">
+            <Link href="/favorite">
+              <a className="menu-item">Favorite</a>
+            </Link>
+            <Link href="/settings/address">
               <a className="menu-item">Settings</a>
             </Link>
           </>
