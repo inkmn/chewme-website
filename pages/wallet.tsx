@@ -53,15 +53,17 @@ const MyWallet = () => {
               {(walletData?.addressList || []).map((item, index) => {
                 return (
                   <Item key={index}>
-                    <div className="wallet-image">
-                      <Image
-                        className="image"
-                        height={45}
-                        width={45}
-                        src="/image 1.png"
-                        alt=""
-                      />
-                      <div className="title"> {item.currency} </div>
+                    <div className="item-column">
+                      <div className="wallet-image ">
+                        <Image
+                          className="image"
+                          height={45}
+                          width={45}
+                          src="/image 1.png"
+                          alt=""
+                        />
+                        <div className="title"> {item.currency} </div>
+                      </div>
                     </div>
                     <div className="item-column">
                       <div className="balance">balance: </div>
@@ -72,7 +74,7 @@ const MyWallet = () => {
                     <div className="item-column">
                       <div className="balance">Crypto address: </div>
                       <div className="balance-total">
-                        <span>{item?.number}</span>
+                        <span className="token-id">{item?.number}</span>
                         <span
                           onClick={() => {
                             navigator.clipboard.writeText(item?.number || '')
@@ -156,9 +158,9 @@ const MyWallet = () => {
             </Col>
           </Row>
 
-          <pre style={{ color: 'red' }}>
+          {/* <pre style={{ color: 'red' }}>
             {JSON.stringify(walletData, null, 2)}
-          </pre>
+          </pre> */}
           <StyledModal
             closeIcon={
               <CloseCircleFilled style={{ fontSize: 24, marginTop: '20px' }} />
@@ -265,7 +267,15 @@ const Item = styled.div`
   border-radius: 5px;
   border: 1px solid var(--primary);
   align-items: center;
+  flex-wrap: wrap;
+  height: auto;
 
+  .token-id {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 250px;
+  }
   .action {
     font-size: 1.2rem;
     color: var(--primary);
@@ -317,6 +327,15 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     margin-right: 10px;
+    flex: 1 1;
+    min-width: max-content;
+    white-space: nowrap;
+
+    :last-child {
+      text-align: end;
+      align-items: flex-end;
+      display: flex;
+    }
   }
 
   @media only screen and (max-width: 767px) {
