@@ -4,6 +4,7 @@ import {
   GooglePlusOutlined,
   UserOutlined,
   MailFilled,
+  GlobalOutlined,
 } from '@ant-design/icons'
 import { Button, notification, Row, Space } from 'antd'
 import { Formik } from 'formik'
@@ -156,8 +157,12 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                   name="password"
                 />
               </FormItem>
-              <FormItem name="country_code" label="Country code">
-                <Select name="country_code" placeholder="Салбар сонгох">
+              <FormItem name="country_code">
+                <Select
+                  size="large"
+                  name="country_code"
+                  placeholder="Салбар сонгох"
+                >
                   {[
                     { code: 'US', name: 'US - United States' },
                     { code: 'MN', name: 'MN - Mongolia' },
@@ -193,6 +198,21 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 const StyledWrapper = styled.div`
   padding-top: 40px;
   .dc-form {
+    .ant-col {
+      &.ant-form-item-label {
+        label {
+          color: #fff;
+        }
+      }
+    }
+    .ant-select-selector {
+      background: transparent;
+      color: #fff;
+      border: none;
+      border-bottom: 1px solid #fff;
+      border-radius: 0;
+      font-size: 24px;
+    }
     *:focus {
       outline: none;
     }
