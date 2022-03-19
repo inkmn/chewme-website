@@ -345,6 +345,19 @@ const StyledWrapper = styled.div`
     justify-content: center;
     font-weight: 600;
   }
+
+  .ant-form-item-explain-error {
+    color: #ff8f90;
+  }
+  .ant-form-item-has-error,
+  .ant-input-number-prefix,
+  .ant-form-item-has-error,
+  .ant-form-item-has-error,
+  .ant-input-number-prefix {
+    .ant-input-prefix {
+      color: #ff8f90 !important;
+    }
+  }
 `
 
 export default ForgotPasswordForm
