@@ -108,26 +108,6 @@ body,
   display: flex;
 }
 
-/* .btn-green {
-  background: var(--primary);
-  border-color: var(--primary);
-} */
-
-.ant-btn-primary,
-.ant-btn-lg {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-.ant-btn-primary:hover {
-  background: #5d712cd4;
-  border-color: #5d712cd4;
-}
-.ant-btn-primary:focus {
-  background: #779139;
-  border-color: #779139;
-}
-
 .page-title {
   margin-top: 30px;
   font-size: 2rem;

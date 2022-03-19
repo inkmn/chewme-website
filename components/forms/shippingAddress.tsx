@@ -141,6 +141,7 @@ const ShippingAddress = () => {
             </div>
             <div className="flex-end">
               <Button
+                className="primary-round"
                 htmlType="submit"
                 type="primary"
                 loading={isSubmitting}

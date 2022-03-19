@@ -25,7 +25,9 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
   const [otpCode, setOtpCode] = useState<string | undefined>()
   const [tempToken, setTempToken] = useState<string | undefined>()
   const formSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required'),
+    email: Yup.string()
+      .email('Email is required')
+      .required('Email is required'),
     password: Yup.string()
       .min(8, 'Password at least 8 characters')
       .matches(/^(?=.*[a-z])/, 'Must contain at least one lowercase character')
@@ -62,10 +64,10 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       notification.error({
         message: error.data.message,
       })
+      actions.setFieldError('username', error.data.message)
       actions.setSubmitting(false)
     }
   }
-
   const handleOtpSubmit = async (
     values: { code: string | undefined },
     actions: { setSubmitting: (arg0: boolean) => void }
@@ -114,7 +116,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
           }}
           onSubmit={handleOtpSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldError }) => (
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="code">
                 <Input

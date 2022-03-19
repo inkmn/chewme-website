@@ -4,6 +4,7 @@ import { Form, FormItem, Input, Select } from 'formik-antd'
 import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
+import ButtonStyled from '../buttonStyled'
 
 const formSchema = Yup.object().shape({
   old_password: Yup.string().required('Old password is required'),
@@ -71,15 +72,13 @@ const UserPassword = () => {
               </Form.Item>
             </div>
             <div className="flex-end">
-              <Button
-                htmlType="submit"
+              <ButtonStyled
                 type="primary"
+                htmlType="submit"
                 loading={isSubmitting}
-                size="large"
-                shape="round"
               >
                 Save password
-              </Button>
+              </ButtonStyled>
             </div>
           </Form>
         )}
