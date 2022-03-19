@@ -4,6 +4,8 @@ import { Form, FormItem, Input, Select } from 'formik-antd'
 import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
+import useUser from '@/hooks/useUser'
+import { useState } from 'react'
 
 const formSchema = Yup.object().shape({
   first_name: Yup.string().required('Firstname is required'),
@@ -16,6 +18,18 @@ const formSchema = Yup.object().shape({
   postcode: Yup.string().required('Zipcode is required'),
   street_address: Yup.string().required('Address is required'),
 })
+
+interface Address {
+  first_name: string
+  last_name: string
+  country: string
+  state: string
+  city: string
+  apartment: string
+  phone: string
+  postcode: string
+  street_address: string
+}
 
 const ShippingAddress = () => {
   const handleSubmit = async (
@@ -41,6 +55,21 @@ const ShippingAddress = () => {
       actions.setSubmitting(false)
     }
   }
+
+  const [data, setData] = useState<Address>({
+    first_name: '',
+    last_name: '',
+    country: '',
+    state: '',
+    city: '',
+    apartment: '',
+    phone: '',
+    postcode: '',
+    street_address: '',
+  })
+
+  const { user, error } = useUser()
+  console.log(user)
 
   return (
     <StyledForm>
@@ -87,13 +116,13 @@ const ShippingAddress = () => {
                 </Select>
               </FormItem>
               <FormItem name="state" label="State code">
-                <Input name="state" />
+                <Input name="state" placeholder="State code" />
               </FormItem>
               <FormItem name="city" label="City code">
-                <Input name="city" />
+                <Input name="city" placeholder="City code" />
               </FormItem>
               <FormItem name="apartment" label="Apartment">
-                <Input name="apartment" />
+                <Input name="apartment" placeholder="Apartment" />
               </FormItem>
               <FormItem name="phone" label="Phone">
                 <Input
@@ -104,10 +133,10 @@ const ShippingAddress = () => {
                 />
               </FormItem>
               <FormItem name="postcode" label="Zipcode">
-                <Input name="postcode" placeholder="" />
+                <Input name="postcode" placeholder="Zipcode" />
               </FormItem>
               <FormItem name="street_address" label="Address">
-                <Input name="street_address" placeholder="" />
+                <Input name="street_address" placeholder="Address" />
               </FormItem>
             </div>
             <div className="flex-end">
@@ -124,6 +153,8 @@ const ShippingAddress = () => {
           </Form>
         )}
       </Formik>
+
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </StyledForm>
   )
 }
