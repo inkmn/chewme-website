@@ -3,6 +3,7 @@
 const proxyHost = 'http://192.168.1.210:30527'
 const nextConfig = {
   reactStrictMode: false,
+  distDir: 'build',
   images: {
     domains: ['dev-dc-s3.goodtech.mn', '192.168.1.157'],
   },

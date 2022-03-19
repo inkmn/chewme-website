@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('antd/dist/antd.css');
+@import url('swiper/css/pagination');
+@import url('swiper/css');
 
 html {
   scroll-behavior: smooth;
@@ -132,20 +135,6 @@ body,
   color: var(--primary);
   text-transform: capitalize;
 }
-
-/* .ant-input-custom:focus {
-  border-color: rebeccapurple;
-  outline: 0;
-  -webkit-box-shadow: 0 0 0 2px rgba(87, 168, 233, 0.2);
-  box-shadow: 0 0 0 2px rgba(87, 168, 233, 0.2);
-}
-.ant-input:focus {
-  border: 3px solid rebeccapurple;
-  border-color: rebeccapurple;
-  outline: 0;
-  -webkit-box-shadow: 0 0 0 2px rgba(87, 168, 233, 0.2);
-  box-shadow: 0 0 0 2px rgba(87, 168, 233, 0.2);
-} */
 
 @import url('antd/dist/antd.css');
 @import url('swiper/css/pagination');
