@@ -79,7 +79,10 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
   }
   const handleOtpSubmit = async (
     values: { code: string | undefined },
-    actions: { setSubmitting: (arg0: boolean) => void }
+    actions: {
+      setSubmitting: (arg0: boolean) => void
+      setFieldError: (arg0: string, arg1: string) => void
+    }
   ): Promise<void> => {
     try {
       const res = await publicFetch<{ access_token: string }>(
@@ -98,6 +101,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       notification.success({ message: 'Request successful' })
       actions.setSubmitting(false)
     } catch (error: any) {
+      actions.setFieldError('code', error.data.message)
       actions.setSubmitting(false)
     }
   }
