@@ -6,6 +6,7 @@ import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
 import useUser from '@/hooks/useUser'
 import { useState } from 'react'
+import ButtonStyled from '../buttonStyled'
 
 const formSchema = Yup.object().shape({
   first_name: Yup.string().required('Firstname is required'),
@@ -140,8 +141,7 @@ const ShippingAddress = () => {
               </FormItem>
             </div>
             <div className="flex-end">
-              <Button
-                className="primary-round"
+              <ButtonStyled
                 htmlType="submit"
                 type="primary"
                 loading={isSubmitting}
@@ -149,7 +149,7 @@ const ShippingAddress = () => {
                 shape="round"
               >
                 Save changes
-              </Button>
+              </ButtonStyled>
             </div>
           </Form>
         )}

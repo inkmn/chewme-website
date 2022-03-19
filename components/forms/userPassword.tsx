@@ -73,9 +73,11 @@ const UserPassword = () => {
             </div>
             <div className="flex-end">
               <ButtonStyled
-                type="primary"
                 htmlType="submit"
+                type="primary"
                 loading={isSubmitting}
+                size="large"
+                shape="round"
               >
                 Save password
               </ButtonStyled>

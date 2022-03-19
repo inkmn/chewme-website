@@ -4,6 +4,7 @@ import { Form, FormItem, Input, Select } from 'formik-antd'
 import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
+import ButtonStyled from '../buttonStyled'
 
 const formSchema = Yup.object().shape({
   email: Yup.string().email().required('Email is required'),
@@ -64,15 +65,15 @@ const UserEmail = () => {
               </Form.Item>
             </div>
             <div className="flex-end">
-              <Button
+              <ButtonStyled
                 htmlType="submit"
                 type="primary"
                 loading={isSubmitting}
                 size="large"
                 shape="round"
               >
-                Save
-              </Button>
+                Email changes
+              </ButtonStyled>
             </div>
           </Form>
         )}
