@@ -4,8 +4,9 @@ import Link from 'next/link'
 import CartType from '@/interfaces/cart'
 import RemoveIcon from '../../assets/remove.svg'
 import privatefetcher from '@/lib/privateFetch'
-import { Button, Space } from 'antd'
+import { Button, notification, Space } from 'antd'
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import CustomCyrrency from '../currencyFormat'
 
 const CartItem = ({
   item,
@@ -22,12 +23,16 @@ const CartItem = ({
   }
 
   const updateQuantity = async (quantity: number): Promise<void> => {
-    await privatefetcher(`/app/order/${item.id}/update_cart`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        quantity: quantity,
-      }),
-    })
+    try {
+      await privatefetcher(`/app/order/${item.id}/update_cart`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          quantity: quantity,
+        }),
+      })
+    } catch (error: any) {
+      notification.error(error.data.message)
+    }
     mutate()
   }
 
@@ -71,13 +76,18 @@ const CartItem = ({
           </div>
           <div className="ifb-price">
             <Space>
-              <span>{item.price}</span>
-              <span>*</span>
               <span>
-                {item.quantity} {item.unit}
+                <CustomCyrrency value={item.price} suffix="DC" />
               </span>
+              <span>x</span>
+              <span>{item.quantity}</span>
               <span>=</span>
-              <span>${item.price * item.quantity}</span>
+              <span>
+                <CustomCyrrency
+                  value={item.price * item.quantity}
+                  suffix="DC"
+                />
+              </span>
             </Space>
           </div>
         </div>

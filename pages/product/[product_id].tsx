@@ -12,7 +12,7 @@ import CarouselThumb from '@/components/product/thumbs'
 import useInit from '@/hooks/useInit'
 import AddToCartForm from '@/components/forms/addToCart'
 import privatefetcher from '@/lib/privateFetch'
-import Item from 'antd/lib/list/Item'
+import CustomCyrrency from '@/components/currencyFormat'
 
 const { Paragraph, Link } = Typography
 
@@ -103,14 +103,13 @@ const ProductDetail = () => {
                 <div className="price-box">
                   <div className="price">
                     <div className="inner-price usd-price">
-                      <span className="price-value">{productData?.price}</span>
-                      <span>USD</span>
+                      <CustomCyrrency value={productData?.price} currency="$" />
                     </div>
                     <div className="inner-price dc-price">
-                      <span className="price-value">
-                        {productData?.dc_price}
-                      </span>
-                      <span>DC</span>
+                      <CustomCyrrency
+                        value={productData?.dc_price}
+                        suffix="DC"
+                      />
                     </div>
                   </div>
                   <div className="addingcart">

@@ -3,31 +3,28 @@ import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { Empty, Space, Tag } from 'antd'
+import { Button, Col, Empty, Row, Space, Tag } from 'antd'
 import privatefetcher from '@/lib/privateFetch'
-import useInit from '@/hooks/useInit'
 import OrderItemType from '@/interfaces/orderItem'
-import { datetimeFormat, formatterUSD } from '@/utils/index'
-import ProductItem from '@/interfaces/product'
+import { datetimeFormat } from '@/utils/index'
 import Image from 'next/image'
+import CustomCyrrency from '@/components/currencyFormat'
+import { useState } from 'react'
+import RenderStatus from '@/components/orderStatus'
 
 const OrderDetail = () => {
   const router = useRouter()
-  const { data } = useInit()
   const { order_id } = router.query
+  const [loading, setLoading] = useState(false)
 
-  const { data: orderData, error } = useSWR<OrderItemType>(
+  const {
+    data: orderData,
+    error,
+    mutate,
+  } = useSWR<OrderItemType>(
     order_id ? `/app/order/${order_id}/get` : null,
     privatefetcher
   )
-
-  const renderStatus = (status: string | undefined) => {
-    if (status === 'COMPLETED') return <Tag color={'green'}>COMPLETED</Tag>
-    if (status === 'NEW') return <Tag>NEW</Tag>
-    if (status === 'CANCEL') return <Tag color="red">CANCEL</Tag>
-    if (status === 'PAID') return <Tag color="green">PAID</Tag>
-    return <Tag color="">-</Tag>
-  }
 
   if (error && error) {
     return (
@@ -45,6 +42,19 @@ const OrderDetail = () => {
         </StyledOrderDetail>
       </Layout>
     )
+  }
+
+  const payForThisOrder = async () => {
+    setLoading(true)
+    try {
+      await privatefetcher(`/app/order/${order_id}/payment`, {
+        method: 'GET',
+      })
+      mutate()
+    } catch (error) {
+      mutate()
+    }
+    setLoading(false)
   }
 
   return (
@@ -83,7 +93,7 @@ const OrderDetail = () => {
                 <div className="shipping-box">
                   <div className="orderStatus text-end">
                     <Space>
-                      {renderStatus(orderData?.order_status)}
+                      <RenderStatus status={orderData?.order_status} />
                       <span>{orderData?.code}</span>
                     </Space>
                   </div>
@@ -100,7 +110,7 @@ const OrderDetail = () => {
               <div className="mobile-row">
                 <div className="label order-code">Status:</div>
                 <span className="value order-code-value">
-                  {renderStatus(orderData?.order_status)}
+                  <RenderStatus status={orderData?.order_status} />
                 </span>
               </div>
               <div className="mobile-row">
@@ -167,7 +177,7 @@ const OrderDetail = () => {
                     <div className="column">
                       <div className="item-title">{item?.name}</div>
                       <div className="item-price">
-                        {formatterUSD(item?.price)} /<div className="dc"></div>
+                        <CustomCyrrency value={item?.price} suffix="DC" />
                       </div>
                     </div>
                   </div>
@@ -193,9 +203,16 @@ const OrderDetail = () => {
                       <div className="title">{item?.name}</div>
                       <p className="description">{item.code}</p>
                     </td>
-                    <td>{formatterUSD(item?.price)}</td>
+                    <td>
+                      <CustomCyrrency value={item?.price} suffix="DC" />
+                    </td>
                     <td>{item.quantity}</td>
-                    <td>{formatterUSD(item?.price * item.quantity)}</td>
+                    <td>
+                      <CustomCyrrency
+                        value={item?.price * item.quantity}
+                        suffix="DC"
+                      />
+                    </td>
                   </tr>
                 )
               })}
@@ -215,11 +232,32 @@ const OrderDetail = () => {
                 <td></td>
                 <td className="amount total">Total Amount</td>
                 <td className="amount total">
-                  {formatterUSD(orderData?.total_amount)}
+                  <CustomCyrrency value={orderData?.total_amount} suffix="DC" />
                 </td>
               </tr>
             </table>
           </StyledPadanTotal>
+          <Row justify="end">
+            <Col>
+              {orderData?.order_status !== 'PAID' ? (
+                <Button
+                  loading={loading}
+                  size="large"
+                  onClick={payForThisOrder}
+                >
+                  <Space>
+                    <span>
+                      <CustomCyrrency
+                        value={orderData?.total_amount}
+                        suffix="DC"
+                      />
+                    </span>
+                    <span>pay</span>
+                  </Space>
+                </Button>
+              ) : null}
+            </Col>
+          </Row>
           {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
         </div>
       </StyledOrderDetail>
