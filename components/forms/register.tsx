@@ -73,9 +73,6 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       setOtpCode(otpRes.dev_code)
       actions.setSubmitting(false)
     } catch (error: any) {
-      notification.error({
-        message: error.data.message,
-      })
       actions.setFieldError('email', error.data.message)
       actions.setSubmitting(false)
     }
