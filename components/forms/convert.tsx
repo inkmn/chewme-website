@@ -8,6 +8,7 @@ import { CaretDownOutlined, SwapOutlined } from '@ant-design/icons'
 import Image from 'next/image'
 import DogeChew from '../../assets/dogechew-coin.png'
 import Shiba from '../../assets/dogcoin.png'
+import ButtonStyled from '../buttonStyled'
 
 const Option = SelectAnt.Option
 
@@ -145,7 +146,7 @@ const Convert = () => {
                 </Select>
               </InputAnt.Group>
             </Form.Item>
-            <Button
+            <ButtonStyled
               shape="round"
               style={{
                 width: '100%',
@@ -157,7 +158,7 @@ const Convert = () => {
               size="large"
             >
               Swap
-            </Button>
+            </ButtonStyled>
           </Form>
         )}
       </Formik>
