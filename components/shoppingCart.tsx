@@ -5,9 +5,10 @@ import privatefetcher from '@/lib/privateFetch'
 import CartList from '@/components/cart/list'
 import ListWithPagination from '@/components/listWithPagination'
 import { useState } from 'react'
-import { Button, Space } from 'antd'
+import { Button, Col, Row, Space } from 'antd'
 import { useRouter } from 'next/router'
 import useCart from '@/hooks/useCart'
+import CustomCyrrency from './currencyFormat'
 
 const ShoppingCart = () => {
   const router = useRouter()
@@ -18,6 +19,13 @@ const ShoppingCart = () => {
     handlePageChange,
     offset,
   }: any = useCart()
+
+  const clearCart = async () => {
+    await privatefetcher(`/app/order/clear_cart`, {
+      method: 'GET',
+    })
+    mutate()
+  }
 
   return (
     <StyledShoppingCart>
@@ -43,22 +51,42 @@ const ShoppingCart = () => {
           <div className="cart-total-amount">
             <Space>
               <span>Subtotal:</span>
-              <span>${(cartData?.cart_sum || {}).total_amount.toFixed(2)}</span>
+              <span>
+                <CustomCyrrency
+                  value={(cartData?.cart_sum || {}).total_amount}
+                  suffix="DC"
+                />
+              </span>
             </Space>
           </div>
         </div>
-        <Button
-          onClick={() => {
-            router.push('/checkout')
-          }}
-          disabled={!cartData?.count}
-          type="primary"
-          block
-          shape="round"
-          size="large"
-        >
-          Checkout
-        </Button>
+        <Row gutter={24}>
+          <Col span={12}>
+            <Button
+              block
+              onClick={clearCart}
+              disabled={!cartData?.count}
+              shape="round"
+              size="large"
+            >
+              Clear cart
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button
+              block
+              onClick={() => {
+                router.push('/checkout')
+              }}
+              disabled={!cartData?.count}
+              type="primary"
+              shape="round"
+              size="large"
+            >
+              Checkout
+            </Button>
+          </Col>
+        </Row>
       </div>
     </StyledShoppingCart>
   )

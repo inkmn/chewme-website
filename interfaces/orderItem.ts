@@ -1,3 +1,11 @@
+enum OrderType {
+  NEW = 'NEW',
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  COMPLETED = 'COMPLETED',
+  CANCELED = 'CANCELED',
+}
+
 interface OrderItemType {
   account_amount: string
   archive_id: string | null
@@ -15,7 +23,7 @@ interface OrderItemType {
   is_sale_price: false
   note: string | null
   order_shipping: any
-  order_status: string
+  order_status: OrderType
   order_status_date: string
   order_user_id: string
   paid_amount: string

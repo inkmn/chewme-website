@@ -2,6 +2,7 @@ import { ProductListItem } from '@/interfaces/product'
 import Image from '@/components/s3Image'
 import styled from 'styled-components'
 import Link from 'next/link'
+import CustomCyrrency from '../currencyFormat'
 
 const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
   return (
@@ -31,8 +32,12 @@ const ProductCard = ({ item }: { item: ProductListItem }): JSX.Element => {
         <div className="instock">{item.stock_avialable} In Stock</div>
       )}
       <div className="card-footer">
-        <span>${item.price} /</span>
-        <span className="last-child"> {item.dc_price} DC</span>
+        <span className="pre-price">
+          <CustomCyrrency value={item.price} currency="$" />
+        </span>
+        <span className="last-child">
+          <CustomCyrrency value={item.dc_price} suffix="DC" />
+        </span>
       </div>
     </StyledWrapper>
   )
@@ -74,6 +79,18 @@ const StyledWrapper = styled.div`
     align-items: center;
     width: 100%;
     font-family: Helvetica Neue;
+    // & > span {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    // }
+    .pre-price {
+      color: #757575;
+      border-right: 1px solid #e0e0e0;
+      margin-right: 8px;
+      padding-right: 8px;
+      line-height: 26px;
+    }
     .last-child {
       font-weight: 700;
     }

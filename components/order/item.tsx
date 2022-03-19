@@ -4,6 +4,8 @@ import OrderType from '@/interfaces/orderItem'
 import privatefetcher from '@/lib/privateFetch'
 import { Space, Tag } from 'antd'
 import { dateFormat } from '@/utils/index'
+import CustomCyrrency from '../currencyFormat'
+import RenderStatus from '../orderStatus'
 
 const OrderItem = ({
   item,
@@ -36,16 +38,16 @@ const OrderItem = ({
             <div className="ifb-quantity">
               <Space>
                 <span>Order status:</span>
-                <Tag>
-                  {item.order_status} -{' '}
-                  <span>{dateFormat(item.order_status_date)}</span>
-                </Tag>
+                <RenderStatus status={item.order_status} />
+                <span>{dateFormat(item.order_status_date)}</span>
               </Space>
             </div>
             <div className="ifb-price">
               <Space>
                 <h2>Paid amount:</h2>
-                <h2>${item.paid_amount}</h2>
+                <h2>
+                  <CustomCyrrency value={item.paid_amount} suffix="DC" />
+                </h2>
               </Space>
             </div>
           </div>

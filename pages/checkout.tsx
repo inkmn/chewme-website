@@ -10,6 +10,7 @@ import privatefetcher from '@/lib/privateFetch'
 import { useRouter } from 'next/router'
 import CartType from '@/interfaces/cart'
 import useCart from '@/hooks/useCart'
+import CustomCyrrency from '@/components/currencyFormat'
 
 const Checkout = () => {
   const router = useRouter()
@@ -32,16 +33,13 @@ const Checkout = () => {
     actions: { setSubmitting: (arg0: boolean) => void }
   ): Promise<void> => {
     try {
-      const res = await privatefetcher<{ access_token: string }>(
-        `/app/order/CART/create`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            shipping_info: values,
-            cart_products: cartData?.rows.map((item: CartType) => item.id),
-          }),
-        }
-      )
+      await privatefetcher<{ access_token: string }>(`/app/order/CART/create`, {
+        method: 'POST',
+        body: JSON.stringify({
+          shipping_info: values,
+          cart_products: cartData?.rows.map((item: CartType) => item.id),
+        }),
+      })
       router.push(`/order`)
       notification.success({ message: 'Request successful' })
       actions.setSubmitting(false)
@@ -79,11 +77,14 @@ const Checkout = () => {
                               <strong className="product-quantity">
                                 (
                                 <Space>
-                                  <span>{item.price}</span>
-                                  <span>*</span>
                                   <span>
-                                    {item.quantity} {item.unit}
+                                    <CustomCyrrency
+                                      value={item.price}
+                                      suffix="DC"
+                                    />
                                   </span>
+                                  <span>x</span>
+                                  <span>{item.quantity}</span>
                                 </Space>
                                 )
                               </strong>
@@ -91,7 +92,12 @@ const Checkout = () => {
                           </td>
                           <td className="product-total">
                             <span className="price-amount amount">
-                              <strong>${item.price * item.quantity}</strong>
+                              <strong>
+                                <CustomCyrrency
+                                  value={item.price * item.quantity}
+                                  suffix="DC"
+                                />
+                              </strong>
                             </span>
                           </td>
                         </tr>
@@ -103,8 +109,10 @@ const Checkout = () => {
                       <td>
                         <span className="price-amount amount">
                           <strong>
-                            <span className="price-currencySymbol">$</span>
-                            {cartData?.cart_sum.total_amount}
+                            <CustomCyrrency
+                              value={cartData?.cart_sum.total_amount}
+                              suffix="DC"
+                            />
                           </strong>
                         </span>
                       </td>
@@ -115,8 +123,7 @@ const Checkout = () => {
                       <td>
                         <span className="price-amount amount">
                           <bdi>
-                            <span className="price-currencySymbol">$</span>
-                            0.00
+                            <CustomCyrrency value={0} suffix="DC" />
                           </bdi>
                         </span>
                       </td>
@@ -128,8 +135,10 @@ const Checkout = () => {
                         <strong>
                           <span className="price-amount amount">
                             <bdi>
-                              <span className="price-currencySymbol">$</span>
-                              {cartData?.cart_sum.total_amount}
+                              <CustomCyrrency
+                                value={cartData?.cart_sum.total_amount}
+                                suffix="DC"
+                              />
                             </bdi>
                           </span>
                         </strong>{' '}
