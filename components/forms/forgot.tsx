@@ -1,4 +1,4 @@
-import { LockFilled, MailFilled } from '@ant-design/icons'
+import { KeyOutlined, LockFilled, MailFilled } from '@ant-design/icons'
 import { Button, notification } from 'antd'
 import { Formik, FormikHelpers } from 'formik'
 import { Form, FormItem, Input } from 'formik-antd'
@@ -130,6 +130,7 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 
   return (
     <StyledWrapper>
+      <h2 className="login-modal-header">Forget password</h2>
       {passwordForm ? (
         <Formik
           initialValues={initialPasswordValues}
@@ -202,7 +203,13 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
           {({ isSubmitting }) => (
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="code">
-                <Input size="large" name="code" placeholder="Code" />
+                <Input
+                  bordered={false}
+                  size="large"
+                  name="code"
+                  placeholder="Code"
+                  prefix={<KeyOutlined />}
+                />
               </FormItem>
               <Button
                 htmlType="submit"
@@ -227,6 +234,7 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="username">
                 <Input
+                  bordered={false}
                   prefix={<MailFilled />}
                   size="large"
                   name="username"
@@ -248,15 +256,17 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         </Formik>
       )}
       <p className="login-text">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry.
+        After `Reset password` clicking, check your email to make sure you have
+        received a text message.
       </p>
     </StyledWrapper>
   )
 }
 
 const StyledWrapper = styled.div`
-  padding-top: 40px;
+  h2 {
+    padding-bottom: 40px;
+  }
   .dc-form {
     *:focus {
       outline: none;
@@ -291,11 +301,6 @@ const StyledWrapper = styled.div`
         background: transparent;
         color: #fff;
       }
-    }
-  }
-  .ant-input-affix-wrapper {
-    &.ant-input-affix-wrapper-lg {
-      background: transparent;
       .ant-input-prefix {
         ::before {
           background: red;
@@ -342,6 +347,19 @@ const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
     font-weight: 600;
+  }
+
+  .ant-form-item-explain-error {
+    color: #ff8f90;
+  }
+  .ant-form-item-has-error,
+  .ant-input-number-prefix,
+  .ant-form-item-has-error,
+  .ant-form-item-has-error,
+  .ant-input-number-prefix {
+    .ant-input-prefix {
+      color: #ff8f90 !important;
+    }
   }
 `
 

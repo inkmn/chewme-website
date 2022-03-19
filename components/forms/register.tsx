@@ -96,6 +96,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 
   return (
     <StyledWrapper>
+      <h2 className="login-modal-header">Signup</h2>
       {otpCode ? (
         <Formik
           enableReinitialize
@@ -117,11 +118,11 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="code">
                 <Input
+                  bordered={false}
                   prefix={<KeyOutlined />}
                   size="large"
                   name="code"
                   placeholder="Code"
-                  className=""
                 />
               </FormItem>
               <Button
@@ -151,6 +152,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="email">
                 <Input
+                  bordered={false}
                   prefix={<MailFilled />}
                   size="large"
                   name="email"
@@ -159,6 +161,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               </FormItem>
               <FormItem name="password">
                 <Input.Password
+                  bordered={false}
                   prefix={<LockFilled />}
                   size="large"
                   placeholder="Password"
@@ -167,6 +170,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               </FormItem>
               <FormItem name="country_code">
                 <Select
+                  bordered={false}
                   suffixIcon={<CaretDownFilled style={{ color: '#fff' }} />}
                   size="large"
                   name="country_code"
@@ -204,7 +208,9 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 }
 
 const StyledWrapper = styled.div`
-  padding-top: 40px;
+  h1 {
+    padding-bottom: 40px;
+  }
   .dc-form {
     .ant-col {
       &.ant-form-item-label {
@@ -305,6 +311,32 @@ const StyledWrapper = styled.div`
     display: flex;
     justify-content: center;
     font-weight: 600;
+  }
+
+  .ant-form-item-explain-error {
+    color: #ff8f90;
+  }
+  .ant-form-item-has-error,
+  .ant-input-number-prefix,
+  .ant-form-item-has-error,
+  .ant-form-item-has-error,
+  .ant-input-number-prefix {
+    .ant-input-prefix {
+      color: #ff8f90 !important;
+    }
+  }
+
+  .anticon {
+    &.anticon-eye {
+      &.ant-input-password-icon {
+        color: #fff;
+      }
+    }
+    &.anticon-eye-invisible {
+      &.ant-input-password-icon {
+        color: #fff;
+      }
+    }
   }
 `
 

@@ -53,6 +53,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 
   return (
     <StyledLogin>
+      <h2 className="login-modal-header">Login </h2>
       <Formik
         initialValues={{
           username: 'bilegsaikhan.e@gmail.com',
@@ -78,7 +79,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                 bordered={false}
                 prefix={<LockFilled />}
                 size="large"
-                placeholder="Password s"
+                placeholder="Password"
                 name="password"
               />
             </FormItem>
@@ -102,7 +103,9 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 }
 
 const StyledLogin = styled.div`
-  padding-top: 40px;
+  h2 {
+    padding-bottom: 40px;
+  }
   .dc-form {
     *:focus {
       outline: none;
@@ -168,6 +171,30 @@ const StyledLogin = styled.div`
     display: flex;
     justify-content: center;
     font-weight: 600;
+  }
+  .ant-form-item-explain-error {
+    color: #ff8f90;
+  }
+  .ant-form-item-has-error,
+  .ant-input-number-prefix,
+  .ant-form-item-has-error,
+  .ant-form-item-has-error,
+  .ant-input-number-prefix {
+    .ant-input-prefix {
+      color: #ff8f90 !important;
+    }
+  }
+  .anticon {
+    &.anticon-eye {
+      &.ant-input-password-icon {
+        color: #fff;
+      }
+    }
+    &.anticon-eye-invisible {
+      &.ant-input-password-icon {
+        color: #fff;
+      }
+    }
   }
 `
 

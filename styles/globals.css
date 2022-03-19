@@ -135,3 +135,7 @@ body,
   color: var(--primary);
   text-transform: capitalize;
 }
+
+@import url('antd/dist/antd.css');
+@import url('swiper/css/pagination');
+@import url('swiper/css');
