@@ -1,4 +1,4 @@
-import { Button, notification, Space } from 'antd'
+import { notification, Space } from 'antd'
 import { Formik } from 'formik'
 import { Form, FormItem, Input, Select } from 'formik-antd'
 import * as Yup from 'yup'
@@ -12,10 +12,30 @@ import CartType from '@/interfaces/cart'
 import useCart from '@/hooks/useCart'
 import CustomCyrrency from '@/components/currencyFormat'
 import ButtonStyled from '@/components/buttonStyled'
+import { useState } from 'react'
+import UserShippingAddresTypes from '@/interfaces/userShippingAddresTypes'
+import useUser from '@/hooks/useUser'
 
 const Checkout = () => {
   const router = useRouter()
   const { data: cartData } = useCart()
+  const { user } = useUser()
+  const [formData, setFormData] = useState<UserShippingAddresTypes>({
+    first_name: user.first_name,
+    last_name: user.last_name,
+    country: user.country_code,
+    state: user.state_code,
+    city: user.city_code,
+    apartment: user.apartment,
+    phone: user.phone,
+    postcode: user.zipcode,
+    street_address: user.address,
+    country_code: user.country_code,
+    state_code: user.state_code,
+    city_code: user.city_code,
+    zipcode: user.zipcode,
+    address: user.address,
+  })
 
   const formSchema = Yup.object().shape({
     first_name: Yup.string().required('Firstname is required'),
@@ -142,7 +162,7 @@ const Checkout = () => {
                               />
                             </bdi>
                           </span>
-                        </strong>{' '}
+                        </strong>
                       </td>
                     </tr>
                   </tfoot>
@@ -152,17 +172,7 @@ const Checkout = () => {
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               <h2>Billing Details</h2>
               <Formik
-                initialValues={{
-                  first_name: undefined,
-                  last_name: undefined,
-                  country_code: undefined,
-                  state_code: undefined,
-                  city_code: undefined,
-                  apartment: undefined,
-                  phone: undefined,
-                  zipcode: undefined,
-                  address: undefined,
-                }}
+                initialValues={formData}
                 validationSchema={formSchema}
                 onSubmit={handleSubmit}
               >

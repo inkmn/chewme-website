@@ -1,10 +1,4 @@
-import {
-  LockFilled,
-  MailFilled,
-  FacebookOutlined,
-  GooglePlusOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
+import { LockFilled, UserOutlined } from '@ant-design/icons'
 import { Button, notification, Row, Space } from 'antd'
 import { Formik } from 'formik'
 import { Form, FormItem, Input } from 'formik-antd'
