@@ -15,7 +15,7 @@ const FilterNavbar = ({
   options?: OptionalInterface[]
 }): JSX.Element => {
   const {
-    data: { categories_tree },
+    data: { categories_tree, OPTIONS_TYPE },
   } = useInit()
   const router = useRouter()
   const {
@@ -107,19 +107,51 @@ const FilterNavbar = ({
     }
   }
 
+  const chnageProductType = (id: string) => {
+    router.push(
+      `${pathname}${qs.stringify(
+        {
+          page,
+          limit,
+          query,
+          category_id,
+          start_date,
+          end_date,
+          optional,
+          optional_type: id === optional_type ? '' : id,
+        },
+        {
+          encode: false,
+          addQueryPrefix: true,
+        }
+      )}`
+    )
+  }
+
   return (
     <StyledFilterBar>
       <div className="desktop-view">
         <div className="categories filterSection">
+          <h2>Pet type</h2>
+
+          {OPTIONS_TYPE.map((otype) => (
+            <div
+              className={classnames([
+                'category-item',
+                optional_type === otype.id ? 'selected' : undefined,
+              ])}
+              key={otype.id}
+            >
+              <a onClick={() => chnageProductType(otype.id)}>
+                <span>{otype.name}</span>
+                <CloseOutlined />
+              </a>
+            </div>
+          ))}
+        </div>
+        <div className="categories filterSection">
           <h2>Category</h2>
-          <div
-            className={classnames([
-              'category-item',
-              !category_id ? 'selected' : undefined,
-            ])}
-          >
-            <a onClick={() => chnageCategory('')}>All</a>
-          </div>
+
           {categories_tree.map((category) => (
             <div
               className={classnames([

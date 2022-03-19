@@ -20,6 +20,10 @@ const useInit = (): {
       categories: [],
       categories_indexed: {},
       categories_tree: [],
+      OPTIONS_TYPE: [],
+      OPTIONS_FLAVOR: [],
+      OPTIONS_CHEWMETER: [],
+      OPTIONS_BREED_SIZE: [],
     },
     error,
     isValidating,
@@ -45,6 +49,10 @@ const useInit = (): {
         categories_tree: arrayToTree(initRes.categories, {
           parentProperty: 'parent_id',
         }),
+        OPTIONS_TYPE: initRes.OPTIONS_TYPE,
+        OPTIONS_FLAVOR: initRes.OPTIONS_FLAVOR,
+        OPTIONS_CHEWMETER: initRes.OPTIONS_CHEWMETER,
+        OPTIONS_BREED_SIZE: initRes.OPTIONS_BREED_SIZE,
       }
 
       return gahai

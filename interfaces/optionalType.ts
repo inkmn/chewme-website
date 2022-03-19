@@ -4,12 +4,12 @@ enum OptionalType {
   OPTIONS_FLAVOR = 'OPTIONS_FLAVOR',
 }
 
-interface OptionalItem {
+export interface OptionalItem {
   id: string
   name: string
 }
 
-interface OptionalInterface {
+export interface OptionalInterface {
   code: OptionalType
   name: string
   optionals: OptionalItem[]
