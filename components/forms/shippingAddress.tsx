@@ -106,14 +106,13 @@ const ShippingAddress = () => {
               </Row>
               <FormItem name="country" label="Country ">
                 <Select name="country" placeholder="Select">
-                  {[
-                    { code: 'US', name: 'US - United States' },
-                    { code: 'MN', name: 'MN - Mongolia' },
-                  ].map((item: { name: string; code: string }) => (
-                    <Select.Option key={item.code} value={item.code}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
+                  {[{ code: 'US', name: 'US - United States' }].map(
+                    (item: { name: string; code: string }) => (
+                      <Select.Option key={item.code} value={item.code}>
+                        {item.name}
+                      </Select.Option>
+                    )
+                  )}
                 </Select>
               </FormItem>
               <FormItem name="state" label="State code">
