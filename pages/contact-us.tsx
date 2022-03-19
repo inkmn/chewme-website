@@ -5,6 +5,7 @@ import { Formik } from 'formik'
 import { Form, Input } from 'formik-antd'
 import GoogleMapReact from 'google-map-react'
 import { Button, Col, Row, Form as FormAnt } from 'antd'
+import ButtonStyled from '@/components/buttonStyled'
 
 const AnyReactComponent = ({
   text,
@@ -115,7 +116,7 @@ const ContactUs = () => {
                           />
                         </Form.Item>
                         <div className="flex-end">
-                          <Button
+                          <ButtonStyled
                             htmlType="submit"
                             type="primary"
                             loading={isSubmitting}
@@ -123,7 +124,7 @@ const ContactUs = () => {
                             shape="round"
                           >
                             Message us
-                          </Button>
+                          </ButtonStyled>
                         </div>
                       </div>
                     </Col>
