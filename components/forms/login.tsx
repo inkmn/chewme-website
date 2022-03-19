@@ -78,7 +78,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
                 bordered={false}
                 prefix={<LockFilled />}
                 size="large"
-                placeholder="Password s"
+                placeholder="Password"
                 name="password"
               />
             </FormItem>

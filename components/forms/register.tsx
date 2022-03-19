@@ -117,11 +117,11 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="code">
                 <Input
+                  bordered={false}
                   prefix={<KeyOutlined />}
                   size="large"
                   name="code"
                   placeholder="Code"
-                  className=""
                 />
               </FormItem>
               <Button
@@ -151,6 +151,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
             <Form layout={'vertical'} className="dc-form">
               <FormItem name="email">
                 <Input
+                  bordered={false}
                   prefix={<MailFilled />}
                   size="large"
                   name="email"
@@ -159,6 +160,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               </FormItem>
               <FormItem name="password">
                 <Input.Password
+                  bordered={false}
                   prefix={<LockFilled />}
                   size="large"
                   placeholder="Password"
@@ -167,6 +169,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
               </FormItem>
               <FormItem name="country_code">
                 <Select
+                  bordered={false}
                   suffixIcon={<CaretDownFilled style={{ color: '#fff' }} />}
                   size="large"
                   name="country_code"
