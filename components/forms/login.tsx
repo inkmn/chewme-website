@@ -181,6 +181,18 @@ const StyledLogin = styled.div`
       color: #ff8f90 !important;
     }
   }
+  .anticon {
+    &.anticon-eye {
+      &.ant-input-password-icon {
+        color: #fff;
+      }
+    }
+    &.anticon-eye-invisible {
+      &.ant-input-password-icon {
+        color: #fff;
+      }
+    }
+  }
 `
 
 export default LoginForm
