@@ -59,7 +59,7 @@ const MyWallet = () => {
                           className="image"
                           height={45}
                           width={45}
-                          src="/image 1.png"
+                          src={`/${item?.currency}.png`}
                           alt=""
                         />
                         <div className="title"> {item.currency} </div>
