@@ -53,6 +53,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 
   return (
     <StyledLogin>
+      <h2 className="login-modal-header">Login </h2>
       <Formik
         initialValues={{
           username: 'bilegsaikhan.e@gmail.com',
@@ -102,7 +103,9 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 }
 
 const StyledLogin = styled.div`
-  padding-top: 40px;
+  h2 {
+    padding-bottom: 40px;
+  }
   .dc-form {
     *:focus {
       outline: none;

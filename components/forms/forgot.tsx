@@ -130,6 +130,7 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 
   return (
     <StyledWrapper>
+      <h2 className="login-modal-header">Forget password</h2>
       {passwordForm ? (
         <Formik
           initialValues={initialPasswordValues}
@@ -263,7 +264,9 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 }
 
 const StyledWrapper = styled.div`
-  padding-top: 40px;
+  h2 {
+    padding-bottom: 40px;
+  }
   .dc-form {
     *:focus {
       outline: none;

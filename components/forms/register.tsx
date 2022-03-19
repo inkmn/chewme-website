@@ -96,6 +96,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 
   return (
     <StyledWrapper>
+      <h2 className="login-modal-header">Signup</h2>
       {otpCode ? (
         <Formik
           enableReinitialize
@@ -207,7 +208,9 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
 }
 
 const StyledWrapper = styled.div`
-  padding-top: 40px;
+  h1 {
+    padding-bottom: 40px;
+  }
   .dc-form {
     .ant-col {
       &.ant-form-item-label {

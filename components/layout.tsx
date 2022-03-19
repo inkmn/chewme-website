@@ -70,7 +70,6 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
         title={false}
         destroyOnClose
       >
-        <h2 className="login-modal-header">Login or Signup</h2>
         {{
           register: <RegisterForm onSuccess={resetAuthType} />,
           forgot: <ForgotPasswordForm onSuccess={resetAuthType} />,
@@ -96,10 +95,21 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
               </a>
             )}
 
-            <Divider style={{ borderColor: '#fff' }} type="vertical" />
-            <a className="login-text" onClick={() => setAuthType('forgot')}>
-              Forget Password ?
-            </a>
+            {authType !== 'forgot' ? (
+              <>
+                <Divider style={{ borderColor: '#fff' }} type="vertical" />
+                <a className="login-text" onClick={() => setAuthType('forgot')}>
+                  Forget Password ?
+                </a>
+              </>
+            ) : (
+              <>
+                <Divider style={{ borderColor: '#fff' }} type="vertical" />
+                <a className="login-text" onClick={() => setAuthType('login')}>
+                  Already have an account?
+                </a>
+              </>
+            )}
           </div>
         </div>
       </StyledModal>
