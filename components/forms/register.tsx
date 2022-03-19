@@ -9,7 +9,7 @@ import {
   KeyOutlined,
 } from '@ant-design/icons'
 import { Button, notification, Row, Space } from 'antd'
-import { Formik } from 'formik'
+import { Formik, FormikHelpers } from 'formik'
 import { Form, FormItem, Input, Select } from 'formik-antd'
 import * as Yup from 'yup'
 import { Cookies } from 'react-cookie'
@@ -19,6 +19,12 @@ import useUser from '@/hooks/useUser'
 import { useState } from 'react'
 
 const cookies = new Cookies()
+
+interface RergisterFormValues {
+  email: string
+  password: string
+  country_code: string
+}
 
 const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
   const { mutate } = useUser()
@@ -36,9 +42,15 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       .required('Password is required'),
   })
 
+  const registerValues: RergisterFormValues = {
+    email: '',
+    password: '',
+    country_code: 'US',
+  }
+
   const handleSubmit = async (
-    values: any,
-    actions: { setSubmitting: (arg0: boolean) => void }
+    values: RergisterFormValues,
+    actions: FormikHelpers<RergisterFormValues>
   ): Promise<void> => {
     try {
       const res = await publicFetch<{ access_token: string }>(
@@ -142,11 +154,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         </Formik>
       ) : (
         <Formik
-          initialValues={{
-            email: undefined,
-            password: undefined,
-            country_code: 'US',
-          }}
+          initialValues={registerValues}
           validationSchema={formSchema}
           onSubmit={handleSubmit}
         >
