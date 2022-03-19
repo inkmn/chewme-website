@@ -1,12 +1,14 @@
 import { Divider as DividerAnt } from 'antd'
 import styled from 'styled-components'
-// import Paw from '../assets/pawprint.svg'
+import Paw from '../assets/pawicon.svg'
 
 const Divider = (): JSX.Element => {
   return (
     <StyledWrapper>
       <DividerAnt>
-        <div className="svg">{/* <Paw /> */}</div>
+        <div className="svg">
+          <Paw />
+        </div>
       </DividerAnt>
     </StyledWrapper>
   )
