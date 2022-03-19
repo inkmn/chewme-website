@@ -22,7 +22,10 @@ const OrderDetail = () => {
     data: orderData,
     error,
     mutate,
-  } = useSWR(order_id ? `/app/order/${order_id}/get` : null, privatefetcher)
+  } = useSWR<OrderItemType>(
+    order_id ? `/app/order/${order_id}/get` : null,
+    privatefetcher
+  )
 
   if (error && error) {
     return (
