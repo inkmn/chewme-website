@@ -5,6 +5,7 @@ import BoneButton from '@/components/boneButton'
 import BoneButtonFlat from '@/components/boneButtonFlat'
 import { Button, Result, Divider, Row, Space } from 'antd'
 import { useRouter } from 'next/router'
+import ButtonStyled from '@/components/buttonStyled'
 
 const Custom404 = () => {
   const router = useRouter()
@@ -17,13 +18,9 @@ const Custom404 = () => {
           title="404"
           subTitle="Sorry, the page you visited does not exist."
           extra={
-            <Button
-              className="btn-green"
-              type="primary"
-              onClick={() => router.push('/')}
-            >
+            <ButtonStyled type="primary" onClick={() => router.push('/')}>
               Back Home
-            </Button>
+            </ButtonStyled>
           }
         />
       </StyledOrigin>

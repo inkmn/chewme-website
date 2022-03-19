@@ -11,6 +11,7 @@ import Image from 'next/image'
 import CustomCyrrency from '@/components/currencyFormat'
 import { useState } from 'react'
 import RenderStatus from '@/components/orderStatus'
+import ButtonStyled from '@/components/buttonStyled'
 
 const OrderDetail = () => {
   const router = useRouter()
@@ -240,7 +241,7 @@ const OrderDetail = () => {
           <Row justify="end">
             <Col>
               {orderData?.order_status !== 'PAID' ? (
-                <Button
+                <ButtonStyled
                   loading={loading}
                   size="large"
                   onClick={payForThisOrder}
@@ -254,7 +255,7 @@ const OrderDetail = () => {
                     </span>
                     <span>pay</span>
                   </Space>
-                </Button>
+                </ButtonStyled>
               ) : null}
             </Col>
           </Row>

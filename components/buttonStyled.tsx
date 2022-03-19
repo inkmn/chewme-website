@@ -6,7 +6,7 @@ const ButtonStyled = ({ children, ...props }: ButtonProps): JSX.Element => {
 }
 
 const StyledButton = styled(Button)`
-  &.ant-btn-primary {
+  &.ant-btn-primary :not([disabled]) {
     background: var(--primary);
     border: var(--primary);
     :focus {
@@ -16,9 +16,9 @@ const StyledButton = styled(Button)`
       background-color: #7a9439;
     }
   }
-  &.ant-btn-default,
-  &.ant-btn-ghost,
-  &.ant-btn-dashed {
+  &.ant-btn-default :not([disabled]),
+  &.ant-btn-ghost :not([disabled]),
+  &.ant-btn-dashed :not([disabled]) {
     :focus {
       color: #7a9439;
       border-color: #7a9439;

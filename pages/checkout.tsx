@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import CartType from '@/interfaces/cart'
 import useCart from '@/hooks/useCart'
 import CustomCyrrency from '@/components/currencyFormat'
+import ButtonStyled from '@/components/buttonStyled'
 
 const Checkout = () => {
   const router = useRouter()
@@ -207,7 +208,7 @@ const Checkout = () => {
                       <Input size="large" name="address" />
                     </FormItem>
 
-                    <Button
+                    <ButtonStyled
                       htmlType="submit"
                       type="primary"
                       size="large"
@@ -216,7 +217,7 @@ const Checkout = () => {
                       style={{ marginBottom: '24px' }}
                     >
                       Place order
-                    </Button>
+                    </ButtonStyled>
                   </Form>
                 )}
               </Formik>

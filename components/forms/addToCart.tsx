@@ -6,6 +6,7 @@ import privatefetcher from '@/lib/privateFetch'
 import useUser from '@/hooks/useUser'
 import { useAppContext } from '@/context/state'
 import useCart from '@/hooks/useCart'
+import ButtonStyled from '../buttonStyled'
 
 const AddToCartForm = ({
   productId,
@@ -80,7 +81,7 @@ const AddToCartForm = ({
             </FormItem>
 
             <Row justify="center">
-              <Button
+              <ButtonStyled
                 disabled={!stock}
                 htmlType="submit"
                 type="primary"
@@ -88,7 +89,7 @@ const AddToCartForm = ({
                 shape="round"
               >
                 {stock ? 'Add to cart' : 'Not available'}
-              </Button>
+              </ButtonStyled>
             </Row>
           </Form>
         )}

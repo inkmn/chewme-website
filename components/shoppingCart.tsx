@@ -9,6 +9,7 @@ import { Button, Col, Row, Space } from 'antd'
 import { useRouter } from 'next/router'
 import useCart from '@/hooks/useCart'
 import CustomCyrrency from './currencyFormat'
+import ButtonStyled from './buttonStyled'
 
 const ShoppingCart = () => {
   const router = useRouter()
@@ -62,7 +63,7 @@ const ShoppingCart = () => {
         </div>
         <Row gutter={24}>
           <Col span={12}>
-            <Button
+            <ButtonStyled
               block
               onClick={clearCart}
               disabled={!cartData?.count}
@@ -70,10 +71,10 @@ const ShoppingCart = () => {
               size="large"
             >
               Clear cart
-            </Button>
+            </ButtonStyled>
           </Col>
           <Col span={12}>
-            <Button
+            <ButtonStyled
               block
               onClick={() => {
                 router.push('/checkout')
@@ -84,7 +85,7 @@ const ShoppingCart = () => {
               size="large"
             >
               Checkout
-            </Button>
+            </ButtonStyled>
           </Col>
         </Row>
       </div>

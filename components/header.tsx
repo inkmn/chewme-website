@@ -89,7 +89,6 @@ const SiteHeader = styled.div`
   z-index: 10;
   transition: all 0.4s ease-in-out;
   user-select: none;
-
   &.sticky {
     background-color: rgba(97, 126, 16, 0.8);
     backdrop-filter: saturate(180%) blur(20px);
