@@ -2,8 +2,8 @@ import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
-import { Button, Col, Empty, Row, Space, Tag } from 'antd'
+import useSWR, { MutatorOptions } from 'swr'
+import { Col, Empty, Row, Space } from 'antd'
 import privatefetcher from '@/lib/privateFetch'
 import OrderItemType from '@/interfaces/orderItem'
 import { datetimeFormat } from '@/utils/index'
@@ -22,10 +22,7 @@ const OrderDetail = () => {
     data: orderData,
     error,
     mutate,
-  } = useSWR<OrderItemType>(
-    order_id ? `/app/order/${order_id}/get` : null,
-    privatefetcher
-  )
+  } = useSWR(order_id ? `/app/order/${order_id}/get` : null, privatefetcher)
 
   if (error && error) {
     return (
@@ -48,14 +45,16 @@ const OrderDetail = () => {
   const payForThisOrder = async () => {
     setLoading(true)
     try {
+      console.log('it works')
       await privatefetcher(`/app/order/${order_id}/payment`, {
         method: 'GET',
       })
-      mutate()
+      await mutate()
+      setLoading(false)
     } catch (error) {
       mutate()
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
@@ -190,52 +189,59 @@ const OrderDetail = () => {
 
           <StyledPadanList>
             <table>
-              <tr className="list-header">
-                <td>Description</td>
-                <td>Unit Cost</td>
-                <td>Quantity</td>
-                <td>Amount</td>
-              </tr>
+              <tbody>
+                <tr className="list-header">
+                  <td>Description</td>
+                  <td>Unit Cost</td>
+                  <td>Quantity</td>
+                  <td>Amount</td>
+                </tr>
 
-              {orderData?.products?.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <div className="title">{item?.name}</div>
-                      <p className="description">{item.code}</p>
-                    </td>
-                    <td>
-                      <CustomCyrrency value={item?.price} suffix="DC" />
-                    </td>
-                    <td>{item.quantity}</td>
-                    <td>
-                      <CustomCyrrency
-                        value={item?.price * item.quantity}
-                        suffix="DC"
-                      />
-                    </td>
-                  </tr>
-                )
-              })}
+                {orderData?.products?.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>
+                        <div className="title">{item?.name}</div>
+                        <p className="description">{item.code}</p>
+                      </td>
+                      <td>
+                        <CustomCyrrency value={item?.price} suffix="DC" />
+                      </td>
+                      <td>{item.quantity}</td>
+                      <td>
+                        <CustomCyrrency
+                          value={item?.price * item.quantity}
+                          suffix="DC"
+                        />
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
             </table>
           </StyledPadanList>
 
           <StyledPadanTotal>
             <table>
-              <tr className="amount">
-                <td></td>
-                <td></td>
-                <td>Total Quantity</td>
-                <td>{orderData?.quantity}</td>
-              </tr>
-              <tr className="amount">
-                <td></td>
-                <td></td>
-                <td className="amount total">Total Amount</td>
-                <td className="amount total">
-                  <CustomCyrrency value={orderData?.total_amount} suffix="DC" />
-                </td>
-              </tr>
+              <tbody>
+                <tr className="amount">
+                  <td></td>
+                  <td></td>
+                  <td>Total Quantity</td>
+                  <td>{orderData?.quantity}</td>
+                </tr>
+                <tr className="amount">
+                  <td></td>
+                  <td></td>
+                  <td className="amount total">Total Amount</td>
+                  <td className="amount total">
+                    <CustomCyrrency
+                      value={orderData?.total_amount}
+                      suffix="DC"
+                    />
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </StyledPadanTotal>
           <Row justify="end">
@@ -259,7 +265,6 @@ const OrderDetail = () => {
               ) : null}
             </Col>
           </Row>
-          {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
         </div>
       </StyledOrderDetail>
     </Layout>
