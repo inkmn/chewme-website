@@ -76,7 +76,7 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       notification.error({
         message: error.data.message,
       })
-      actions.setFieldError('username', error.data.message)
+      actions.setFieldError('email', error.data.message)
       actions.setSubmitting(false)
     }
   }
@@ -101,9 +101,6 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       notification.success({ message: 'Request successful' })
       actions.setSubmitting(false)
     } catch (error: any) {
-      notification.error({
-        message: error.data.message,
-      })
       actions.setSubmitting(false)
     }
   }

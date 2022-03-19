@@ -13,7 +13,6 @@ const cookies = new Cookies()
 
 const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
   const { mutate } = useUser()
-  const router = useRouter()
   const formSchema = Yup.object().shape({
     username: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -50,7 +49,7 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       <h2 className="login-modal-header">Login </h2>
       <Formik
         initialValues={{
-          username: 'bilegsaikhan.e@gmail.com',
+          username: 'bilgee@gmail.com',
           password: 'Qwer1234',
         }}
         validationSchema={formSchema}

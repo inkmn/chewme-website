@@ -91,10 +91,16 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       actions.setSubmitting(false)
     }
   }
+  //   formikHelpers: FormikHelpers<{
+  //     code: string;
+  // }>) => void | Promise<any>
 
   const handleOtpSubmit = async (
     values: { code: string | undefined },
-    actions: { setSubmitting: (arg0: boolean) => void }
+    actions: {
+      setSubmitting: (arg0: boolean) => void
+      setFieldError: (arg0: string, arg1: string) => void
+    }
   ): Promise<void> => {
     try {
       const res = await publicFetch<{ access_token: string }>(
@@ -112,9 +118,10 @@ const ForgotPasswordForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
       notification.success({ message: 'Request successful' })
       actions.setSubmitting(false)
     } catch (error: any) {
-      notification.error({
-        message: error.data.message,
-      })
+      // notification.error({
+      //   message: error.data.message,
+      // })
+      actions.setFieldError('code', error.data.message)
       actions.setSubmitting(false)
     }
   }
