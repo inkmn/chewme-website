@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 import useUser from '@/hooks/useUser'
 import { useState } from 'react'
 import ButtonStyled from '../buttonStyled'
+import UserShippingAddresTypes from '@/interfaces/userShippingAddresTypes'
 
 const formSchema = Yup.object().shape({
   first_name: Yup.string().required('Firstname is required'),
@@ -19,18 +20,6 @@ const formSchema = Yup.object().shape({
   postcode: Yup.string().required('Zipcode is required'),
   street_address: Yup.string().required('Address is required'),
 })
-
-interface Address {
-  first_name: string
-  last_name: string
-  country: string
-  state: string
-  city: string
-  apartment: string
-  phone: string
-  postcode: string
-  street_address: string
-}
 
 const ShippingAddress = () => {
   const handleSubmit = async (
@@ -57,35 +46,29 @@ const ShippingAddress = () => {
     }
   }
 
-  const [data, setData] = useState<Address>({
-    first_name: '',
-    last_name: '',
-    country: '',
-    state: '',
-    city: '',
-    apartment: '',
-    phone: '',
-    postcode: '',
-    street_address: '',
-  })
-
   const { user, error } = useUser()
-  console.log(user)
+
+  const [data, setData] = useState<UserShippingAddresTypes>({
+    first_name: user.first_name,
+    last_name: user.last_name,
+    country: user.country_code,
+    state: user.state_code,
+    city: user.city_code,
+    apartment: user.apartment,
+    phone: user.phone,
+    postcode: user.zipcode,
+    street_address: user.address,
+    country_code: user.country_code,
+    state_code: user.state_code,
+    city_code: user.city_code,
+    zipcode: user.zipcode,
+    address: user.address,
+  })
 
   return (
     <StyledForm>
       <Formik
-        initialValues={{
-          first_name: '',
-          last_name: '',
-          country: '',
-          state: '',
-          city: '',
-          apartment: '',
-          phone: '',
-          postcode: '',
-          street_address: '',
-        }}
+        initialValues={data}
         validationSchema={formSchema}
         onSubmit={handleSubmit}
       >
@@ -154,7 +137,7 @@ const ShippingAddress = () => {
         )}
       </Formik>
 
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
     </StyledForm>
   )
 }

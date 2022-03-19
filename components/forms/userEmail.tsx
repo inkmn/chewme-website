@@ -5,6 +5,9 @@ import styled from 'styled-components'
 import privatefetcher from '@/lib/privateFetch'
 import * as Yup from 'yup'
 import ButtonStyled from '../buttonStyled'
+import useUser from '@/hooks/useUser'
+import { useState } from 'react'
+import SettingsEmailType from '@/interfaces/settingsEmailType'
 
 const formSchema = Yup.object().shape({
   email: Yup.string().email().required('Email is required'),
@@ -12,6 +15,13 @@ const formSchema = Yup.object().shape({
 })
 
 const UserEmail = () => {
+  const { user, error } = useUser()
+
+  const [data, setData] = useState<SettingsEmailType>({
+    email: user.email,
+    type: 'EMAIL',
+  })
+
   const handleSubmit = async (
     values: any,
     actions: { setSubmitting: (arg0: boolean) => void }
@@ -40,13 +50,11 @@ const UserEmail = () => {
     }
   }
 
+  console.log(user.email)
   return (
     <StyledForm>
       <Formik
-        initialValues={{
-          email: '',
-          type: 'EMAIL',
-        }}
+        initialValues={data}
         validationSchema={formSchema}
         onSubmit={handleSubmit}
       >
