@@ -3,7 +3,7 @@ import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { Button, Col, Empty, Row, Space, Tag } from 'antd'
+import { Alert, Empty, notification, Space } from 'antd'
 import privatefetcher from '@/lib/privateFetch'
 import OrderItemType from '@/interfaces/orderItem'
 import { datetimeFormat } from '@/utils/index'
@@ -17,6 +17,7 @@ const OrderDetail = () => {
   const router = useRouter()
   const { order_id } = router.query
   const [loading, setLoading] = useState(false)
+  const [orderError, setOrderError] = useState(false)
 
   const {
     data: orderData,
@@ -48,14 +49,21 @@ const OrderDetail = () => {
   const payForThisOrder = async () => {
     setLoading(true)
     try {
+      console.log('it works')
       await privatefetcher(`/app/order/${order_id}/payment`, {
         method: 'GET',
       })
+      await mutate()
+      setLoading(false)
+    } catch (error: any) {
+      setOrderError(error.data.message || error.data.code)
+      notification.error({
+        message: 'Error',
+        description: error.data.message || error.data.code,
+      })
       mutate()
-    } catch (error) {
-      mutate()
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
@@ -190,76 +198,86 @@ const OrderDetail = () => {
 
           <StyledPadanList>
             <table>
-              <tr className="list-header">
-                <td>Description</td>
-                <td>Unit Cost</td>
-                <td>Quantity</td>
-                <td>Amount</td>
-              </tr>
+              <tbody>
+                <tr className="list-header">
+                  <td>Description</td>
+                  <td>Unit Cost</td>
+                  <td>Quantity</td>
+                  <td>Amount</td>
+                </tr>
 
-              {orderData?.products?.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <div className="title">{item?.name}</div>
-                      <p className="description">{item.code}</p>
-                    </td>
-                    <td>
-                      <CustomCyrrency value={item?.price} suffix="DC" />
-                    </td>
-                    <td>{item.quantity}</td>
-                    <td>
-                      <CustomCyrrency
-                        value={item?.price * item.quantity}
-                        suffix="DC"
-                      />
-                    </td>
-                  </tr>
-                )
-              })}
+                {orderData?.products?.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>
+                        <div className="title">{item?.name}</div>
+                        <p className="description">{item.code}</p>
+                      </td>
+                      <td>
+                        <CustomCyrrency value={item?.price} suffix="DC" />
+                      </td>
+                      <td>{item.quantity}</td>
+                      <td>
+                        <CustomCyrrency
+                          value={item?.price * item.quantity}
+                          suffix="DC"
+                        />
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
             </table>
           </StyledPadanList>
 
           <StyledPadanTotal>
             <table>
-              <tr className="amount">
-                <td></td>
-                <td></td>
-                <td>Total Quantity</td>
-                <td>{orderData?.quantity}</td>
-              </tr>
-              <tr className="amount">
-                <td></td>
-                <td></td>
-                <td className="amount total">Total Amount</td>
-                <td className="amount total">
-                  <CustomCyrrency value={orderData?.total_amount} suffix="DC" />
-                </td>
-              </tr>
+              <tbody>
+                <tr className="amount">
+                  <td></td>
+                  <td></td>
+                  <td>Total Quantity</td>
+                  <td>{orderData?.quantity}</td>
+                </tr>
+                <tr className="amount">
+                  <td></td>
+                  <td></td>
+                  <td className="amount total">Total Amount</td>
+                  <td className="amount total">
+                    <CustomCyrrency
+                      value={orderData?.total_amount}
+                      suffix="DC"
+                    />
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </StyledPadanTotal>
-          <Row justify="end">
-            <Col>
-              {orderData?.order_status !== 'PAID' ? (
-                <ButtonStyled
-                  loading={loading}
-                  size="large"
-                  onClick={payForThisOrder}
-                >
-                  <Space>
-                    <span>
-                      <CustomCyrrency
-                        value={orderData?.total_amount}
-                        suffix="DC"
-                      />
-                    </span>
-                    <span>pay</span>
-                  </Space>
-                </ButtonStyled>
-              ) : null}
-            </Col>
-          </Row>
-          {/* <pre>{JSON.stringify(orderData, null, 2)}</pre> */}
+          <div>
+            {orderError ? (
+              <Alert showIcon type="error" message={orderError} />
+            ) : null}
+            <div style={{ marginTop: '2rem' }}></div>
+            {orderData?.order_status !== 'PAID' ? (
+              <ButtonStyled
+                block
+                type="primary"
+                loading={loading}
+                size="large"
+                onClick={payForThisOrder}
+              >
+                <Space>
+                  <span>
+                    <CustomCyrrency
+                      value={orderData?.total_amount}
+                      suffix="DC"
+                    />
+                  </span>
+                  <span>pay</span>
+                </Space>
+              </ButtonStyled>
+            ) : null}
+          </div>
         </div>
       </StyledOrderDetail>
     </Layout>
