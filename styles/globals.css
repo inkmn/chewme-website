@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('antd/dist/antd.css');
+@import url('swiper/css/pagination');
+@import url('swiper/css');
 
 html {
   scroll-behavior: smooth;
@@ -132,7 +135,3 @@ body,
   color: var(--primary);
   text-transform: capitalize;
 }
-
-@import url('antd/dist/antd.css');
-@import url('swiper/css/pagination');
-@import url('swiper/css');
