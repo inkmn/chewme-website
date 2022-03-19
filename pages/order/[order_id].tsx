@@ -247,27 +247,27 @@ const OrderDetail = () => {
               </tbody>
             </table>
           </StyledPadanTotal>
-          <Row justify="end">
-            <Col>
-              {orderData?.order_status !== 'PAID' ? (
-                <ButtonStyled
-                  loading={loading}
-                  size="large"
-                  onClick={payForThisOrder}
-                >
-                  <Space>
-                    <span>
-                      <CustomCyrrency
-                        value={orderData?.total_amount}
-                        suffix="DC"
-                      />
-                    </span>
-                    <span>pay</span>
-                  </Space>
-                </ButtonStyled>
-              ) : null}
-            </Col>
-          </Row>
+          <div style={{ marginTop: '2rem' }}>
+            {orderData?.order_status !== 'PAID' ? (
+              <ButtonStyled
+                block
+                type="primary"
+                loading={loading}
+                size="large"
+                onClick={payForThisOrder}
+              >
+                <Space>
+                  <span>
+                    <CustomCyrrency
+                      value={orderData?.total_amount}
+                      suffix="DC"
+                    />
+                  </span>
+                  <span>pay</span>
+                </Space>
+              </ButtonStyled>
+            ) : null}
+          </div>
         </div>
       </StyledOrderDetail>
     </Layout>
