@@ -2,8 +2,8 @@ import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import useSWR, { MutatorOptions } from 'swr'
-import { Col, Empty, Row, Space } from 'antd'
+import useSWR from 'swr'
+import { Alert, Empty, notification, Space } from 'antd'
 import privatefetcher from '@/lib/privateFetch'
 import OrderItemType from '@/interfaces/orderItem'
 import { datetimeFormat } from '@/utils/index'
@@ -17,6 +17,7 @@ const OrderDetail = () => {
   const router = useRouter()
   const { order_id } = router.query
   const [loading, setLoading] = useState(false)
+  const [orderError, setOrderError] = useState(false)
 
   const {
     data: orderData,
@@ -54,7 +55,12 @@ const OrderDetail = () => {
       })
       await mutate()
       setLoading(false)
-    } catch (error) {
+    } catch (error: any) {
+      setOrderError(error.data.message || error.data.code)
+      notification.error({
+        message: 'Error',
+        description: error.data.message || error.data.code,
+      })
       mutate()
       setLoading(false)
     }
@@ -247,7 +253,11 @@ const OrderDetail = () => {
               </tbody>
             </table>
           </StyledPadanTotal>
-          <div style={{ marginTop: '2rem' }}>
+          <div>
+            {orderError ? (
+              <Alert showIcon type="error" message={orderError} />
+            ) : null}
+            <div style={{ marginTop: '2rem' }}></div>
             {orderData?.order_status !== 'PAID' ? (
               <ButtonStyled
                 block
