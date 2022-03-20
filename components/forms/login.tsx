@@ -14,8 +14,8 @@ const cookies = new Cookies()
 const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
   const { mutate } = useUser()
   const formSchema = Yup.object().shape({
-    username: Yup.string().required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    username: Yup.string().required('Email is required').trim(),
+    password: Yup.string().required('Password is required').trim(),
   })
 
   const handleSubmit = async (
@@ -27,7 +27,10 @@ const LoginForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
         `/app/auth/login`,
         {
           method: 'POST',
-          body: JSON.stringify(values),
+          body: JSON.stringify({
+            ...values,
+            username: values?.username.trim(),
+          }),
         }
       )
       cookies.set('token', res.access_token)

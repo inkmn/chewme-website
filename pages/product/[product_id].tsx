@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Layout from '@/components/layout'
 import PageHeader from '@/components/pageHeader/cover'
 import styled from 'styled-components'
@@ -6,7 +5,7 @@ import { useRouter } from 'next/router'
 import publicFetcher from '@/lib/publicFetch'
 import useSWR from 'swr'
 import ProductItem from '@/interfaces/product'
-import { Col, Empty, Row, Tag, Typography } from 'antd'
+import { Col, Empty, notification, Row, Tag, Typography } from 'antd'
 import { HeartFilled, HeartOutlined, StarFilled } from '@ant-design/icons'
 import CarouselThumb from '@/components/product/thumbs'
 import useInit from '@/hooks/useInit'
@@ -14,7 +13,7 @@ import AddToCartForm from '@/components/forms/addToCart'
 import privatefetcher from '@/lib/privateFetch'
 import CustomCyrrency from '@/components/currencyFormat'
 
-const { Paragraph, Link } = Typography
+const { Paragraph } = Typography
 
 const ProductDetail = () => {
   const {
@@ -22,7 +21,6 @@ const ProductDetail = () => {
   } = useInit()
 
   const router = useRouter()
-  const [isFav, setIsFav] = useState(true)
   const { product_id } = router.query
   const {
     data: productData,
@@ -52,13 +50,19 @@ const ProductDetail = () => {
   }
 
   const setFavorite = async () => {
-    await privatefetcher(`/app/favorite`, {
-      method: 'POST',
-      body: JSON.stringify({ product_id }),
-    })
-    // await privatefetcher(`/app/favorite/${product_id}`, {
-    //   method: 'DELETE',
-    // })
+    try {
+      await privatefetcher(`/app/favorite`, {
+        method: 'POST',
+        body: JSON.stringify({ product_id }),
+      })
+      // await privatefetcher(`/app/favorite/${product_id}`, {
+      //   method: 'DELETE',
+      // })
+    } catch (error: any) {
+      notification.error({
+        message: error.data.message,
+      })
+    }
     mutate()
   }
 

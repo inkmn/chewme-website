@@ -157,15 +157,12 @@ const MyWallet = () => {
               </HistoryList>
             </Col>
           </Row>
-
-          {/* <pre style={{ color: 'red' }}>
-            {JSON.stringify(walletData, null, 2)}
-          </pre> */}
           <StyledModal
             closeIcon={
               <CloseCircleFilled style={{ fontSize: 24, marginTop: '20px' }} />
             }
             title={false}
+            maskClosable={false}
             visible={action?.type === 'deposit'}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
@@ -179,13 +176,17 @@ const MyWallet = () => {
             }
             title={false}
             visible={action?.type === 'convert'}
-            // visible={true}
+            maskClosable={false}
             footer={false}
             onCancel={() => setAction({ type: undefined, item: undefined })}
           >
             <ModalTitle>Convert</ModalTitle>
             <Convert />
           </StyledModal>
+
+          {/* <pre style={{ color: 'red' }}>
+            {JSON.stringify(walletData, null, 2)}
+          </pre> */}
         </div>
       </StyledMyWallet>
     </Layout>

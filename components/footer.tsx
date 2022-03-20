@@ -56,8 +56,8 @@ const Footer = (): JSX.Element => {
           </Col>
           <Col xs={24} sm={24} md={12} lg={8} xl={6} xxl={6}>
             <div className="nav-item">
-              <Link href="/about">
-                <a>About us</a>
+              <Link href="/origin">
+                <a>Origin</a>
               </Link>
             </div>
             <div className="nav-item">

@@ -56,7 +56,8 @@ const OrderDetail = () => {
       await mutate()
       setLoading(false)
     } catch (error: any) {
-      setOrderError(error.data.message || error.data.code)
+      // setOrderError(error.data.message || error.data.code)
+      setOrderError(error.data.message || error.data.code ? true : false)
       notification.error({
         message: 'Error',
         description: error.data.message || error.data.code,

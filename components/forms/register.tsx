@@ -33,7 +33,8 @@ const RegisterForm = ({ onSuccess = () => {} }: { onSuccess?: any }) => {
   const formSchema = Yup.object().shape({
     email: Yup.string()
       .email('Email is required')
-      .required('Email is required'),
+      .required('Email is required')
+      .trim(),
     password: Yup.string()
       .min(8, 'Password at least 8 characters')
       .matches(/^(?=.*[a-z])/, 'Must contain at least one lowercase character')
