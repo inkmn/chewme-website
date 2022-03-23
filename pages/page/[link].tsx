@@ -9,15 +9,19 @@ const Page = () => {
   const { link } = router.query
 
   const { data } = useSWR(`/page/${link}`, PublicFetcher)
+  function createMarkup() {
+    return { __html: data }
+  }
 
   return (
     <Layout>
       <PageHeader title={`About`} image={`/cover5.jpeg`} />
-      {/* <div>
+      <div>
         <div className="container">
-          <h1 className="page-title">{data.title}</h1>
+          <h1 className="page-title">{data}</h1>
+          <div dangerouslySetInnerHTML={createMarkup()} />
         </div>
-      </div> */}
+      </div>
     </Layout>
   )
 }
